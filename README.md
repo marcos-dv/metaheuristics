@@ -7,3 +7,12 @@ The idea is define problems, solutions to those problems, and solve them with me
 Author:
 * Marcos Domínguez Velad
 * marcos.dominguezv.dev@gmail.com
+
+# Build and Run
+
+Build the project with
+```
+make
+```
+
+Run the `a.out` file.
