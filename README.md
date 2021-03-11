@@ -2,4 +2,8 @@
 
 Repository for metaheuristics and optimization problems.
 
-Author: Marcos Domínguez Velad marcos.dominguez.v.dev@gmail.com
+The idea is define problems, solutions to those problems, and solve them with metaheuristics. In particular, it will be focused on **hyperparameter tuning** for metaheuristics.
+
+Author:
+* Marcos Domínguez Velad
+* marcos.dominguez.v.dev@gmail.com
