@@ -6,4 +6,4 @@ The idea is define problems, solutions to those problems, and solve them with me
 
 Author:
 * Marcos Domínguez Velad
-* marcos.dominguez.v.dev@gmail.com
+* marcos.dominguezv.dev@gmail.com
