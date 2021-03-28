@@ -8,11 +8,6 @@ Author:
 * Marcos Domínguez Velad
 * marcos.dominguezv.dev@gmail.com
 
-# Build and Run
+# Documentation
 
-Build the project with
-```
-make
-```
-
-Run the `a.out` file.
+...Work in progress...
