@@ -1,6 +1,6 @@
 package exec;
 
-import metaheuristics.*;
+import problems.*;
 
 public class ExecTest {
 

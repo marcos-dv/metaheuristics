@@ -1,4 +1,4 @@
-package metaheuristics;
+package problems;
 
 public class NearestPointProblem implements Problem {
 

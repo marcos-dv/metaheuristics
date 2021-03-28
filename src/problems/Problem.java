@@ -1,4 +1,4 @@
-package metaheuristics;
+package problems;
 
 public interface Problem {
 	public double fitness(Solution sol);

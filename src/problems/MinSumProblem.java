@@ -1,4 +1,4 @@
-package metaheuristics;
+package problems;
 
 public class MinSumProblem implements Problem {
 
