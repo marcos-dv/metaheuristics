@@ -4,17 +4,17 @@ import utils.Globals;
 import utils.RandomGenerator;
 
 public class Solution {
-	public double [] pop;
+	public double [] coords;
 	public int dim;
 	private double fitness;
 	private Problem targetProblem;
 
-	public double[] getPop() {
-		return pop;
+	public double[] getCoords() {
+		return coords;
 	}
 
-	public void setPop(double[] pop) {
-		this.pop = pop;
+	public void setCoords(double[] coords) {
+		this.coords = coords.clone();
 	}
 
 	public int getDim() {
@@ -48,9 +48,9 @@ public class Solution {
 		fitness = Double.POSITIVE_INFINITY;
 	}
 
-	public Solution(double [] pop, Problem p) {
-		this.pop = pop.clone();
-		dim = pop.length;
+	public Solution(double [] coords, Problem p) {
+		this.coords = coords.clone();
+		dim = coords.length;
 		fitness = Double.POSITIVE_INFINITY;
 		targetProblem = p;
 	}
@@ -60,31 +60,47 @@ public class Solution {
 	}
 
 	public Solution(Solution sol, Problem p) {
-		this(sol.pop, p);
+		this(sol.coords, p);
 		setFitness(sol.getFitness());
+	}
+	
+	private double dist(double [] p, double [] q) {
+		double d = 0;
+		for (int i = 0; i < Math.min(p.length, q.length); ++i) {
+			d += (p[i] - q[i])*(p[i] - q[i]);
+		}
+		return Math.sqrt(d);
+	}
+
+	public double dist(Solution sol) {
+		double [] coords2 = sol.getCoords();
+		if (coords.length != coords2.length) {
+			System.out.println("Solution warning: euclidean distance between 2 different dimensions");
+		}		
+		return dist(coords, coords2);
 	}
 	
 	public void randomInit() {
 	    RandomGenerator rand = Globals.getRandomGenerator();
-	    pop = new double[dim];
+	    coords = new double[dim];
 	    //populate the array with doubles
-	    for (int i = 0; i < pop.length; ++i) {
-			pop[i] = rand.randomDouble(targetProblem.getLB(), targetProblem.getUB());
+	    for (int i = 0; i < coords.length; ++i) {
+			coords[i] = rand.randomDouble(targetProblem.getLB(), targetProblem.getUB());
 		}
 	}
 
 	@Override
 	public String toString() {
-		String popString = "";
-		for (double p : this.pop) {
-			popString += Double.toString(p) + '\n';
+		String coordsString = "";
+		for (double p : this.coords) {
+			coordsString += Double.toString(p) + '\n';
 		}
 		
 		return "Solution dim = " + dim 
 				+ " fitness = " + getFitness() 
 				+ " targetProblem =" + targetProblem
-				+ " population:\n"
-				+ popString;
+				+ " coords:\n"
+				+ coordsString;
 	}
 	
 	

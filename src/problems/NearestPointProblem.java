@@ -23,7 +23,7 @@ public class NearestPointProblem implements Problem {
 	
 	@Override
 	public double fitness(Solution sol) {
-		return dist(targetPoint, sol.pop);
+		return dist(targetPoint, sol.coords);
 	}
 
 	@Override

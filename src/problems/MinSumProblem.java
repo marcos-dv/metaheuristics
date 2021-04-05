@@ -9,7 +9,7 @@ public class MinSumProblem implements Problem {
 	public double fitness(Solution sol) {
 		double res = 0;
 		for (int i = 0; i < sol.dim; ++i) {
-			res += sol.pop[i];
+			res += sol.coords[i];
 		}
 		return res;
 	}
