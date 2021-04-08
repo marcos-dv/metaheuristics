@@ -1,9 +1,12 @@
 package exec;
 
+import metaheuristics.GSA;
 import problems.*;
+import utils.Globals;
 
 public class ExecTest {
 
+	// Basic Solutions and problems
 	public static void dummyTest1() {
 		int dim = 30;
 		MinSumProblem problem = new MinSumProblem();
@@ -12,6 +15,7 @@ public class ExecTest {
 		System.out.println(sol);
 	}
 
+	// Basic Solutions and problems
 	public static void dummyTest2() {
 		int dim = 5;
 		NearestPointProblem problem = new NearestPointProblem();
@@ -26,8 +30,21 @@ public class ExecTest {
 		
 	}
 
+	// GSA
+	public static void dummyTest3(int dim, int popsize) {
+		// Fix seed for experiments
+		Globals.getRandomGenerator().setSeed(1);
+
+		DummyProblem problem = new DummyProblem();
+		problem.setDim(dim);
+		// popsize
+		GSA gsa = new GSA(popsize, problem);
+		gsa.initPop();
+		gsa.nextIter();		
+	}
+
 	public static void main(String[] args) {
-		dummyTest2();
+		dummyTest3(3, 5);
 	
 	}
 

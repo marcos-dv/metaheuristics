@@ -14,8 +14,8 @@ public class TestCec2015 {
 		double[] f,x;
 		File fpt;
 		
-		m=3;
-		n=50;
+		m=5;
+		n=30;
 		
 		x = new double[m*n];
 		f = new double[m];
