@@ -5,6 +5,7 @@ public class NearestPointProblem implements Problem {
 	private final double lowerBound = -100;
 	private final double upperBound = 100;
 	private double [] targetPoint = {1, 2, 3};
+	public int dim;
 	
 	public NearestPointProblem() {
 	}
@@ -34,5 +35,15 @@ public class NearestPointProblem implements Problem {
 	@Override
 	public double getLB() {
 		return lowerBound;
+	}
+
+	@Override
+	public int getDim() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setDim(int dim) {
+		this.dim = dim;
 	}
 }
