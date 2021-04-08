@@ -1,7 +1,6 @@
 package metaheuristics;
 
 import java.util.Arrays;
-import java.util.List;
 
 import problems.Problem;
 import problems.Solution;
@@ -10,6 +9,9 @@ import utils.Pair;
 import utils.RandomGenerator;
 
 public class GSA {
+	
+	private boolean DEBUG = true;
+	
 	private Solution [] sols;
 //	private Solution [] bestSols;
 //	private double [] v;
@@ -41,6 +43,7 @@ public class GSA {
 		alfa = 20;
 		epsilon = 1e-9;
 		MAX_ITER = 51;
+		
 	}
 
 	public GSA(int popSize, Problem targetProblem) {
@@ -71,6 +74,15 @@ public class GSA {
 			sols[i] = new Solution(targetProblem);
 			sols[i].randomInit();
 		}
+		// Init structures
+		reset();
+	}
+	
+	public void reset() {
+		fit = new double[sols.length];
+		q = new double[sols.length];
+		mass = new double[sols.length];
+		a = new double[sols.length][targetProblem.getDim()];
 	}
 	
 	public void nextIter() {
@@ -89,17 +101,21 @@ public class GSA {
 		// Compute best K
 		Pair kbest[] = new Pair[sols.length];
 		for(int i = 0; i < sols.length; ++i) {
-			kbest[i].index=i;
-			kbest[i].value=fit[i];
+			kbest[i] = new Pair(i, fit[i]);
 		}
 		Arrays.sort(kbest);
 		
-		// Print best K
-		for(int i = 0; i < sols.length; ++i) {
-			System.out.println(i + ". " + kbest[i].index
-					+ " val = " + kbest[i].value);
+		if (DEBUG) {
+			System.out.println("-Fitness sorted");
+			for(int i = 0; i < sols.length; ++i) {
+				System.out.println(i + " val = " + fit[i]);
+			}
+			// Print best K
+			for(int i = 0; i < sols.length; ++i) {
+				System.out.println(i + ". " + kbest[i].index
+						+ " val = " + kbest[i].value);
+			}
 		}
-//////////////////////////////////////////////////////
 		
 		// Compute q = normalized fitness
 		double accumq = 0;
@@ -113,13 +129,24 @@ public class GSA {
 			mass[i] = q[i] / accumq;
 		}
 		
+		if (DEBUG) {
+			System.out.println("q's");
+			for(int i = 0; i < sols.length; ++i) {
+				System.out.println("q[i] = " + q[i]);
+			}
+			System.out.println("mass");
+			for(int i = 0; i < sols.length; ++i) {
+				System.out.println("mass[i] = " + mass[i]);
+			}
+		}
+		
 		// Compute G(t) depending on G0
 		double Gt = G0*Math.exp(-alfa*(double)numIter/MAX_ITER);
 		// Check G(t) is ok
-		System.out.println("G(t) = " + Gt);
+		if (DEBUG)
+			System.out.println("G(t) = " + Gt);
 		
-		if (true)
-			return ;
+		
 		
 		// Compute total acceleration over each particle
 		for(int i = 0; i < sols.length; ++i) {
