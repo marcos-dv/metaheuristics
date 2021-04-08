@@ -8,6 +8,35 @@ public class Solution {
 	public int dim;
 	private double fitness;
 	private Problem targetProblem;
+	
+	public Solution() {
+		fitness = Double.POSITIVE_INFINITY;
+	}
+
+	public Solution(double [] coords, Problem p) {
+		this.coords = coords.clone();
+		dim = coords.length;
+		assert(p.getDim() == dim);
+		fitness = Double.POSITIVE_INFINITY;
+		targetProblem = p;
+	}
+
+	public Solution(int dim, Problem p) {
+		this(new double[dim], p);
+	}
+
+	public Solution(Problem p) {
+		this(p.getDim(), p);
+	}
+
+	public Solution(Solution sol, Problem p) {
+		this(sol.coords, p);
+		setFitness(sol.getFitness());
+	}
+
+	public Solution(Solution sol) {
+		this(sol, sol.getTargetProblem());
+	}
 
 	public double[] getCoords() {
 		return coords;
@@ -44,26 +73,6 @@ public class Solution {
 		this.fitness = fitness;
 	}
 
-	public Solution() {
-		fitness = Double.POSITIVE_INFINITY;
-	}
-
-	public Solution(double [] coords, Problem p) {
-		this.coords = coords.clone();
-		dim = coords.length;
-		fitness = Double.POSITIVE_INFINITY;
-		targetProblem = p;
-	}
-
-	public Solution(int dim, Problem p) {
-		this(new double[dim], p);
-	}
-
-	public Solution(Solution sol, Problem p) {
-		this(sol.coords, p);
-		setFitness(sol.getFitness());
-	}
-	
 	private double dist(double [] p, double [] q) {
 		double d = 0;
 		for (int i = 0; i < Math.min(p.length, q.length); ++i) {

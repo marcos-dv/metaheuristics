@@ -1,17 +1,18 @@
 package metaheuristics;
 
+import java.util.Arrays;
 import java.util.List;
 
 import problems.Problem;
 import problems.Solution;
 import utils.Globals;
+import utils.Pair;
 import utils.RandomGenerator;
 
 public class GSA {
 	private Solution [] sols;
 //	private Solution [] bestSols;
 //	private double [] v;
-	private List<Solution> [] kbest;
 	
 	// Info to compute
 	private double [] fit;
@@ -35,6 +36,11 @@ public class GSA {
 	public GSA(Problem targetProblem) {
 		this.targetProblem = targetProblem;
 		numIter = 1;
+		// Hyperparameters
+		G0 = 100;
+		alfa = 20;
+		epsilon = 1e-9;
+		MAX_ITER = 51;
 	}
 
 	public GSA(int popSize, Problem targetProblem) {
@@ -55,13 +61,15 @@ public class GSA {
 	}
 	
 	public void initPop() {
+		// Init population
 		if (sols == null) {
 			System.out.println("GSA error: solutions are not initialized");
 			return ;
 		}
 		// Random init
-		for (Solution sol : sols) {
-			sol.randomInit();
+		for (int i = 0; i < sols.length; ++i) {
+			sols[i] = new Solution(targetProblem);
+			sols[i].randomInit();
 		}
 	}
 	
@@ -72,12 +80,26 @@ public class GSA {
 		// Also get best and worst
 		bestFitness = Double.POSITIVE_INFINITY;
 		worstFitness = Double.NEGATIVE_INFINITY;
-		// TODO get KBEST !!! (heap with maximum size = k)
 		for(int i = 0; i < sols.length; ++i) {
 			fit[i] = sols[i].getFitness();
 			bestFitness = Math.min(bestFitness, fit[i]);
 			worstFitness = Math.max(worstFitness, fit[i]);
 		}
+		
+		// Compute best K
+		Pair kbest[] = new Pair[sols.length];
+		for(int i = 0; i < sols.length; ++i) {
+			kbest[i].index=i;
+			kbest[i].value=fit[i];
+		}
+		Arrays.sort(kbest);
+		
+		// Print best K
+		for(int i = 0; i < sols.length; ++i) {
+			System.out.println(i + ". " + kbest[i].index
+					+ " val = " + kbest[i].value);
+		}
+//////////////////////////////////////////////////////
 		
 		// Compute q = normalized fitness
 		double accumq = 0;
@@ -86,7 +108,7 @@ public class GSA {
 			accumq += q[i];
 		}
 		
-		// Compute mass = 0..1 value by fitness
+		// Compute mass in [0,1] value by fitness
 		for(int i = 0; i < sols.length; ++i) {
 			mass[i] = q[i] / accumq;
 		}
@@ -95,6 +117,9 @@ public class GSA {
 		double Gt = G0*Math.exp(-alfa*(double)numIter/MAX_ITER);
 		// Check G(t) is ok
 		System.out.println("G(t) = " + Gt);
+		
+		if (true)
+			return ;
 		
 		// Compute total acceleration over each particle
 		for(int i = 0; i < sols.length; ++i) {
