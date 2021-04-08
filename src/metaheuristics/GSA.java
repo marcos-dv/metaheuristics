@@ -2,8 +2,10 @@ package metaheuristics;
 
 import java.util.Arrays;
 
+
 import problems.Problem;
 import problems.Solution;
+import utils.Algorithms;
 import utils.Globals;
 import utils.Pair;
 import utils.RandomGenerator;
@@ -37,7 +39,7 @@ public class GSA {
 	
 	public GSA(Problem targetProblem) {
 		this.targetProblem = targetProblem;
-		numIter = 1;
+		numIter = 0;
 		// Hyperparameters
 		G0 = 100;
 		alfa = 20;
@@ -86,6 +88,11 @@ public class GSA {
 	}
 	
 	public void nextIter() {
+		// Next iteration
+		numIter++;
+		if (DEBUG)
+			System.out.println("\n# Begin iteration: " + numIter);
+		
 		// Update everything
 		
 		// 1. Update fitnesses
@@ -99,6 +106,14 @@ public class GSA {
 		}
 		
 		// Compute best K
+
+		double kRate = sols.length / MAX_ITER;
+		int kSize = (int) (sols.length-(numIter-1)*kRate);
+		kSize = Math.min(kSize, sols.length);
+		kSize = Math.max(kSize, 1);
+		if (DEBUG)
+			System.out.println("K = " + kSize);
+
 		Pair kbest[] = new Pair[sols.length];
 		for(int i = 0; i < sols.length; ++i) {
 			kbest[i] = new Pair(i, fit[i]);
@@ -106,7 +121,7 @@ public class GSA {
 		Arrays.sort(kbest);
 		
 		if (DEBUG) {
-			System.out.println("-Fitness sorted");
+			System.out.println("# Fitness sorted");
 			for(int i = 0; i < sols.length; ++i) {
 				System.out.println(i + " val = " + fit[i]);
 			}
@@ -130,11 +145,11 @@ public class GSA {
 		}
 		
 		if (DEBUG) {
-			System.out.println("q's");
+			System.out.println("# q's");
 			for(int i = 0; i < sols.length; ++i) {
 				System.out.println("q[i] = " + q[i]);
 			}
-			System.out.println("mass");
+			System.out.println("# mass");
 			for(int i = 0; i < sols.length; ++i) {
 				System.out.println("mass[i] = " + mass[i]);
 			}
@@ -142,19 +157,25 @@ public class GSA {
 		
 		// Compute G(t) depending on G0
 		double Gt = G0*Math.exp(-alfa*(double)numIter/MAX_ITER);
+
 		// Check G(t) is ok
 		if (DEBUG)
-			System.out.println("G(t) = " + Gt);
-		
-		
+			System.out.println("# G(t) = " + Gt);
 		
 		// Compute total acceleration over each particle
+		// First, radios (distances between particles and k-best)
+		double R[][] = new double[sols.length][kSize];
 		for(int i = 0; i < sols.length; ++i) {
 
 			// Influence of j-th particle
-			double [] factorj = new double[sols.length];
-			for(int j = 0; j < sols.length; ++j) {
+			double [] factorj = new double[kSize];
+			for(int j = 0; j < kSize; ++j) {
 				factorj[j] = Globals.getRandomGenerator().randomDouble();
+				factorj[j] *= mass[kbest[j].index];
+				R[i][j] = Algorithms.d2(
+						sols[i].getCoords(), sols[kbest[j].index].getCoords());
+				if (DEBUG)
+					System.out.println("Dist: " + R[i][j]);
 			}
 			
 			for(int j = 0; j < sols.length; ++j) {
@@ -164,8 +185,6 @@ public class GSA {
 			
 			}
 		}
-		
-		
 		
 	}
 
