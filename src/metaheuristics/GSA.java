@@ -2,27 +2,24 @@ package metaheuristics;
 
 import java.util.Arrays;
 
-
 import problems.Problem;
 import problems.Solution;
 import utils.Algorithms;
 import utils.Globals;
 import utils.Pair;
-import utils.RandomGenerator;
 
 public class GSA {
 	
 	private boolean DEBUG = true;
 	
 	private Solution [] sols;
-//	private Solution [] bestSols;
-//	private double [] v;
 	
 	// Info to compute
 	private double [] fit;
 	private double [] q; // normalized fitness
 	private double [] mass;
 	private double [][] a; // acceleration
+	private double [][] v; // vel
 	
 	// Global params
 	private int MAX_ITER;
@@ -79,12 +76,21 @@ public class GSA {
 		// Init structures
 		reset();
 	}
+
+	public Solution[] getSols() {
+		return sols;
+	}
+
+	public void setSols(Solution[] sols) {
+		this.sols = sols;
+	}
 	
 	public void reset() {
 		fit = new double[sols.length];
 		q = new double[sols.length];
 		mass = new double[sols.length];
 		a = new double[sols.length][targetProblem.getDim()];
+		v = new double[sols.length][targetProblem.getDim()];
 	}
 	
 	public void nextIter() {
@@ -113,7 +119,6 @@ public class GSA {
 		kSize = Math.max(kSize, 1);
 		if (DEBUG)
 			System.out.println("K = " + kSize);
-
 		Pair kbest[] = new Pair[sols.length];
 		for(int i = 0; i < sols.length; ++i) {
 			kbest[i] = new Pair(i, fit[i]);
@@ -166,25 +171,92 @@ public class GSA {
 		// First, radios (distances between particles and k-best)
 		double R[][] = new double[sols.length][kSize];
 		for(int i = 0; i < sols.length; ++i) {
-
-			// Influence of j-th particle
-			double [] factorj = new double[kSize];
 			for(int j = 0; j < kSize; ++j) {
-				factorj[j] = Globals.getRandomGenerator().randomDouble();
-				factorj[j] *= mass[kbest[j].index];
+				// Dist
 				R[i][j] = Algorithms.d2(
 						sols[i].getCoords(), sols[kbest[j].index].getCoords());
 				if (DEBUG)
-					System.out.println("Dist: " + R[i][j]);
-			}
-			
-			for(int j = 0; j < sols.length; ++j) {
-				if (i == j)
-					continue;
-				
-			
+					System.out.println("R["+i+"]["+j+"] = " + R[i][j]);
 			}
 		}
+		
+		// Influence of j-th particle
+		double [] factorj = new double[kSize];
+		for(int j = 0; j < kSize; ++j) {
+			// Factor j
+			factorj[j] = Globals.getRandomGenerator().randomDouble();
+			factorj[j] *= mass[kbest[j].index];
+
+		}
+		
+		for(int i = 0; i < sols.length; ++i) {
+			if (DEBUG)
+				System.out.println("# Update acceleration " + i);
+			// Accumulate forces in component 'd'
+			for (int d = 0; d < targetProblem.getDim(); ++d) {
+				a[i][d] = 0;
+				for(int j = 0; j < kSize; ++j) {
+					if (i == kbest[j].index)
+						continue;
+					// x[i][d]-x[k][d]
+					double xdiff = sols[i].getCoords()[d]-sols[kbest[j].index].getCoords()[d];
+					if (DEBUG)
+						System.out.println("x["+i+"]["+d+"]-x["+kbest[j].index+"]["+d
+								+"] = " + xdiff);
+					// acceleration update
+					a[i][d] += factorj[j] * (-xdiff) / (R[i][j]+epsilon);
+				}
+			}
+			if (DEBUG) {
+				System.out.print("a[" + i + "] = (");
+				for(int d = 0; d < targetProblem.getDim(); ++d)
+					System.out.print(a[i][d]+" ");
+				System.out.println(')');
+			}
+		}
+		
+		// Update velocity
+		if (DEBUG)
+			System.out.println("# velocity");
+		for (int i = 0; i < sols.length; ++i) {
+			double r = Globals.getRandomGenerator().randomDouble();
+			for (int d = 0; d < targetProblem.getDim(); ++d) {
+				v[i][d] = r*v[i][d]+a[i][d];
+			}
+			if (DEBUG) {
+				System.out.print("v[" + i + "] = (");
+				for(int d = 0; d < targetProblem.getDim(); ++d)
+					System.out.print(v[i][d]+" ");
+				System.out.println(')');
+			}
+		}
+
+		// Update position
+		if (DEBUG)
+			System.out.println("# position");
+		for (int i = 0; i < sols.length; ++i) {
+			double [] x = sols[i].getCoords();
+			for (int d = 0; d < targetProblem.getDim(); ++d) {
+				x[d] += v[i][d];
+			}
+			sols[i].setCoords(x);
+			if (DEBUG) {
+				System.out.print("x[" + i + "] = (");
+				for(int d = 0; d < targetProblem.getDim(); ++d)
+					System.out.print(v[i][d]+" ");
+				System.out.println(')');
+			}
+		}
+
+		// Check final fitness
+		if (DEBUG)
+			System.out.println("# position");
+		for (int i = 0; i < sols.length; ++i) {
+			if (DEBUG) {
+				System.out.println("f[" + i + "] = " + sols[i].getFitness());
+			}
+		}
+		
 		
 	}
 

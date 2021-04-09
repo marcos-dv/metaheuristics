@@ -44,6 +44,7 @@ public class Solution {
 
 	public void setCoords(double[] coords) {
 		this.coords = coords.clone();
+		fitness = Double.POSITIVE_INFINITY;
 	}
 
 	public int getDim() {

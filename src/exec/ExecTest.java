@@ -40,11 +40,46 @@ public class ExecTest {
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		gsa.initPop();
-		gsa.nextIter();		
+		for (int numiter = 0; numiter < 100; ++numiter) {
+			gsa.nextIter();		
+			try {
+				Thread.sleep(400);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// GSA with minsum
+	public static void easyTest(int dim, int popsize) {
+		// Fix seed for experiments
+		Globals.getRandomGenerator().setSeed(1);
+
+		MinSumProblem problem = new MinSumProblem();
+		problem.setDim(dim);
+		// popsize
+		GSA gsa = new GSA(popsize, problem);
+		gsa.initPop();
+//		double [] xx = {0, 0, 0};
+//		gsa.getSols()[0].setCoords(xx);
+		for (int numiter = 0; numiter < 100; ++numiter) {
+			gsa.nextIter();		
+			Solution [] sols = gsa.getSols();
+			double totalSum = 0;
+			for (Solution sol : sols) {
+				totalSum += sol.getFitness();
+			}
+			System.out.println("Total sum = " + totalSum);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void main(String[] args) {
-		dummyTest3(3, 5);
+		easyTest(3, 5);
 	
 	}
 

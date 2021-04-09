@@ -39,8 +39,7 @@ public class NearestPointProblem implements Problem {
 
 	@Override
 	public int getDim() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dim;
 	}
 
 	public void setDim(int dim) {
