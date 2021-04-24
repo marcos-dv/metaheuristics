@@ -1,5 +1,7 @@
 package utils;
 
+import problems.Solution;
+
 public class Algorithms {
 	
 	public static double d2(double [] p, double [] q) {
@@ -13,5 +15,24 @@ public class Algorithms {
 		}
 		return Math.sqrt(d);
 	}
+	
+	public static Solution getGlobalOptimum(Solution [] sols) {
+		if (sols == null) {
+			System.out.println("Warning-Algorithms: getGlobalOptimum function, solutions parameter is null");
+			return null;
+		}
+		double curMin = Double.POSITIVE_INFINITY;
+		Solution curSol = null;
 
+		for (int i = 0; i < sols.length; ++i) {
+			if (sols[i] == null)
+				continue;
+			if (sols[i].getFitness() < curMin) {
+				curMin = sols[i].getFitness();
+				curSol = sols[i];
+			}
+		}
+		return curSol;
+	}
+	
 }
