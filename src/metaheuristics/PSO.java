@@ -2,10 +2,11 @@ package metaheuristics;
 
 import problems.Problem;
 import problems.Solution;
+import utils.Algorithms;
 import utils.Globals;
 import utils.RandomGenerator;
 
-public class PSO {
+public class PSO implements IMetaheuristic {
 	private Solution [] sols;
 	private Solution [] bestSols;
 	private double [] v;
@@ -33,6 +34,7 @@ public class PSO {
 		this(pso.sols, pso.targetProblem);
 	}
 
+	@Override
 	public void initPop() {
 		if (sols == null) {
 			System.out.println("PSO error: solutions are not initialized");
@@ -66,6 +68,29 @@ public class PSO {
 									targetProblem.getUB()-targetProblem.getLB());
 		}
 		
+	}
+
+	@Override
+	public void nextIter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getNumIter() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Solution[] getSols() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Solution getGlobalOptimum() {
+		return Algorithms.getGlobalOptimum(sols);
 	}
 	
 }

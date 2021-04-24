@@ -8,7 +8,7 @@ import utils.Algorithms;
 import utils.Globals;
 import utils.Pair;
 
-public class GSA {
+public class GSA implements IMetaheuristic {
 	
 	private boolean DEBUG = true;
 	
@@ -42,7 +42,6 @@ public class GSA {
 		alfa = 20;
 		epsilon = 1e-9;
 		MAX_ITER = 51;
-		
 	}
 
 	public GSA(int popSize, Problem targetProblem) {
@@ -62,6 +61,7 @@ public class GSA {
 		numIter = GSA.getNumIter();
 	}
 	
+	@Override
 	public void initPop() {
 		// Init population
 		if (sols == null) {
@@ -77,6 +77,7 @@ public class GSA {
 		reset();
 	}
 
+	@Override
 	public Solution[] getSols() {
 		return sols;
 	}
@@ -92,7 +93,45 @@ public class GSA {
 		a = new double[sols.length][targetProblem.getDim()];
 		v = new double[sols.length][targetProblem.getDim()];
 	}
-	
+
+	public boolean checkCorrectness() {
+		boolean ok = true;
+		if (sols == null) {
+			System.out.println("Warning-GSA: solutions are not initialized");
+			ok = false;
+		}
+		else {
+			for (int i = 0; i < sols.length; ++i) {
+				if (sols[i] == null) {
+					System.out.println("Warning-GSA: sols["+i+"] is not initialized");
+					ok = false;
+				}
+			}
+		}
+		if (numIter < 0) {
+			System.out.println("Warning-GSA: number of iterations < 0");
+			ok = false;
+		}
+		
+		if (fit == null || q == null || mass == null || a == null || v == null) {
+			System.out.println("Warning-GSA: fitness, q, mass, acceleration, or velocity are not initialized");
+			ok = false;
+		}
+		if (G0 <= 0) {
+			System.out.println("Warning-GSA: G0 = " + G0);
+		}
+		if (alfa <= 0) {
+			System.out.println("Warning-GSA: alfa = " + alfa);
+		}
+		if (epsilon <= 0) {
+			System.out.println("Warning-GSA: epsilon = " + epsilon);
+			ok = false;
+		}
+
+		return ok;
+	}
+
+	@Override
 	public void nextIter() {
 		// Next iteration
 		numIter++;
@@ -260,6 +299,7 @@ public class GSA {
 		
 	}
 
+	@Override
 	public int getNumIter() {
 		return numIter;
 	}
@@ -290,6 +330,11 @@ public class GSA {
 
 	public void setEpsilon(double epsilon) {
 		this.epsilon = epsilon;
+	}
+
+	@Override
+	public Solution getGlobalOptimum() {
+		return Algorithms.getGlobalOptimum(sols);
 	}
 	
 }
