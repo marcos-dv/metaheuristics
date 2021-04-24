@@ -45,11 +45,7 @@ public class TestCec2015 {
 				x[1*n+j] = 0.0;
 				//System.out.println(x[1*n+j]);
 			}
-			
-			
-			
 
-			
 			for (k=0;k<1;k++)
 			{
 				tf.test_func(x,f,n,m,func_num);
