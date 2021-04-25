@@ -2,11 +2,10 @@ package tests;
 
 import problems.RandomProblem;
 import problems.Solution;
-import utils.Algorithms;
 import utils.Globals;
 import utils.Pair;
 
-public class TestAlgorithms {
+public class TestPair {
 	
 	public static void KbestTest(int pop, int k) {
 		Globals.getRandomGenerator().setSeed(1);
