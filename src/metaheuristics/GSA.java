@@ -1,6 +1,5 @@
 package metaheuristics;
 
-import java.util.Arrays;
 
 import problems.Problem;
 import problems.Solution;
@@ -14,12 +13,15 @@ public class GSA implements IMetaheuristic {
 	
 	private Solution [] sols;
 	
-	// Info to compute
+	// Info to compute (index-correlated with sols array)
 	private double [] fit;
 	private double [] q; // normalized fitness
 	private double [] mass;
-	private double [][] a; // acceleration
-	private double [][] v; // vel
+	private double [][] a; // acceleration of sols[i] on each component
+	private double [][] v; // vel of sols[i] on each component
+	private Pair [] kbest; // kbest solutions (index, fitness)
+	private int kSize; // kbest size for each iteration
+	private double Gt;
 	
 	// Global params
 	private int MAX_ITER;
@@ -33,6 +35,8 @@ public class GSA implements IMetaheuristic {
 	private Solution gSol;
 	private Problem targetProblem;
 	private int popSize;
+
+	private double R[][];
 	
 	public GSA(Problem targetProblem) {
 		this.targetProblem = targetProblem;
@@ -92,6 +96,7 @@ public class GSA implements IMetaheuristic {
 		mass = new double[sols.length];
 		a = new double[sols.length][targetProblem.getDim()];
 		v = new double[sols.length][targetProblem.getDim()];
+		kbest = null;
 	}
 
 	public boolean checkCorrectness() {
@@ -113,8 +118,8 @@ public class GSA implements IMetaheuristic {
 			ok = false;
 		}
 		
-		if (fit == null || q == null || mass == null || a == null || v == null) {
-			System.out.println("Warning-GSA: fitness, q, mass, acceleration, or velocity are not initialized");
+		if (fit == null || q == null || mass == null || a == null || v == null || kbest == null) {
+			System.out.println("Warning-GSA: fitness, q, mass, acceleration, velocity , or kbest are not initialized");
 			ok = false;
 		}
 		if (G0 <= 0) {
@@ -131,17 +136,19 @@ public class GSA implements IMetaheuristic {
 		return ok;
 	}
 
-	@Override
-	public void nextIter() {
-		// Next iteration
-		numIter++;
+	protected int computeK() {
+		double kRate = sols.length / MAX_ITER;
+		int k = (int) (sols.length-(numIter-1)*kRate);
+		k = Math.min(k, sols.length);
+		k = Math.max(k, 1);
 		if (DEBUG)
-			System.out.println("\n# Begin iteration: " + numIter);
-		
-		// Update everything
-		
-		// 1. Update fitnesses
-		// Also get best and worst
+			System.out.println("K = " + k);
+		return k;
+	}
+	
+	// First step of iteration
+	protected void processFitness() {
+		// Get the best and worst fitness
 		bestFitness = Double.POSITIVE_INFINITY;
 		worstFitness = Double.NEGATIVE_INFINITY;
 		for(int i = 0; i < sols.length; ++i) {
@@ -150,19 +157,9 @@ public class GSA implements IMetaheuristic {
 			worstFitness = Math.max(worstFitness, fit[i]);
 		}
 		
-		// Compute best K
-
-		double kRate = sols.length / MAX_ITER;
-		int kSize = (int) (sols.length-(numIter-1)*kRate);
-		kSize = Math.min(kSize, sols.length);
-		kSize = Math.max(kSize, 1);
-		if (DEBUG)
-			System.out.println("K = " + kSize);
-		Pair kbest[] = new Pair[sols.length];
-		for(int i = 0; i < sols.length; ++i) {
-			kbest[i] = new Pair(i, fit[i]);
-		}
-		Arrays.sort(kbest);
+		// Compute best K fitness
+		kSize = computeK();
+		kbest = Pair.sortIdxSolutions(sols);
 		
 		if (DEBUG) {
 			System.out.println("# Fitness sorted");
@@ -175,7 +172,10 @@ public class GSA implements IMetaheuristic {
 						+ " val = " + kbest[i].value);
 			}
 		}
-		
+
+	}
+	
+	protected void computeMass() {
 		// Compute q = normalized fitness
 		double accumq = 0;
 		for(int i = 0; i < sols.length; ++i) {
@@ -198,27 +198,68 @@ public class GSA implements IMetaheuristic {
 				System.out.println("mass[i] = " + mass[i]);
 			}
 		}
-		
-		// Compute G(t) depending on G0
-		double Gt = G0*Math.exp(-alfa*(double)numIter/MAX_ITER);
-
+	}
+	
+	protected double calcGravity() {
+		double localGt = G0*Math.exp(-alfa*(double)numIter/MAX_ITER);
 		// Check G(t) is ok
 		if (DEBUG)
-			System.out.println("# G(t) = " + Gt);
-		
-		// Compute total acceleration over each particle
-		// First, radios (distances between particles and k-best)
-		double R[][] = new double[sols.length][kSize];
+			System.out.println("# G(t) = " + localGt);
+		return localGt;
+	}
+	
+	protected double[][] calcDistances() {
+		double [][] distances = new double[sols.length][kSize];
 		for(int i = 0; i < sols.length; ++i) {
 			for(int j = 0; j < kSize; ++j) {
 				// Dist
-				R[i][j] = Algorithms.d2(
+				distances[i][j] = Algorithms.d2(
 						sols[i].getCoords(), sols[kbest[j].index].getCoords());
 				if (DEBUG)
-					System.out.println("R["+i+"]["+j+"] = " + R[i][j]);
+					System.out.println("R["+i+"]["+j+"] = " + distances[i][j]);
 			}
 		}
-		
+		return distances;
+	}
+
+	protected void updateVelocity() {
+		// Update velocity
+		if (DEBUG)
+			System.out.println("# velocity");
+		for (int i = 0; i < sols.length; ++i) {
+			double r = Globals.getRandomGenerator().randomDouble();
+			for (int d = 0; d < targetProblem.getDim(); ++d) {
+				v[i][d] = r*v[i][d]+a[i][d];
+			}
+			if (DEBUG) {
+				System.out.print("v[" + i + "] = (");
+				for(int d = 0; d < targetProblem.getDim(); ++d)
+					System.out.print(v[i][d]+" ");
+				System.out.println(')');
+			}
+		}
+	}
+	
+	protected void updatePosition() {
+		// Update position
+		if (DEBUG)
+			System.out.println("# position");
+		for (int i = 0; i < sols.length; ++i) {
+			double [] x = sols[i].getCoords();
+			for (int d = 0; d < targetProblem.getDim(); ++d) {
+				x[d] += v[i][d];
+			}
+			sols[i].setCoords(x);
+			if (DEBUG) {
+				System.out.print("x[" + i + "] = (");
+				for(int d = 0; d < targetProblem.getDim(); ++d)
+					System.out.print(v[i][d]+" ");
+				System.out.println(')');
+			}
+		}
+	}
+	
+	protected void updateAcceleration() {
 		// Influence of j-th particle
 		double [] factorj = new double[kSize];
 		for(int j = 0; j < kSize; ++j) {
@@ -245,6 +286,7 @@ public class GSA implements IMetaheuristic {
 					// acceleration update
 					a[i][d] += factorj[j] * (-xdiff) / (R[i][j]+epsilon);
 				}
+
 			}
 			if (DEBUG) {
 				System.out.print("a[" + i + "] = (");
@@ -253,50 +295,43 @@ public class GSA implements IMetaheuristic {
 				System.out.println(')');
 			}
 		}
+	}
+	
+	@Override
+	public void nextIter() {
+		// Next iteration
+		numIter++;
+		if (DEBUG)
+			System.out.println("\n# Begin iteration: " + numIter);
 		
-		// Update velocity
-		if (DEBUG)
-			System.out.println("# velocity");
-		for (int i = 0; i < sols.length; ++i) {
-			double r = Globals.getRandomGenerator().randomDouble();
-			for (int d = 0; d < targetProblem.getDim(); ++d) {
-				v[i][d] = r*v[i][d]+a[i][d];
-			}
-			if (DEBUG) {
-				System.out.print("v[" + i + "] = (");
-				for(int d = 0; d < targetProblem.getDim(); ++d)
-					System.out.print(v[i][d]+" ");
-				System.out.println(')');
-			}
-		}
+		// Initialize structures
+		
+		// 1. Update fitnesses, best, worst, kbest
+		processFitness();
+		
+		// 2. Compute q and mass
+		computeMass();
+		
+		// 3. Compute gravity constant
+		Gt = calcGravity();
 
-		// Update position
-		if (DEBUG)
-			System.out.println("# position");
-		for (int i = 0; i < sols.length; ++i) {
-			double [] x = sols[i].getCoords();
-			for (int d = 0; d < targetProblem.getDim(); ++d) {
-				x[d] += v[i][d];
-			}
-			sols[i].setCoords(x);
-			if (DEBUG) {
-				System.out.print("x[" + i + "] = (");
-				for(int d = 0; d < targetProblem.getDim(); ++d)
-					System.out.print(v[i][d]+" ");
-				System.out.println(')');
-			}
-		}
+		// 4. Compute distances between particles
+		R = calcDistances();
+		
+		// 5. Update acceleration
+		updateAcceleration();
+		
+		updateVelocity();
 
+		updatePosition();
+		
 		// Check final fitness
-		if (DEBUG)
+		if (DEBUG) {
 			System.out.println("# position");
-		for (int i = 0; i < sols.length; ++i) {
-			if (DEBUG) {
+			for (int i = 0; i < sols.length; ++i) {
 				System.out.println("f[" + i + "] = " + sols[i].getFitness());
 			}
 		}
-		
-		
 	}
 
 	@Override
