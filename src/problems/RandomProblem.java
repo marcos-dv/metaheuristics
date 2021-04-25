@@ -2,23 +2,23 @@ package problems;
 
 import utils.Globals;
 
-public class DummyProblem implements Problem {
+public class RandomProblem implements Problem {
 
 	private double lowerBound = 0;
 	private double upperBound = 100;
 	private int dim;
 	
-	public DummyProblem() {
+	public RandomProblem() {
 		lowerBound=0;
 		upperBound=100;
 	}
 
-	public DummyProblem(double lb, double ub) {
+	public RandomProblem(double lb, double ub) {
 		lowerBound=lb;
 		upperBound=ub;
 	}
 
-	public DummyProblem(double lb, double ub, int dim) {
+	public RandomProblem(double lb, double ub, int dim) {
 		this(lb, ub);
 		this.dim=dim;
 	}

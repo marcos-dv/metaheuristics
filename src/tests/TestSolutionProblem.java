@@ -25,7 +25,6 @@ public class TestSolutionProblem {
 			System.out.println("Solution " + i + " fitness = " + solution.getFitness());
 			i++;
 		}
-		
 	}
 
 	public static void main(String[] args) {

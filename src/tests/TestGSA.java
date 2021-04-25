@@ -1,7 +1,7 @@
 package tests;
 
 import metaheuristics.GSA;
-import problems.DummyProblem;
+import problems.RandomProblem;
 import problems.MinSumProblem;
 import problems.Solution;
 import utils.Globals;
@@ -12,7 +12,7 @@ public class TestGSA {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 
-		DummyProblem problem = new DummyProblem();
+		RandomProblem problem = new RandomProblem();
 		problem.setDim(dim);
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
