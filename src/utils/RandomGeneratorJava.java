@@ -22,7 +22,10 @@ public class RandomGeneratorJava implements RandomGenerator {
 
 	@Override
 	public int randomInt(int lowerBound, int upperBound) {
-		return lowerBound + (upperBound-lowerBound)*randomInt();
+		int r = randomInt() % (upperBound-lowerBound);
+		if (r < 0)
+			return r + upperBound;
+		return r + lowerBound;
 	}
 
 	@Override

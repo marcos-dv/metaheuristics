@@ -6,6 +6,10 @@ public class MinSqSumProblem implements Problem {
 	private final double upperBound = 1;
 	public int dim;
 	
+	public MinSqSumProblem(int dim) {
+		setDim(dim);
+	}
+
 	@Override
 	public double fitness(Solution sol) {
 		double res = 0;
