@@ -8,7 +8,7 @@ import utils.Globals;
 
 public class TestGSA {
 	// GSA
-	public static void dummyGSATest(int dim, int popsize) {
+	public static void dummyGSATest(int dim, int popsize, int maxiter) {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 
@@ -17,10 +17,10 @@ public class TestGSA {
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		gsa.initPop();
-		for (int numiter = 0; numiter < 100; ++numiter) {
+		for (int numiter = 0; numiter < maxiter; ++numiter) {
 			gsa.nextIter();		
 			try {
-				Thread.sleep(400);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -56,7 +56,7 @@ public class TestGSA {
 	}
 
 	public static void main(String[] args) {
-		easyGSATest(3, 5);
+		dummyGSATest(3, 5, 3);
 	
 	}
 

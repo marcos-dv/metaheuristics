@@ -108,7 +108,7 @@ public class Solution {
 		
 		return "Solution dim = " + dim 
 				+ " fitness = " + getFitness() 
-				+ " targetProblem =" + targetProblem
+				+ " targetProblem = " + targetProblem
 				+ " coords:\n"
 				+ coordsString;
 	}
