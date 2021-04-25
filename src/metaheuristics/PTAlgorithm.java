@@ -3,6 +3,7 @@ package metaheuristics;
 import java.util.Arrays;
 
 import problems.Problem;
+import utils.Globals;
 
 public abstract class PTAlgorithm {
 	private IMetaheuristic metaheuristic;
@@ -10,6 +11,8 @@ public abstract class PTAlgorithm {
 	private double [][] EW;
 	private Problem problem;
 	private int popsize;
+
+	private boolean DEBUG = true;
 	
 	public PTAlgorithm(IMetaheuristic metaheuristic) {
 		this.metaheuristic = metaheuristic;
@@ -74,7 +77,8 @@ public abstract class PTAlgorithm {
 	}
 
 	public int selectParamValue() {
-		return 0;
+		// Random pick
+		return Globals.getRandomGenerator().randomInt(0, paramRange.length);
 	}
 	
 	// Update in the metaheuristic the proper parameter!

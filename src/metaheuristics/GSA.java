@@ -9,7 +9,7 @@ import utils.Pair;
 
 public class GSA implements IMetaheuristic {
 	
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	
 	private Solution [] sols;
 	
