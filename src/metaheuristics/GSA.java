@@ -286,7 +286,7 @@ public class GSA implements IMetaheuristic {
 					// acceleration update
 					a[i][d] += factorj[j] * (-xdiff) / (R[i][j]+epsilon);
 				}
-//				a[i][d] *= Gt;
+				a[i][d] *= Gt;
 			}
 			if (DEBUG) {
 				System.out.print("a[" + i + "] = (");
