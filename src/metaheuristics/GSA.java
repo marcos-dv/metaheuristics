@@ -32,9 +32,7 @@ public class GSA implements IMetaheuristic {
 	
 	private double worstFitness;
 	private double bestFitness;
-	private Solution gSol;
 	private Problem targetProblem;
-	private int popSize;
 
 	private double R[][];
 	
@@ -50,14 +48,12 @@ public class GSA implements IMetaheuristic {
 
 	public GSA(int popSize, Problem targetProblem) {
 		this(targetProblem);
-		this.popSize = popSize;
 		sols = new Solution[popSize];
 	}
 	
 	public GSA(Solution [] sols, Problem targetProblem) {
 		this(targetProblem);
 		this.sols = sols.clone();
-		this.popSize = sols.length;
 	}
 
 	public GSA(GSA GSA) {
