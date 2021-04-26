@@ -18,7 +18,7 @@ public class PTGSA extends PTAlgorithm {
 	@Override
 	public void setNewParam(double alfa) {
 		gsa.setAlfa(alfa);
-		setMetaheuristic(gsa);
+	//	setMetaheuristic(gsa);
 		if (DEBUG) {
 			GSA meta = (GSA) this.getMetaheuristic();
 			System.out.println("Alfa = " + meta.getAlfa());

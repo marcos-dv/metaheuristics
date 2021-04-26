@@ -29,12 +29,20 @@ public class TestPTGSA {
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {2., 5., 7.};
 		PTGSA ptgsa = new PTGSA(gsa, alfas);
-		ptgsa.run(maxiter);		
+		ptgsa.setup();
+		for(int i = 0; i < maxiter; ++i) {
+			System.out.println("-- Iter " + i);
+			ptgsa.nextIter();
+	//		ptgsa.printParamRange();
+			ptgsa.printEW();
+			ptgsa.printMeans();
+			System.out.println();
+		}
 	}
 	
 	public static void main(String[] args) {
 		System.out.println("Start test");
-		testSetParam(5, 3, 50);
+		testUpdateEW(3, 4, 100);
 		System.out.println("End testing");
 	}
 

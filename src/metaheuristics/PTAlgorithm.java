@@ -71,20 +71,29 @@ public abstract class PTAlgorithm {
 	public void printParamRange() {
 		System.out.println("Parameter domain:");
 		for(int i = 0; i < paramRange.length; ++i) {
-			System.out.println(paramRange[i] + ' ');
+			System.out.print(paramRange[i] + ' ');
 		}
+		System.out.println();
 	}
 
 	public void printEW() {
+		String decimalFormat = "%.2f";
 		System.out.println("Elementary Weights Matrix:");
 		for(int i = 0; i < EW.length; ++i) {
 			for(int j = 0; j < EW[i].length; ++j) {
-				System.out.print(EW[i][j] + "  ");
+				System.out.print(String.format(decimalFormat, EW[i][j]) + "  ");
 			}	
 			System.out.println();
 		}
 	}
 	
+	public void printMeans() {
+		System.out.println("Means:");
+		for(int i = 0; i < meansEW.length; ++i) {
+			System.out.println(i + ". Mean = " + meansEW[i]);
+		}
+	}
+
 	public double[][] getEW() {
 		return EW;
 	}
@@ -137,12 +146,14 @@ public abstract class PTAlgorithm {
 		if (bestIndexes.size() == 0) {
 			System.out.println("Warning-PTAlgorithm: not best parameter value found");
 		}
+		/*
 		if (DEBUG) {
 			System.out.println("# Best indexes and values:");
 			for (Integer index: bestIndexes) {
 				System.out.println(index + " -> " + paramRange[index]);
 			}
 		}
+		*/
 		int idx = Globals.getRandomGenerator().randomInt(0, bestIndexes.size());
 		return bestIndexes.get(idx);
 	}
@@ -158,28 +169,29 @@ public abstract class PTAlgorithm {
 		return mean / (double)popsize;
 	}
 	
-	public void initPrevFitness() {
-		// Only for first iteration, initialize prev fitness
-		if (prevFitness == null) {
-			Solution[] sols = metaheuristic.getSols();
-			if(popsize != sols.length) {
-				System.out.println("Warning-PTAlgorithm: popsize != sols.length in metaheuristic!\n\tpopsize = " 
-						+ popsize + " and sols.length = " + sols.length);
-			}
-			prevFitness = new double[popsize];
-			for(int i = 0; i < popsize; ++i) {
-				prevFitness[i] = sols[i].getFitness();
-			}
+	public void updatePrevFitness() {
+		Solution[] sols = metaheuristic.getSols();
+		if(popsize != sols.length) {
+			System.out.println("Warning-PTAlgorithm: popsize != sols.length in metaheuristic!\n\tpopsize = " 
+					+ popsize + " and sols.length = " + sols.length);
+		}
+		prevFitness = new double[popsize];
+		for(int i = 0; i < popsize; ++i) {
+			prevFitness[i] = sols[i].getFitness();
 		}
 	}
 	
 	public void updateCaseAllGood(int row, double [] delta) {
+		if (DEBUG)
+			System.out.println("# Update case good");
 		for(int j = 0; j < popsize; ++j) {
 			EW[row][j] = Math.tanh(delta[j]/popsize);
 		}
 	}
 
 	public void updateCaseAllBad(int row, double [] delta) {
+		if (DEBUG)
+			System.out.println("# Update case bad");
 		// Negative weights
 		for(int j = 0; j < popsize; ++j) {
 			EW[row][j] = Math.tanh(delta[j]/popsize);
@@ -187,12 +199,16 @@ public abstract class PTAlgorithm {
 	}
 
 	public void updateCaseMixed(int row, double [] delta) {
+		if (DEBUG)
+			System.out.println("# Update case mix");
 		for(int j = 0; j < popsize; ++j) {
 			EW[row][j] = Math.abs(Math.tanh(delta[j]/popsize));
 		}
 	}
 
 	public void updateCaseStagnition(int row, double [] delta) {
+		if (DEBUG)
+			System.out.println("# Update case stagnition");
 		for(int j = 0; j < popsize; ++j) {
 			EW[row][j] = -2;
 		}
@@ -243,14 +259,17 @@ public abstract class PTAlgorithm {
 		else {
 			System.out.println("Warning-PTAlgorithm: Unknown landscape case");
 		}
+		// Update mean
+		meansEW[row] = calcMean(row);
 	}
 	
 	
 	public void updateEW(int row) {
 		// first iteration
 		if (prevFitness == null) {
-			initPrevFitness();
+			updatePrevFitness();
 		}
+		// other iterations
 		else {
 			double [] deltaFitness = new double[popsize];
 			Solution [] sols = metaheuristic.getSols();
@@ -259,6 +278,7 @@ public abstract class PTAlgorithm {
 				deltaFitness[i] = sols[i].getFitness() - prevFitness[i];
 			}
 			updateRow(row, deltaFitness);
+			updatePrevFitness();
 		}
 	}
 	
