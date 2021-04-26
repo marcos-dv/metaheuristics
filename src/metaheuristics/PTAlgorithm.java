@@ -15,6 +15,7 @@ public abstract class PTAlgorithm {
 	private int popsize;
 
 	private boolean DEBUG = true;
+	private double curAlfa; // current value for the parameter alfa
 	
 	public PTAlgorithm(IMetaheuristic metaheuristic) {
 		this.metaheuristic = metaheuristic;
@@ -36,6 +37,14 @@ public abstract class PTAlgorithm {
 	public void setParamRange(double[] paramRange) {
 		this.paramRange = paramRange.clone();
 		Arrays.sort(this.paramRange);
+	}
+
+	public double getCurAlfa() {
+		return curAlfa;
+	}
+
+	public void setCurAlfa(double curAlfa) {
+		this.curAlfa = curAlfa;
 	}
 
 	public IMetaheuristic getMetaheuristic() {
@@ -96,7 +105,7 @@ public abstract class PTAlgorithm {
 				bestIndexes.add(i);
 				bestMean = meansEW[i];
 			}
-			// candidate
+			// new candidate
 			else if (meansEW[i] == bestMean) {
 				bestIndexes.add(i);
 			}
@@ -131,8 +140,8 @@ public abstract class PTAlgorithm {
 	
 	public void nextIter() {
 		int idx = selectParamValue();
-		double alfa = paramRange[idx];
-		setNewParam(alfa);
+		curAlfa = paramRange[idx];
+		setNewParam(curAlfa);
 		metaheuristic.nextIter();
 		updateEW(idx);
 	}
