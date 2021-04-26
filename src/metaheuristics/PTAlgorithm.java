@@ -68,6 +68,23 @@ public abstract class PTAlgorithm {
 		this.problem = problem;
 	}
 	
+	public void printParamRange() {
+		System.out.println("Parameter domain:");
+		for(int i = 0; i < paramRange.length; ++i) {
+			System.out.println(paramRange[i] + ' ');
+		}
+	}
+
+	public void printEW() {
+		System.out.println("Elementary Weights Matrix:");
+		for(int i = 0; i < EW.length; ++i) {
+			for(int j = 0; j < EW[i].length; ++j) {
+				System.out.print(EW[i][j] + "  ");
+			}	
+			System.out.println();
+		}
+	}
+	
 	public double[][] getEW() {
 		return EW;
 	}
@@ -192,7 +209,7 @@ public abstract class PTAlgorithm {
 		// Analysis of the landscape
 		for(int i = 0; i < popsize; ++i) {
 			// Magnitude
-			if (Math.abs(delta[i]) < DELTA_THRESHOLD) {
+			if (Math.abs(delta[i]) <= DELTA_THRESHOLD) {
 				cntStagnition++;
 			}
 			// Sign
