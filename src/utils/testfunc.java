@@ -61,6 +61,7 @@ public class testfunc {
 	//double cf_cal(double[] , double , int , double[] ,double[] ,double[] ,double[] , int )
 	
 	
+	@SuppressWarnings("resource")
 	public void test_func(double[] x, double[] f, int nx, int mx,int func_num)throws Exception{
 		//int cf_num=10,i,j;
 		int cf_num,i,j;
