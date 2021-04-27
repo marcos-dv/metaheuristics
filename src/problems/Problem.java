@@ -7,5 +7,4 @@ public interface Problem {
 	public double getUB();
 	public double getLB();
 	public int getDim();
-	
 }
