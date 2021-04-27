@@ -102,13 +102,14 @@ public class Solution {
 
 	@Override
 	public String toString() {
-		String coordsString = "";
-		for (double p : this.coords) {
-			coordsString += Double.toString(p) + '\n';
+		String coordsString = "( ";
+		for (int i = 0; i < coords.length-1; ++i) {
+			coordsString += Double.toString(coords[i]) + " , ";
 		}
+		coordsString += Double.toString(coords[coords.length-1]) + " )\n";
 		
-		return "Solution dim = " + dim 
-				+ " fitness = " + getFitness() 
+		return "Solution fitness = " + getFitness()
+				+ " dim = " + dim 
 				+ " targetProblem = " + targetProblem
 				+ " coords:\n"
 				+ coordsString;
