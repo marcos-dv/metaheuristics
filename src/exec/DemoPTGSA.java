@@ -8,18 +8,6 @@ import utils.Globals;
 
 public class DemoPTGSA {
 	
-	public static void testSetParam(int dim, int popsize, int maxiter) {
-		// Fix seed for experiments
-		Globals.getRandomGenerator().setSeed(1);
-	
-		Problem problem = new MinSqSumProblem(dim);
-		// popsize
-		GSA gsa = new GSA(popsize, problem);
-		double [] alfas = {2., 5., 7.};
-		PTGSA ptgsa = new PTGSA(gsa, alfas);
-		ptgsa.run(maxiter);		
-	}
-	
 	public static void testUpdateEW(int dim, int popsize, int maxiter) {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
