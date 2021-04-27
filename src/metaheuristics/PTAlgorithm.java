@@ -104,7 +104,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 				+ " vs Prev " + String.format(decimalFormat, prevFitness[i]));
 			// Coords
 			double [] coords = sols[i].getCoords();
-			System.out.print(" \t (");
+			System.out.print(" \t ( ");
 			for(int d = 0; d < coords.length; ++d) {
 				System.out.print(String.format(coordsFormat, coords[d]) + " , ");
 			}

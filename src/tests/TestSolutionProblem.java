@@ -17,7 +17,8 @@ public class TestSolutionProblem {
 	// Basic Solutions and problems
 	public static void dummyTest2() {
 		int dim = 5;
-		NearestPointProblem problem = new NearestPointProblem();
+		double [] targetPoint = new double[]{1, 2, 3};
+		NearestPointProblem problem = new NearestPointProblem(targetPoint);
 		Solution [] sols = new Solution[5];
 		int i = 1;
 		for (Solution solution : sols) {

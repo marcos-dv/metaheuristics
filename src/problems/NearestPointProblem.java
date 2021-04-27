@@ -9,9 +9,6 @@ public class NearestPointProblem implements Problem {
 	private double [] targetPoint = {1, 2, 3};
 	public int dim;
 	
-	public NearestPointProblem() {
-	}
-
 	public NearestPointProblem(double [] point) {
 		targetPoint = point;
 	}
