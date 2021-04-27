@@ -1,6 +1,6 @@
 package metaheuristics;
 
-import problems.Solution;
+import solutions.Solution;
 
 public interface IMetaheuristic {
 

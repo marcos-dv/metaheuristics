@@ -1,5 +1,6 @@
-package problems;
+package solutions;
 
+import problems.Problem;
 import utils.Globals;
 import utils.RandomGenerator;
 

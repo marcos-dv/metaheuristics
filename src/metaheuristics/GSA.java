@@ -2,7 +2,7 @@ package metaheuristics;
 
 
 import problems.Problem;
-import problems.Solution;
+import solutions.Solution;
 import utils.Algorithms;
 import utils.Globals;
 import utils.Pair;

@@ -2,8 +2,8 @@ package tests;
 
 import metaheuristics.GSA;
 import problems.RandomProblem;
+import solutions.Solution;
 import problems.MinSumProblem;
-import problems.Solution;
 import utils.Globals;
 
 public class TestGSA {

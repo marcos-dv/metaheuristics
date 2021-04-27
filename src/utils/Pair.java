@@ -2,7 +2,7 @@ package utils;
 
 import java.util.Arrays;
 
-import problems.Solution;
+import solutions.Solution;
 
 // Keep track of indexes when sorting an array
 public class Pair implements Comparable<Pair> {

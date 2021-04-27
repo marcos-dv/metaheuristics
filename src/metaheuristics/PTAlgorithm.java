@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import problems.Problem;
-import problems.Solution;
+import solutions.Solution;
 import utils.Globals;
 
 public abstract class PTAlgorithm {

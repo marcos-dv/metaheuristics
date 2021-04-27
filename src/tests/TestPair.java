@@ -1,7 +1,7 @@
 package tests;
 
 import problems.RandomProblem;
-import problems.Solution;
+import solutions.Solution;
 import utils.Globals;
 import utils.Pair;
 

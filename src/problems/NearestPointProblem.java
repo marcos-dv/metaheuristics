@@ -1,5 +1,7 @@
 package problems;
 
+import solutions.Solution;
+
 public class NearestPointProblem implements Problem {
 
 	private final double lowerBound = -100;

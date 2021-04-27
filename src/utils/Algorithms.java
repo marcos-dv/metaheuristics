@@ -1,6 +1,6 @@
 package utils;
 
-import problems.Solution;
+import solutions.Solution;
 
 public class Algorithms {
 	
