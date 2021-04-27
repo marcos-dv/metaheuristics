@@ -12,6 +12,7 @@ public class GSA implements IMetaheuristic {
 	private boolean DEBUG = false;
 	
 	private Solution [] sols;
+	private Solution globalBest;
 	
 	// Info to compute (index-correlated with sols array)
 	private double [] fit;
@@ -75,6 +76,8 @@ public class GSA implements IMetaheuristic {
 		}
 		// Init structures
 		reset();
+		// Update best solution
+		updateGlobalBest();
 	}
 
 	@Override
@@ -293,6 +296,14 @@ public class GSA implements IMetaheuristic {
 		}
 	}
 	
+	public void updateGlobalBest() {
+		Solution curIterationBest = Algorithms.getGlobalOptimum(sols);
+		if ((globalBest == null)
+				|| (curIterationBest.getFitness() < globalBest.getFitness())) {
+			globalBest = curIterationBest;
+		}
+	}
+	
 	@Override
 	public void nextIter() {
 		// Next iteration
@@ -320,6 +331,8 @@ public class GSA implements IMetaheuristic {
 		updateVelocity();
 
 		updatePosition();
+		
+		updateGlobalBest();
 		
 		// Check final fitness
 		if (DEBUG) {
@@ -365,7 +378,8 @@ public class GSA implements IMetaheuristic {
 
 	@Override
 	public Solution getGlobalOptimum() {
-		return Algorithms.getGlobalOptimum(sols);
+		updateGlobalBest();
+		return globalBest;
 	}
 	
 }

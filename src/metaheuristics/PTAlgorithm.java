@@ -7,7 +7,7 @@ import problems.Problem;
 import solutions.Solution;
 import utils.Globals;
 
-public abstract class PTAlgorithm {
+public abstract class PTAlgorithm implements IMetaheuristic {
 	private IMetaheuristic metaheuristic;
 	private double [] paramRange;
 	private double [] meansEW;
@@ -86,7 +86,32 @@ public abstract class PTAlgorithm {
 			System.out.println();
 		}
 	}
-	
+
+	public void printFitness() {
+		if (prevFitness == null) {
+			System.out.println("Previous fitness is not updated yet");
+			return ;
+		}
+		String decimalFormat = "%.2f";
+		String coordsFormat = "%.3f";
+		Solution[] sols = metaheuristic.getSols();
+		
+		System.out.println("Current fitness vs Old fitness:");
+		for(int i = 0; i < popsize; ++i) {
+			// Fitness vs
+			System.out.print(i 
+				+ ". Now " + String.format(decimalFormat, sols[i].getFitness())
+				+ " vs Prev " + String.format(decimalFormat, prevFitness[i]));
+			// Coords
+			double [] coords = sols[i].getCoords();
+			System.out.print(" \t (");
+			for(int d = 0; d < coords.length; ++d) {
+				System.out.print(String.format(coordsFormat, coords[d]) + " , ");
+			}
+			System.out.println(" )");
+		}
+	}
+
 	public void printMeans() {
 		System.out.println("Means:");
 		for(int i = 0; i < meansEW.length; ++i) {
@@ -110,7 +135,8 @@ public abstract class PTAlgorithm {
 		this.popsize = popsize;
 	}
 	
-	public void setup() {
+	@Override
+	public void initPop() {
 		metaheuristic.initPop();
 		if (paramRange == null) {
 			System.out.println("Warning-PTAlgorithm: range of the parameter is not initialized");
@@ -275,10 +301,10 @@ public abstract class PTAlgorithm {
 			Solution [] sols = metaheuristic.getSols();
 			// Compute differences
 			for(int i = 0; i < popsize; ++i) {
-				deltaFitness[i] = sols[i].getFitness() - prevFitness[i];
+				// delta_i = f(x_i) - f(x_i')
+				deltaFitness[i] = prevFitness[i] - sols[i].getFitness();
 			}
 			updateRow(row, deltaFitness);
-			updatePrevFitness();
 		}
 	}
 	
@@ -287,14 +313,32 @@ public abstract class PTAlgorithm {
 		curAlfa = paramRange[idx];
 		setNewParam(curAlfa);
 		metaheuristic.nextIter();
+		printFitness();
 		updateEW(idx);
+		updatePrevFitness();
 	}
 
 	public void run(int numiter) {
-		setup();
+		initPop();
 		for(int i = 0; i < numiter; ++i) {
 			nextIter();
 		}
 	}
+
+	@Override
+	public int getNumIter() {
+		return metaheuristic.getNumIter();
+	}
+
+	@Override
+	public Solution[] getSols() {
+		return metaheuristic.getSols();
+	}
+
+	@Override
+	public Solution getGlobalOptimum() {
+		return metaheuristic.getGlobalOptimum();
+	}
+	
 	
 }

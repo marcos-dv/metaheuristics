@@ -29,7 +29,7 @@ public class TestPTGSA {
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {2., 5., 7.};
 		PTGSA ptgsa = new PTGSA(gsa, alfas);
-		ptgsa.setup();
+		ptgsa.initPop();
 		for(int i = 0; i < maxiter; ++i) {
 			System.out.println("-- Iter " + i);
 			ptgsa.nextIter();
