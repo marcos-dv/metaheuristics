@@ -29,22 +29,19 @@ public class DemoPTGSA {
 			// Global Best
 			Solution globalBest = ptgsa.getGlobalOptimum();
 			System.out.println("Best sol: ");
-			double [] coords = globalBest.getCoords();
-			System.out.print("(");
-			for(int d = 0; d < coords.length; ++d) {
-				System.out.print(coords[d] + " , ");
-			}
-			System.out.println(")");
-			System.out.println("Fitness = " + globalBest.getFitness());
+			System.out.println(globalBest);
 			
 			System.out.println();
 		}
 	}
 	
 	public static void main(String[] args) {
+//		int dim = 3;
+//		int popsize = 50;
+//		int numiter = 20;
 		int dim = 3;
-		int popsize = 50;
-		int numiter = 50;
+		int popsize = 4;
+		int numiter = 20;
 		System.out.println("Start test");
 		demoRunPTGSA(dim, popsize, numiter);
 		System.out.println("End testing");

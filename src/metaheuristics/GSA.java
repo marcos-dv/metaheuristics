@@ -300,7 +300,7 @@ public class GSA implements IMetaheuristic {
 		Solution curIterationBest = Algorithms.getGlobalOptimum(sols);
 		if ((globalBest == null)
 				|| (curIterationBest.getFitness() < globalBest.getFitness())) {
-			globalBest = curIterationBest;
+			globalBest = new Solution(curIterationBest);
 		}
 	}
 	
