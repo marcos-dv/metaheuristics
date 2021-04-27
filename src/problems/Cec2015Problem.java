@@ -44,7 +44,7 @@ public class Cec2015Problem implements AcademicProblem {
 		if (funcNumber <= 0 || funcNumber > 15) {
 			System.out.println("Warning-CEC2015: function number = " + funcNumber);
 		}
-		return optimum[funcNumber];
+		return optimum[funcNumber-1];
 	}
 
 	@Override
