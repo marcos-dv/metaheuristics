@@ -18,6 +18,9 @@ import solutions.Solution;
 public class SphereProblem implements AcademicProblem {
 	
 	private int dim;
+	private double upperBound = 5.12;
+	private double lowerBound = -5.12;
+	private boolean WARNING = true;
 	
 	@Override
 	public int getDim() {
@@ -27,25 +30,55 @@ public class SphereProblem implements AcademicProblem {
 	public SphereProblem(int dim) {
 		this.dim = dim;
 	}
-	
+
+	public SphereProblem(int dim, double lb, double ub) {
+		this(dim);
+		lowerBound = lb;
+		upperBound = lb;
+	}
+
 	@Override
 	public double fitness(Solution sol) {
+		double [] coords = sol.getCoords();
+		if (WARNING && coords.length != dim) {
+			System.out.println("Warning-AcademicProblem: the solution dimension (" 
+					+ coords.length + ") not match the problem dimension (" + dim + ")");
+		}
+		double fit = 0;
+		for(int i = 0; i < dim; ++i) {
+			fit += coords[i]*coords[i];
+		}
+		return fit;
+	}
+	
+	@Override
+	public double getOptimum() {
 		return 0;
+	}
+
+	public Solution getOptimalSol() {
+		// Optimum = (0, 0, ...)
+		double [] coords = new double[dim];
+		Solution opt = new Solution(coords, this);
+		return opt;
 	}
 
 	@Override
 	public double getUB() {
-		return 0;
+		return upperBound;
+	}
+
+	public void setUB(double ub) {
+		upperBound = ub;
 	}
 
 	@Override
 	public double getLB() {
-		return 0;
+		return lowerBound;
 	}
 
-	@Override
-	public double getOptimum() {
-		return 0;
+	public void setLB(double lb) {
+		lowerBound = lb;
 	}
 
 }
