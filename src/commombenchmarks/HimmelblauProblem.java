@@ -1,5 +1,6 @@
-package problems;
+package commombenchmarks;
 
+import problems.AcademicProblem;
 import solutions.Solution;
 
 /**
@@ -15,7 +16,7 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class SphereProblem implements AcademicProblem {
+public class HimmelblauProblem implements AcademicProblem {
 	
 	private int dim;
 	private double upperBound = 5.12;
@@ -27,11 +28,11 @@ public class SphereProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public SphereProblem(int dim) {
+	public HimmelblauProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public SphereProblem(int dim, double lb, double ub) {
+	public HimmelblauProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = lb;
@@ -44,6 +45,7 @@ public class SphereProblem implements AcademicProblem {
 			System.out.println("Warning-AcademicProblem: the solution dimension (" 
 					+ coords.length + ") not match the problem dimension (" + dim + ")");
 		}
+		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
 			fit += coords[i]*coords[i];
