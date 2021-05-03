@@ -5,7 +5,13 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Griewank
+ * 
+ * It is a multimodal function with widespread
+ * suboptimal solutions spread all over the search environment.
+ * This function has one global optimum solution 0 to be
+ * located at f(x * )=[0,0,...,0]. The function is solved with range
+ * of [-600,600].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -19,8 +25,8 @@ import solutions.Solution;
 public class GriewankProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 600;
+	private double lowerBound = -600;
 	private boolean WARNING = true;
 	
 	@Override
@@ -47,9 +53,16 @@ public class GriewankProblem implements AcademicProblem {
 		}
 		
 		double fit = 0;
+		double sum = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			sum += coords[i]*coords[i];
 		}
+		sum /= 4000;
+		double prod = 1;
+		for(int i = 0; i < dim; ++i) {
+			prod *= Math.cos(coords[i]/Math.sqrt((double)(i+1)));
+		}
+		fit = sum - prod + 1;
 		return fit;
 	}
 	

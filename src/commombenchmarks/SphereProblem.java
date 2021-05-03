@@ -7,6 +7,11 @@ import solutions.Solution;
  * 
  * Academic problem: Sphere
  * 
+ * Sphere is a unimodal and continuous function,
+ * which is considered as easy to solve. This function is
+ * evaluated using range between [-5.12,5.12] and its minimum
+ * solution is 0 which is located at f(x * )=[0,0,...,0].
+ * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
  * Hussain, K., Salleh, M. N. M., Cheng, S., & Naseem, R. (2017).

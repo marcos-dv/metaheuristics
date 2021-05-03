@@ -5,7 +5,11 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Schwefel 2.22
+ * 
+ * This function is a unimodal with search
+ * space usually spread over [-10,10] values. The global
+ * minimum 0 is located at f(x * )=[0,0,...,0].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -19,8 +23,8 @@ import solutions.Solution;
 public class Schwefel222Problem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 10;
+	private double lowerBound = -10;
 	private boolean WARNING = true;
 	
 	@Override
@@ -47,9 +51,15 @@ public class Schwefel222Problem implements AcademicProblem {
 		}
 		
 		double fit = 0;
+		double sum = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			sum += Math.abs(coords[i]);
 		}
+		double prod = 1;
+		for(int i = 0; i < dim; ++i) {
+			prod *= Math.abs(coords[i]);
+		}
+		fit = sum + prod;
 		return fit;
 	}
 	

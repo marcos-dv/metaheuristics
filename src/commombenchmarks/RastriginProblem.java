@@ -5,7 +5,14 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Rastringin
+ * 
+ * This multimodal function is difficult to
+ * solve as it presents numerous local minima locations where
+ * an optimization algorithm, with poor explorative capability,
+ * has high chances of being trapped. The function’s only
+ * globally best solution 0 is found at f(x * )=[0,0,...,0] within the
+ * domain of [-5.12,5.12].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -48,7 +55,7 @@ public class RastriginProblem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			fit += coords[i]*coords[i] -10*Math.cos(2*Math.PI*coords[i]) + 10;
 		}
 		return fit;
 	}

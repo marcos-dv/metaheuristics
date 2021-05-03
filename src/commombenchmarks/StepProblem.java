@@ -5,7 +5,14 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Step
+ * 
+ * This function represents flat surface which is
+ * often considered as difficult to solve as no proper direction
+ * towards globally optimum location is easily found. Step is a
+ * unimodal function where minimum solution 0 located at
+ * f(x * )=[-0.5,-0.5,...,-0.5] within the values spread over [-100,100]
+ * range.
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -19,8 +26,8 @@ import solutions.Solution;
 public class StepProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 100;
+	private double lowerBound = -100;
 	private boolean WARNING = true;
 	
 	@Override
@@ -48,7 +55,7 @@ public class StepProblem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			fit += (coords[i]+0.5)*(coords[i]+0.5);
 		}
 		return fit;
 	}
@@ -59,8 +66,10 @@ public class StepProblem implements AcademicProblem {
 	}
 
 	public Solution getOptimalSol() {
-		// Optimum = (0, 0, ...)
+		// Optimum = (-0.5, -0.5, ...)
 		double [] coords = new double[dim];
+		for(int i = 0; i < coords.length; ++i)
+			coords[i] = -0.5;
 		Solution opt = new Solution(coords, this);
 		return opt;
 	}
