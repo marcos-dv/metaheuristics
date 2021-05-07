@@ -1,21 +1,19 @@
 package exec;
 
-import commombenchmarks.EllipticProblem;
-import commombenchmarks.QuarticProblem;
-import commombenchmarks.RosebrockProblem;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
+import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
 import utils.Globals;
 
-public class DemoBenchmarks {
+public class DemoCec2015 {
 	
-	public static void demoBenchmarks(int dim, int popsize, int maxiter) {
+	public static void demoCec2015(int dim, int popsize, int maxiter) {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 	
-		Problem problem = new EllipticProblem(dim);
+		Problem problem = new Cec2015Problem(5, dim);
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {3, 10, 25, 50};
@@ -38,11 +36,11 @@ public class DemoBenchmarks {
 	}
 	
 	public static void main(String[] args) {
-		int dim = 5;
+		int dim = 30;
 		int popsize = 50;
 		int numiter = 50;
 		System.out.println(" --- Start test --- ");
-		demoBenchmarks(dim, popsize, numiter);
+		demoCec2015(dim, popsize, numiter);
 		System.out.println(" --- End testing --- ");
 	}
 
