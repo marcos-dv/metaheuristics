@@ -29,7 +29,6 @@ public class Cec2015Problem implements AcademicProblem {
 		
 		double [] x = sol.getCoords().clone();
 		double [] f; // returned fitness
-		x = new double[dim];
 		int numberOfSolutions = 1;
 		f = new double[numberOfSolutions];
 		
@@ -39,6 +38,30 @@ public class Cec2015Problem implements AcademicProblem {
 		return f[0];
 	}
 
+	public double [] contestFitnessMultipleSols(Solution [] sols) throws Exception {
+		if (dim <= 0) {
+			System.out.println("Warning-CEC2015: dimension = " + dim);
+		}
+		if (funcNumber <= 0 || funcNumber > 15) {
+			System.out.println("Warning-CEC2015: function number = " + funcNumber);
+		}
+		
+		double [] x = new double[sols.length*dim];
+		for(int i = 0; i < sols.length; ++i) {
+			for(int j = 0; j < dim; ++j) {
+				x[i*dim+j] = sols[i].coords[j];
+			}
+		}
+		double [] f; // returned fitness
+		int numberOfSolutions = sols.length;
+		f = new double[numberOfSolutions];
+		
+		testfunc tf = new testfunc();
+
+		tf.test_func(x,f,dim,numberOfSolutions,funcNumber);
+		return f;
+	}
+	
 	@Override
 	public double getOptimum() {
 		if (funcNumber <= 0 || funcNumber > 15) {
