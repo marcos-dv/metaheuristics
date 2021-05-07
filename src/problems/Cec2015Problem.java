@@ -62,6 +62,21 @@ public class Cec2015Problem implements AcademicProblem {
 		return f;
 	}
 	
+	public double [] multipleFitness(Solution sols[]) {
+		try {
+			double [] f = contestFitnessMultipleSols(sols);
+			for(int i = 0; i < sols.length; ++i)
+				f[i] -= getOptimum();
+			return f;
+		} catch (Exception e) {
+			System.err.println("Error-Cec2015Problem: Evaluating test_func. Fitness returned +infinity");
+			System.err.println("Solution not evaluated: " + sols);
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 	@Override
 	public double getOptimum() {
 		if (funcNumber <= 0 || funcNumber > 15) {
@@ -73,7 +88,7 @@ public class Cec2015Problem implements AcademicProblem {
 	@Override
 	public double fitness(Solution sol) {
 		try {
-			return contestFitness1Sol(sol);
+			return contestFitness1Sol(sol)-getOptimum();
 		} catch (Exception e) {
 			System.err.println("Error-Cec2015Problem: Evaluating test_func. Fitness returned +infinity");
 			System.err.println("Solution not evaluated: " + sol);

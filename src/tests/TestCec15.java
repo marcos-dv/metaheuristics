@@ -35,7 +35,7 @@ public class TestCec15 {
 		}
 		double [] f = null;
 		try {
-			f = problem.contestFitnessMultipleSols(sols);
+			f = problem.multipleFitness(sols);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,8 +47,8 @@ public class TestCec15 {
 	}
 
 	public static void main(String[] args) {
-		int func_number = 4;
-		int dim = 10;
+		int func_number = 1;
+		int dim = 30;
 		int popsize = 20;
 		oneCecTest(dim, func_number);
 		multipleCecTest(dim, popsize, func_number);	
