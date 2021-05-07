@@ -180,7 +180,9 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 			}
 		}
 		*/
-		int idx = Globals.getRandomGenerator().randomInt(0, bestIndexes.size());
+		int idx = 0;
+		if (bestIndexes.size() > 1) // Avoid random sample almost always!
+			idx = Globals.getRandomGenerator().randomInt(0, bestIndexes.size());
 		return bestIndexes.get(idx);
 	}
 	
