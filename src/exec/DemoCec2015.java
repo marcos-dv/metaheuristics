@@ -13,7 +13,7 @@ public class DemoCec2015 {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 	
-		Problem problem = new Cec2015Problem(5, dim);
+		Problem problem = new Cec2015Problem(1, dim);
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {3, 10, 25, 50};

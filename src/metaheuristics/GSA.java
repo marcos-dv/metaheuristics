@@ -158,7 +158,6 @@ public class GSA implements IMetaheuristic {
 		
 		// Compute best K fitness
 		kSize = computeK();
-		System.out.println(kSize);
 		kbest = Pair.sortIdxSolutions(sols);
 		
 		if (DEBUG) {

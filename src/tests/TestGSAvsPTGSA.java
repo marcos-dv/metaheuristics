@@ -66,7 +66,7 @@ public class TestGSAvsPTGSA {
 	public static void main(String[] args) {
 		int dim = 20;
 		int popsize = 50;
-		int numiter = 2;
+		int numiter = 20;
 		System.out.println(" --- Start test --- ");
 		double bestgsa = testGSA(dim, popsize, numiter);
 		double bestptgsa = testPTGSA(dim, popsize, numiter);
