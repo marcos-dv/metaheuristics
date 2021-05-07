@@ -136,7 +136,7 @@ public class GSA implements IMetaheuristic {
 	}
 
 	protected int computeK() {
-		double kRate = sols.length / MAX_ITER;
+		double kRate = sols.length / (double)MAX_ITER;
 		int k = (int) (sols.length-(numIter-1)*kRate);
 		k = Math.min(k, sols.length);
 		k = Math.max(k, 1);
@@ -158,6 +158,7 @@ public class GSA implements IMetaheuristic {
 		
 		// Compute best K fitness
 		kSize = computeK();
+		System.out.println(kSize);
 		kbest = Pair.sortIdxSolutions(sols);
 		
 		if (DEBUG) {
