@@ -17,12 +17,12 @@ public class GSA implements IMetaheuristic {
 	// Info to compute (index-correlated with sols array)
 	private double [] fit;
 	private double [] q; // normalized fitness
-	private double [] mass;
+	private double [] mass; // proportional to fitness
 	private double [][] a; // acceleration of sols[i] on each component
 	private double [][] v; // vel of sols[i] on each component
 	private Pair [] kbest; // kbest solutions (index, fitness)
 	private int kSize; // kbest size for each iteration
-	private double Gt;
+	private double Gt; // Gravitatory constant (depends on current iteration)
 	
 	// Global params
 	private int MAX_ITER;
@@ -138,7 +138,7 @@ public class GSA implements IMetaheuristic {
 	protected int computeK() {
 		// Each kRate iterations reduce k by 1
 		int kRate = MAX_ITER / sols.length;
-		int k = (int) (sols.length-(numIter-1)/kRate);
+		int k = sols.length-numIter/kRate;
 	
 		k = Math.min(k, sols.length);
 		k = Math.max(k, 1);
@@ -310,7 +310,6 @@ public class GSA implements IMetaheuristic {
 	@Override
 	public void nextIter() {
 		// Next iteration
-		numIter++;
 		if (DEBUG)
 			System.out.println("\n# Begin iteration: " + numIter);
 		
@@ -336,6 +335,8 @@ public class GSA implements IMetaheuristic {
 		updatePosition();
 		
 		updateGlobalBest();
+		
+		numIter++;
 		
 		// Check final fitness
 		if (DEBUG) {
