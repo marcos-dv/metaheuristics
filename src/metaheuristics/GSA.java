@@ -44,7 +44,7 @@ public class GSA implements IMetaheuristic {
 		G0 = 100;
 		alfa = 20;
 		epsilon = 1e-9;
-		MAX_ITER = 51;
+		MAX_ITER = 10000*targetProblem.getDim();
 	}
 
 	public GSA(int popSize, Problem targetProblem) {
@@ -134,10 +134,12 @@ public class GSA implements IMetaheuristic {
 
 		return ok;
 	}
-
+	
 	protected int computeK() {
-		double kRate = sols.length / (double)MAX_ITER;
-		int k = (int) (sols.length-(numIter-1)*kRate);
+		// Each kRate iterations reduce k by 1
+		int kRate = MAX_ITER / sols.length;
+		int k = (int) (sols.length-(numIter-1)/kRate);
+	
 		k = Math.min(k, sols.length);
 		k = Math.max(k, 1);
 		if (DEBUG)
@@ -158,6 +160,7 @@ public class GSA implements IMetaheuristic {
 		
 		// Compute best K fitness
 		kSize = computeK();
+		System.out.println("K = " + kSize);
 		kbest = Pair.sortIdxSolutions(sols);
 		
 		if (DEBUG) {
@@ -376,6 +379,14 @@ public class GSA implements IMetaheuristic {
 		this.epsilon = epsilon;
 	}
 
+	public int getMAX_ITER() {
+		return MAX_ITER;
+	}
+
+	public void setMAX_ITER(int mAX_ITER) {
+		MAX_ITER = mAX_ITER;
+	}
+	
 	@Override
 	public Solution getGlobalOptimum() {
 		updateGlobalBest();

@@ -17,10 +17,11 @@ public class TestGSA {
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		gsa.initPop();
+		gsa.setMAX_ITER(maxiter);
 		for (int numiter = 0; numiter < maxiter; ++numiter) {
 			gsa.nextIter();		
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -56,7 +57,7 @@ public class TestGSA {
 	}
 
 	public static void main(String[] args) {
-		dummyGSATest(3, 5, 3);
+		dummyGSATest(3, 10, 100);
 	
 	}
 
