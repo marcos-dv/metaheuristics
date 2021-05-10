@@ -8,7 +8,7 @@ public class TestSolutionProblem {
 	// Basic Solutions and problems
 	public static void dummyTest1() {
 		int dim = 30;
-		MinSumProblem problem = new MinSumProblem();
+		Problem problem = new MinSumProblem(dim);
 		Solution sol = new Solution(dim, problem);
 		sol.randomInit();
 		System.out.println(sol);

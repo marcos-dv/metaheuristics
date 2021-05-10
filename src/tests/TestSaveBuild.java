@@ -1,31 +1,19 @@
 package tests;
 
 import metaheuristics.GSA;
+import problems.MinSumProblem;
+import problems.Problem;
 import problems.RandomProblem;
 import solutions.Solution;
-import problems.MinSumProblem;
 import utils.Globals;
 
-public class TestGSA {
-	// GSA
-	public static void dummyGSATest(int dim, int popsize, int maxiter) {
+public class TestSaveBuild {
+	// Solution
+	public static void buildSol(int dim) {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 
-		RandomProblem problem = new RandomProblem();
-		problem.setDim(dim);
-		// popsize
-		GSA gsa = new GSA(popsize, problem);
-		gsa.initPop();
-		gsa.setMAX_ITER(maxiter);
-		for (int numiter = 0; numiter < maxiter; ++numiter) {
-			gsa.nextIter();		
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		Problem problem = new MinSumProblem(dim);
 	}
 
 	// GSA with minsum
@@ -56,8 +44,9 @@ public class TestGSA {
 	}
 
 	public static void main(String[] args) {
-		dummyGSATest(3, 10, 100);
 	
 	}
 
+	
+	
 }

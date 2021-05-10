@@ -8,6 +8,10 @@ public class MinSumProblem implements Problem {
 	private final double upperBound = 1;
 	public int dim;
 	
+	public MinSumProblem(int dim) {
+		this.dim = dim;
+	}
+	
 	@Override
 	public double fitness(Solution sol) {
 		double res = 0;

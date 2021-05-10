@@ -1,5 +1,7 @@
 package solutions;
 
+import java.util.StringTokenizer;
+
 import problems.Problem;
 import utils.Globals;
 import utils.RandomGenerator;
@@ -113,6 +115,28 @@ public class Solution {
 				+ " targetProblem = " + targetProblem
 				+ " coords:\n"
 				+ coordsString;
+	}
+	
+
+	public String save() {
+		String str = "";
+		str += Integer.toString(dim) + ' ';
+		for (int i = 0; i < coords.length; ++i) {
+			str += Double.toString(coords[i]) + ' ';
+		}
+		str += getFitness() + '\n';
+		return str;
+	}
+	
+	public void build(String str) {
+		StringTokenizer tokenizer = new StringTokenizer(str, " ");
+		dim = Integer.parseInt(tokenizer.nextToken());
+		coords = new double[dim];
+		for(int i = 0; i < dim; ++i) {
+			coords[i] = Double.parseDouble(tokenizer.nextToken());
+		}
+		if (tokenizer.hasMoreTokens())
+			fitness = Double.parseDouble(tokenizer.nextToken());
 	}
 	
 	
