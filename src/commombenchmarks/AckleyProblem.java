@@ -58,14 +58,14 @@ public class AckleyProblem implements AcademicProblem {
 		for(int i = 0; i < dim; ++i) {
 			sum1 += coords[i]*coords[i];
 		}
-		sum1 = Math.sqrt(sum1/dim);
+		sum1 = Math.sqrt(sum1/(double)dim);
 		
 		double sum2 = 0;
 		for(int i = 0; i < dim; ++i) {
 			sum2 += Math.cos(2*Math.PI*coords[i]);
 		}
 		sum2 /= dim;
-		fit = -20*Math.exp(sum1) -Math.exp(sum2) + 20 + Math.E;
+		fit = -20*Math.exp(-0.2*sum1) -Math.exp(sum2) + 20 + Math.E;
 		return fit;
 	}
 	
