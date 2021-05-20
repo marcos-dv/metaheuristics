@@ -42,7 +42,7 @@ public class StepProblem implements AcademicProblem {
 	public StepProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

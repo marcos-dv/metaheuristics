@@ -41,7 +41,7 @@ public class SumSquareProblem implements AcademicProblem {
 	public SumSquareProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

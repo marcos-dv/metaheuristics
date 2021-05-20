@@ -35,7 +35,7 @@ public class Penalized1Problem implements AcademicProblem {
 	public Penalized1Problem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

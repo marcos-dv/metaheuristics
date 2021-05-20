@@ -40,7 +40,7 @@ public class QuarticProblem implements AcademicProblem {
 	public QuarticProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

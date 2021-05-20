@@ -35,7 +35,7 @@ public class SchafferProblem implements AcademicProblem {
 	public SchafferProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

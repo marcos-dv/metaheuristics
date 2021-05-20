@@ -42,7 +42,7 @@ public class RastriginProblem implements AcademicProblem {
 	public RastriginProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

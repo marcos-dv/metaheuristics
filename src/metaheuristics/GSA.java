@@ -147,13 +147,18 @@ public class GSA implements IMetaheuristic {
 		return k;
 	}
 	
+	protected void computeFitness() {
+		for(int i = 0; i < sols.length; ++i) {
+			fit[i] = sols[i].getFitness();
+		}
+	}
+	
 	// First step of iteration
 	protected void processFitness() {
 		// Get the best and worst fitness
 		bestFitness = Double.POSITIVE_INFINITY;
 		worstFitness = Double.NEGATIVE_INFINITY;
 		for(int i = 0; i < sols.length; ++i) {
-			fit[i] = sols[i].getFitness();
 			bestFitness = Math.min(bestFitness, fit[i]);
 			worstFitness = Math.max(worstFitness, fit[i]);
 		}
@@ -316,6 +321,8 @@ public class GSA implements IMetaheuristic {
 		// Initialize structures
 		
 		// 1. Update fitnesses, best, worst, kbest
+		computeFitness();
+		
 		processFitness();
 		
 		// 2. Compute q and mass

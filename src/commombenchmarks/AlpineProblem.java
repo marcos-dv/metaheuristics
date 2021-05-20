@@ -35,7 +35,7 @@ public class AlpineProblem implements AcademicProblem {
 	public AlpineProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class Schwefel222Problem implements AcademicProblem {
 	public Schwefel222Problem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
-		upperBound = lb;
+		upperBound = ub;
 	}
 
 	@Override

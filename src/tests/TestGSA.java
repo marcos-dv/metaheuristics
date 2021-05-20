@@ -40,7 +40,7 @@ public class TestGSA {
 //		double [] xx = {0, 0, 0};
 //		gsa.getSols()[0].setCoords(xx);
 		for (int numiter = 0; numiter < 100; ++numiter) {
-			gsa.nextIter();		
+			gsa.nextIter();	
 			Solution [] sols = gsa.getSols();
 			double totalSum = 0;
 			for (Solution sol : sols) {
