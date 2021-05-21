@@ -3,7 +3,6 @@ package tests;
 import metaheuristics.GSA;
 import problems.MinSumProblem;
 import problems.Problem;
-import problems.RandomProblem;
 import solutions.Solution;
 import utils.Globals;
 

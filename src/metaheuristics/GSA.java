@@ -1,9 +1,11 @@
 package metaheuristics;
 
 
+import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
 import utils.Algorithms;
+import utils.FitnessCalculator;
 import utils.Globals;
 import utils.Pair;
 
@@ -36,6 +38,10 @@ public class GSA implements IMetaheuristic {
 	private Problem targetProblem;
 
 	private double R[][];
+
+	private boolean PARALLEL = false;
+
+	private int numThreads;
 	
 	public GSA(Problem targetProblem) {
 		this.targetProblem = targetProblem;
@@ -138,6 +144,7 @@ public class GSA implements IMetaheuristic {
 	protected int computeK() {
 		// Each kRate iterations reduce k by 1
 		int kRate = MAX_ITER / sols.length;
+		kRate = Math.max(kRate, 1); // Avoid kRate == 0
 		int k = sols.length-numIter/kRate;
 	
 		k = Math.min(k, sols.length);
@@ -148,11 +155,45 @@ public class GSA implements IMetaheuristic {
 	}
 	
 	protected void computeFitness() {
-		for(int i = 0; i < sols.length; ++i) {
-			fit[i] = sols[i].getFitness();
+		if (isParallel())
+			computeParallelFitness();
+		else {
+			for(int i = 0; i < sols.length; ++i) {
+				fit[i] = sols[i].getFitness();
+			}
 		}
+		/*  Multiple sols
+			Cec2015Problem p = (Cec2015Problem) targetProblem;
+			try {
+				fit = p.contestFitnessMultipleSols(getSols());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 */
 	}
 	
+	protected void computeParallelFitness() {
+		setNumThreads(8);
+		FitnessCalculator [] fitnessThread = new FitnessCalculator[getNumThreads()];
+		int rate = sols.length/getNumThreads();
+		// System.out.println("Rate " + rate);
+		for(int i = 0; i < getNumThreads()-1; ++i) {
+			fitnessThread[i] = new FitnessCalculator(i*rate, rate, sols, targetProblem, fit);
+		}
+		fitnessThread[getNumThreads()-1] = new FitnessCalculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
+		for (FitnessCalculator fitnessCalculator : fitnessThread) {
+			fitnessCalculator.start();
+		}
+		for (FitnessCalculator fitnessCalculator : fitnessThread) {
+			try {
+				fitnessCalculator.join();
+			} catch (InterruptedException e) {
+				System.out.println("Error-GSA: Error while waiting threads");
+			}
+		}
+	}
+
 	// First step of iteration
 	protected void processFitness() {
 		// Get the best and worst fitness
@@ -399,6 +440,22 @@ public class GSA implements IMetaheuristic {
 	public Solution getGlobalOptimum() {
 		updateGlobalBest();
 		return globalBest;
+	}
+
+	public boolean isParallel() {
+		return PARALLEL;
+	}
+
+	public void setParallel(boolean pARALLEL) {
+		PARALLEL = pARALLEL;
+	}
+
+	public int getNumThreads() {
+		return numThreads;
+	}
+
+	public void setNumThreads(int nthreads) {
+		this.numThreads = nthreads;
 	}
 	
 }

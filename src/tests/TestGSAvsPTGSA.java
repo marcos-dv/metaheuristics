@@ -1,6 +1,5 @@
 package tests;
 
-import commombenchmarks.RosebrockProblem;
 import commombenchmarks.SphereProblem;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
