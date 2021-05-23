@@ -1,43 +1,24 @@
 package exec;
 
-import commombenchmarks.AckleyProblem;
-import commombenchmarks.RosebrockProblem;
+
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
 import problems.Problem;
-import problems.RandomProblem;
 import solutions.Solution;
 import utils.Globals;
 
-public class DemoCec2015 {
+public class DemoCec2015Parallel {
 	
-	public static void demoCec2015(int dim, int popsize, int maxiter) {
-		// Fix seed for experiments
-		Globals.getRandomGenerator().setSeed(1);
-	
-		Problem problem = new Cec2015Problem(1, dim);
-		// popsize
+	private static PTGSA ptgsaInit(int popsize, int maxiter, Problem problem) {
 		GSA gsa = new GSA(popsize, problem);
+		gsa.setParallel(true);
+		gsa.setNumThreads(8);
 		gsa.setMAX_ITER(maxiter);
-		double [] alfas = {10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30};
+		double [] alfas = {15, 20, 25, 30};
 		PTGSA ptgsa = new PTGSA(gsa, alfas);
 		ptgsa.initPop();
-		for(int i = 1; i <= maxiter; ++i) {
-			System.out.println("-- Iter " + i);
-			ptgsa.nextIter();
-			if (i % 20 == 0) {
-		//		ptgsa.printParamRange();
-				ptgsa.printEW();
-				ptgsa.printMeans();
-			}
-			// Global Best
-			Solution globalBest = ptgsa.getGlobalOptimum();
-			System.out.println("Best sol: ");
-			System.out.println(globalBest);
-			
-			System.out.println();
-		}
+		return ptgsa;
 	}
 
 	public static void demoRandom(int dim, int popsize, int maxiter) {
@@ -46,11 +27,7 @@ public class DemoCec2015 {
 	
 		Problem problem = new Cec2015Problem(1, dim);
 		// popsize
-		GSA gsa = new GSA(popsize, problem);
-		gsa.setMAX_ITER(maxiter);
-		double [] alfas = {20};
-		PTGSA ptgsa = new PTGSA(gsa, alfas);
-		ptgsa.initPop();
+		PTGSA ptgsa = ptgsaInit(popsize, maxiter, problem);
 		for(int i = 1; i <= maxiter; ++i) {
 			System.out.println("-- Iter " + i);
 			ptgsa.nextIter();

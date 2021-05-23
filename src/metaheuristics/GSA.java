@@ -5,6 +5,7 @@ import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
 import utils.Algorithms;
+import utils.Cec2015Calculator;
 import utils.FitnessCalculator;
 import utils.Globals;
 import utils.Pair;
@@ -176,17 +177,17 @@ public class GSA implements IMetaheuristic , Parallelizable {
 	
 	protected void computeParallelFitness() {
 		setNumThreads(8);
-		FitnessCalculator [] fitnessThread = new FitnessCalculator[getNumThreads()];
+		Cec2015Calculator [] fitnessThread = new Cec2015Calculator[getNumThreads()];
 		int rate = sols.length/getNumThreads();
 		// System.out.println("Rate " + rate);
 		for(int i = 0; i < getNumThreads()-1; ++i) {
-			fitnessThread[i] = new FitnessCalculator(i*rate, rate, sols, targetProblem, fit);
+			fitnessThread[i] = new Cec2015Calculator(i*rate, rate, sols, targetProblem, fit);
 		}
-		fitnessThread[getNumThreads()-1] = new FitnessCalculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
-		for (FitnessCalculator fitnessCalculator : fitnessThread) {
+		fitnessThread[getNumThreads()-1] = new Cec2015Calculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
+		for (Cec2015Calculator fitnessCalculator : fitnessThread) {
 			fitnessCalculator.start();
 		}
-		for (FitnessCalculator fitnessCalculator : fitnessThread) {
+		for (Cec2015Calculator fitnessCalculator : fitnessThread) {
 			try {
 				fitnessCalculator.join();
 			} catch (InterruptedException e) {
