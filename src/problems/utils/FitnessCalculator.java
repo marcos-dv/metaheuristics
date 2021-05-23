@@ -1,4 +1,4 @@
-package utils;
+package problems.utils;
 
 import problems.Problem;
 import solutions.Solution;

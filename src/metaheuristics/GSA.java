@@ -3,10 +3,10 @@ package metaheuristics;
 
 import problems.Cec2015Problem;
 import problems.Problem;
+import problems.utils.Cec2015Calculator;
+import problems.utils.FitnessCalculator;
 import solutions.Solution;
 import utils.Algorithms;
-import utils.Cec2015Calculator;
-import utils.FitnessCalculator;
 import utils.Globals;
 import utils.Pair;
 import utils.Parallelizable;

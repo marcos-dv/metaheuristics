@@ -15,11 +15,12 @@ public class DemoBenchmarks {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 	
-		Problem problem = new EllipticProblem(dim);
+		Problem problem = new QuarticProblem(dim);
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
-		double [] alfas = {3, 10, 25, 50};
-		PTGSA ptgsa = new PTGSA(gsa, alfas);
+	//	double [] alfas = {3, 10, 25, 50};
+		double [] alfas = {20};
+			PTGSA ptgsa = new PTGSA(gsa, alfas);
 		ptgsa.initPop();
 		for(int i = 1; i <= maxiter; ++i) {
 			System.out.println("-- Iter " + i);
@@ -38,9 +39,9 @@ public class DemoBenchmarks {
 	}
 	
 	public static void main(String[] args) {
-		int dim = 5;
+		int dim = 30;
 		int popsize = 50;
-		int numiter = 50;
+		int numiter = 200;
 		System.out.println(" --- Start test --- ");
 		demoBenchmarks(dim, popsize, numiter);
 		System.out.println(" --- End testing --- ");

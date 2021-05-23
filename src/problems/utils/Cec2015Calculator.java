@@ -1,4 +1,4 @@
-package utils;
+package problems.utils;
 
 import problems.Cec2015Problem;
 import problems.Problem;

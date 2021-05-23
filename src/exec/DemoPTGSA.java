@@ -1,5 +1,7 @@
 package exec;
 
+import commombenchmarks.AckleyProblem;
+import commombenchmarks.GriewankProblem;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.MinSqSumProblem;
@@ -11,9 +13,9 @@ public class DemoPTGSA {
 
 	public static void demoRunPTGSA(int dim, int popsize, int maxiter) {
 		// Fix seed for experiments
-		Globals.getRandomGenerator().setSeed(1);
+		Globals.getRandomGenerator().setSeed(2);
 	
-		Problem problem = new MinSqSumProblem(dim);
+		Problem problem = new GriewankProblem(dim);
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {3, 10, 25, 50};
@@ -39,9 +41,9 @@ public class DemoPTGSA {
 //		int dim = 3;
 //		int popsize = 50;
 //		int numiter = 20;
-		int dim = 3;
-		int popsize = 4;
-		int numiter = 20;
+		int dim = 30;
+		int popsize = 50;
+		int numiter = 300000;
 		System.out.println("Start test");
 		demoRunPTGSA(dim, popsize, numiter);
 		System.out.println("End testing");

@@ -16,7 +16,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 	private Problem problem;
 	private int popsize;
 
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	private double curAlfa; // current value for the parameter alfa
 	
 	private double SIGN_TOLERANCE = 0;
@@ -315,7 +315,8 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 		curAlfa = paramRange[idx];
 		setNewParam(curAlfa);
 		metaheuristic.nextIter();
-		printFitness();
+		if (getNumIter() % 20 == 0)
+			printFitness();
 		updateEW(idx);
 		updatePrevFitness();
 	}

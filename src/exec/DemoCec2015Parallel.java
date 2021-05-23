@@ -7,13 +7,14 @@ import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
 import utils.Globals;
+import utils.SimpleClock;
 
 public class DemoCec2015Parallel {
 	
 	private static PTGSA ptgsaInit(int popsize, int maxiter, Problem problem) {
 		GSA gsa = new GSA(popsize, problem);
 		gsa.setParallel(true);
-		gsa.setNumThreads(8);
+		gsa.setNumThreads(4);
 		gsa.setMAX_ITER(maxiter);
 		double [] alfas = {15, 20, 25, 30};
 		PTGSA ptgsa = new PTGSA(gsa, alfas);
@@ -51,13 +52,12 @@ public class DemoCec2015Parallel {
 		int numiter = 10;
 //		int numiter = 200;
 		System.out.println(" --- Start test --- ");
-		long t0 = System.currentTimeMillis();
+		SimpleClock cl=new SimpleClock();
+		cl.start();
 		demoRandom(dim, popsize, numiter);
-		long t1 = System.currentTimeMillis();
+		cl.end();
 		System.out.println(" --- End testing --- ");
-		long time = (t1-t0)/1000;
-		long msec = t1-t0-time*1000;
-		System.out.println(" --Time: " + time + '.' + msec + " s");
+		cl.displayTime();
 	}
 
 }

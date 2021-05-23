@@ -2,8 +2,8 @@ package tests;
 
 import problems.Cec2015Problem;
 import problems.Problem;
+import problems.utils.FitnessCalculator;
 import solutions.Solution;
-import utils.FitnessCalculator;
 import utils.Globals;
 
 public class TestThreads {

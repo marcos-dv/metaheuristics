@@ -1,7 +1,7 @@
 package problems;
 
+import problems.utils.testfunc;
 import solutions.Solution;
-import utils.testfunc;
 
 public class Cec2015Problem implements AcademicProblem {
 	
