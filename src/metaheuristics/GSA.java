@@ -143,17 +143,24 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		return ok;
 	}
 	
-	protected int computeK() {
-		// Each kRate iterations reduce k by 1
-		int kRate = MAX_ITER / sols.length;
-		kRate = Math.max(kRate, 1); // Avoid kRate == 0
-		int k = sols.length-numIter/kRate;
+	/**
+	 * Normalize k between 1 and sols.length
+	 * @param k
+	 * @return
+	 */
+	protected int normalizeK(int k) {
+		int newK = Math.min(k, sols.length);
+		return Math.max(newK, 1);
+	}
 	
-		k = Math.min(k, sols.length);
-		k = Math.max(k, 1);
-		if (DEBUG)
-			System.out.println("K = " + k);
-		return k;
+	protected int computeK() {
+		if (MAX_ITER >= sols.length) {
+			// Each kRate iterations reduce k by 1
+			int kRate = MAX_ITER / sols.length;
+			return normalizeK(sols.length-numIter/kRate);
+		}
+		// So last iteration end with the best sol
+		return normalizeK(MAX_ITER-numIter);
 	}
 	
 	protected void computeFitness() {
