@@ -1,9 +1,7 @@
 package metaheuristics;
 
 
-import problems.Cec2015Problem;
 import problems.Problem;
-import problems.utils.Cec2015Calculator;
 import problems.utils.FitnessCalculator;
 import solutions.Solution;
 import utils.Algorithms;
@@ -47,8 +45,11 @@ public class GSA implements IMetaheuristic , Parallelizable {
 	
 	public GSA(Problem targetProblem) {
 		this.targetProblem = targetProblem;
+		if (targetProblem.getDim() <= 0) {
+			System.out.println("Warning-GSA: Target problem dimension equals 0.");
+		}
 		numIter = 0;
-		// Hyperparameters
+		// Default Hyperparameters
 		G0 = 100;
 		alfa = 20;
 		epsilon = 1e-9;
@@ -184,17 +185,19 @@ public class GSA implements IMetaheuristic , Parallelizable {
 	
 	protected void computeParallelFitness() {
 		setNumThreads(8);
-		Cec2015Calculator [] fitnessThread = new Cec2015Calculator[getNumThreads()];
+		FitnessCalculator [] fitnessThread = new FitnessCalculator[getNumThreads()];
 		int rate = sols.length/getNumThreads();
 		// System.out.println("Rate " + rate);
 		for(int i = 0; i < getNumThreads()-1; ++i) {
-			fitnessThread[i] = new Cec2015Calculator(i*rate, rate, sols, targetProblem, fit);
+			fitnessThread[i] = new FitnessCalculator(i*rate, rate, sols, targetProblem, fit);
+			// fitnessThread[i] = new Cec2015Calculator(i*rate, rate, sols, targetProblem, fit);
 		}
-		fitnessThread[getNumThreads()-1] = new Cec2015Calculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
-		for (Cec2015Calculator fitnessCalculator : fitnessThread) {
+		fitnessThread[getNumThreads()-1] = new FitnessCalculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
+//		fitnessThread[getNumThreads()-1] = new Cec2015Calculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
+		for (FitnessCalculator fitnessCalculator : fitnessThread) {
 			fitnessCalculator.start();
 		}
-		for (Cec2015Calculator fitnessCalculator : fitnessThread) {
+		for (FitnessCalculator fitnessCalculator : fitnessThread) {
 			try {
 				fitnessCalculator.join();
 			} catch (InterruptedException e) {

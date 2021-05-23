@@ -5,6 +5,7 @@ import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
 import problems.Problem;
+import problems.RandomProblem;
 import solutions.Solution;
 import utils.Globals;
 import utils.SimpleClock;
@@ -14,7 +15,7 @@ public class DemoCec2015Parallel {
 	private static PTGSA ptgsaInit(int popsize, int maxiter, Problem problem) {
 		GSA gsa = new GSA(popsize, problem);
 		gsa.setParallel(true);
-		gsa.setNumThreads(4);
+		gsa.setNumThreads(1);
 		gsa.setMAX_ITER(maxiter);
 		double [] alfas = {15, 20, 25, 30};
 		PTGSA ptgsa = new PTGSA(gsa, alfas);
@@ -27,6 +28,7 @@ public class DemoCec2015Parallel {
 		Globals.getRandomGenerator().setSeed(1);
 	
 		Problem problem = new Cec2015Problem(1, dim);
+		problem = new RandomProblem(1, dim);
 		// popsize
 		PTGSA ptgsa = ptgsaInit(popsize, maxiter, problem);
 		for(int i = 1; i <= maxiter; ++i) {
@@ -49,7 +51,7 @@ public class DemoCec2015Parallel {
 	public static void main(String[] args) {
 		int dim = 30;
 		int popsize = 50;
-		int numiter = 10;
+		int numiter = 20;
 //		int numiter = 200;
 		System.out.println(" --- Start test --- ");
 		SimpleClock cl=new SimpleClock();
