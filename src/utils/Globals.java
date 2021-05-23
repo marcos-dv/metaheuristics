@@ -5,7 +5,8 @@ public class Globals {
 	
 	public static RandomGenerator getRandomGenerator() {
 		if (rand == null)
-			rand = new RandomGeneratorJava();
+			rand = new RandomGeneratorMersenne();
+			// rand = new RandomGeneratorJava();
 		return rand;
 	}
 	

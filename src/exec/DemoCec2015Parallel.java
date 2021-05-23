@@ -28,7 +28,6 @@ public class DemoCec2015Parallel {
 		Globals.getRandomGenerator().setSeed(1);
 	
 		Problem problem = new Cec2015Problem(1, dim);
-		problem = new RandomProblem(1, dim);
 		// popsize
 		PTGSA ptgsa = ptgsaInit(popsize, maxiter, problem);
 		for(int i = 1; i <= maxiter; ++i) {
