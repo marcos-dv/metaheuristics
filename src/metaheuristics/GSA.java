@@ -8,8 +8,9 @@ import utils.Algorithms;
 import utils.FitnessCalculator;
 import utils.Globals;
 import utils.Pair;
+import utils.Parallelizable;
 
-public class GSA implements IMetaheuristic {
+public class GSA implements IMetaheuristic , Parallelizable {
 	
 	private boolean DEBUG = false;
 	
@@ -39,7 +40,7 @@ public class GSA implements IMetaheuristic {
 
 	private double R[][];
 
-	private boolean PARALLEL = false;
+	private boolean parallel = false;
 
 	private int numThreads;
 	
@@ -443,11 +444,11 @@ public class GSA implements IMetaheuristic {
 	}
 
 	public boolean isParallel() {
-		return PARALLEL;
+		return parallel;
 	}
 
 	public void setParallel(boolean pARALLEL) {
-		PARALLEL = pARALLEL;
+		parallel = pARALLEL;
 	}
 
 	public int getNumThreads() {
