@@ -1,12 +1,14 @@
 package problems;
 
-import problems.cec2015.testfunc;
+import problems.cec2015.Cec2015Computations;
+import problems.cec2015.Cec2015Data;
 import solutions.Solution;
 
 public class Cec2015Problem implements AcademicProblem {
 	
 	private final double lb = -100;
 	private final double ub = 100;
+	private final static int CEC2015_TOTAL_FUNCTIONS = 15;
 
 	private int dim;
 	private int funcNumber;
@@ -17,6 +19,15 @@ public class Cec2015Problem implements AcademicProblem {
 		this.dim = dim;
 		// optimum x* of problem -> fn(x*) = 100*n
 		optimum = new double[] {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500};
+
+		// Setup classes where information is stored (bias, shuffled data...)
+		if (Cec2015Data.data == null) {
+			Cec2015Data.data = new Cec2015Data[CEC2015_TOTAL_FUNCTIONS+1];
+		}
+		
+		if (Cec2015Data.data[funcNumber] == null) {
+			Cec2015Data.data = new Cec2015Data[funcNumber];
+		}
 	}
 	
 	public double contestFitness1Sol(Solution sol) throws Exception {
@@ -32,7 +43,7 @@ public class Cec2015Problem implements AcademicProblem {
 		int numberOfSolutions = 1;
 		f = new double[numberOfSolutions];
 		
-		testfunc tf = new testfunc();
+		Cec2015Computations tf = new Cec2015Computations();
 
 		tf.test_func(x,f,dim,numberOfSolutions,funcNumber);
 		return f[0];
@@ -56,7 +67,7 @@ public class Cec2015Problem implements AcademicProblem {
 		int numberOfSolutions = sols.length;
 		f = new double[numberOfSolutions];
 		
-		testfunc tf = new testfunc();
+		Cec2015Computations tf = new Cec2015Computations();
 
 		tf.test_func(x,f,dim,numberOfSolutions,funcNumber);
 		return f;
