@@ -2,7 +2,7 @@ package exec;
 import java.io.*;
 import java.util.Scanner;
 
-import problems.utils.testfunc;
+import problems.cec2015.testfunc;
 
 public class TestCec2015 {
 

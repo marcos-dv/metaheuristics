@@ -1,6 +1,7 @@
 package exec;
 
 
+import commombenchmarks.AckleyProblem;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
@@ -15,7 +16,7 @@ public class DemoCec2015Parallel {
 	private static PTGSA ptgsaInit(int popsize, int maxiter, Problem problem) {
 		GSA gsa = new GSA(popsize, problem);
 		gsa.setParallel(true);
-		gsa.setNumThreads(1);
+		gsa.setNumThreads(2);
 		gsa.setMAX_ITER(maxiter);
 		double [] alfas = {15, 20, 25, 30};
 		PTGSA ptgsa = new PTGSA(gsa, alfas);
@@ -50,7 +51,7 @@ public class DemoCec2015Parallel {
 	public static void main(String[] args) {
 		int dim = 30;
 		int popsize = 50;
-		int numiter = 20;
+		int numiter = 300000;
 //		int numiter = 200;
 		System.out.println(" --- Start test --- ");
 		SimpleClock cl=new SimpleClock();

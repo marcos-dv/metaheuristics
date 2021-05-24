@@ -1,8 +1,8 @@
 package tests;
 
+import parallelism.FitnessCalculator;
 import problems.Cec2015Problem;
 import problems.Problem;
-import problems.utils.FitnessCalculator;
 import solutions.Solution;
 import utils.Globals;
 

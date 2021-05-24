@@ -1,8 +1,9 @@
 package metaheuristics;
 
 
+import parallelism.FitnessCalculator;
 import problems.Problem;
-import problems.utils.FitnessCalculator;
+import problems.cec2015.Cec2015Calculator;
 import solutions.Solution;
 import utils.Algorithms;
 import utils.Globals;
@@ -190,7 +191,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		// System.out.println("Rate " + rate);
 		for(int i = 0; i < getNumThreads()-1; ++i) {
 			fitnessThread[i] = new FitnessCalculator(i*rate, rate, sols, targetProblem, fit);
-			// fitnessThread[i] = new Cec2015Calculator(i*rate, rate, sols, targetProblem, fit);
+			//fitnessThread[i] = new Cec2015Calculator(i*rate, rate, sols, targetProblem, fit);
 		}
 		fitnessThread[getNumThreads()-1] = new FitnessCalculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);
 //		fitnessThread[getNumThreads()-1] = new Cec2015Calculator((getNumThreads()-1)*rate, rate+(sols.length%getNumThreads()), sols, targetProblem, fit);

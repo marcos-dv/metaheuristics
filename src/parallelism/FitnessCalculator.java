@@ -1,4 +1,4 @@
-package problems.utils;
+package parallelism;
 
 import problems.Problem;
 import solutions.Solution;

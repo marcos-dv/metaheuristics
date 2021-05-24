@@ -1,5 +1,6 @@
-package problems.utils;
+package problems.cec2015;
 
+import parallelism.FitnessCalculator;
 import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
