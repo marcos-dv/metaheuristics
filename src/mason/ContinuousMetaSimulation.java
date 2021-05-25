@@ -17,7 +17,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	public int height = 20;
 	public double discretization = 1;
 	public Continuous2D grid = null;
-	public int popsize = 3;
+	public int popsize = 50;
 	int problemDimension;
 	int maxiter;
 	Problem targetProblem;
@@ -108,7 +108,8 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		System.out.println("New step");
 		updateAlgorithm();
 		updateGridPositions();
-		printGrid();
+//		printGrid();
+		printSols();
 	}
 	
 	private Double2D realSpace2Screen(double [] coords) {
@@ -138,15 +139,13 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	}
 
 	private void updateAlgorithm() {
-		for(int i = 1; i <= maxiter; ++i) {
-			System.out.println("-- Iter " + i);
-			algorithm.nextIter();
-			// Global Best
-			Solution globalBest = algorithm.getGlobalOptimum();
-			System.out.println("Best sol: ");
-			System.out.println(globalBest);
-			System.out.println();
-		}
+		System.out.println("-- Iter " + algorithm.getNumIter());
+		algorithm.nextIter();
+		// Global Best
+		Solution globalBest = algorithm.getGlobalOptimum();
+		System.out.println("Best sol: ");
+		System.out.println(globalBest);
+		System.out.println();
 	}
 
 	public void start() {
@@ -160,11 +159,11 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	}
 
 	private void setupAlgorithm() {
-		// popsize
+		maxiter = 1000;
 		GSA gsa = new GSA(popsize, targetProblem);
-		setAlgorithm(gsa);
 		gsa.setMAX_ITER(maxiter);
 		gsa.initPop();
+		setAlgorithm(gsa);
 	}
 	
 	private void setupGrid() {
@@ -186,6 +185,14 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		for (int i = 0; i < popsize; ++i) {
 			Double2D p = grid.getObjectLocation(i);
 			System.out.println(i + ". (" + p.x + ", " + p.y + ")");
+		}
+	}
+
+	public void printSols() {
+		System.out.println("Printing solutions");
+		Solution[] sols = algorithm.getSols();
+		for(int i = 0; i < sols.length; ++i) {
+			System.out.println(sols[i]);
 		}
 	}
 
