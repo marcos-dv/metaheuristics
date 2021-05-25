@@ -1,9 +1,9 @@
 package mason;
 
-public class TestMason {
+public class TestMasonMeta {
 
 	public static void contConsole() {
-		ContinuousGame game = new ContinuousGame(System.currentTimeMillis(), 10, 10, 1);
+		ContinuousMetaSimulation game = new ContinuousMetaSimulation(System.currentTimeMillis(), 10, 10, 1);
 		game.start();
 		long steps = 0;
 		game.printGrid();
@@ -17,15 +17,15 @@ public class TestMason {
 		System.exit(0);
 	}
 	
-	public static void contUI() {
+	public static void startContinuousSimulationUI() {
 		int w = 200;
 		int h = 150;
-		double disc = 1.0;
-		new ContinuousGameUI(w, h, disc).createController();
+		double discretization = 1.0;
+		new ContinuousMetaSimulationUI(w, h, discretization).createController();
 	}
 	
 	public static void main(String[] args) {
-		contUI();
+		startContinuousSimulationUI();
 	}
 
 }
