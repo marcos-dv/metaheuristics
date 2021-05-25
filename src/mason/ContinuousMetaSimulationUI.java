@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 
+import problems.Problem;
 import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
@@ -17,14 +18,19 @@ import sim.portrayal.simple.OvalPortrayal2D;
 public class ContinuousMetaSimulationUI extends GUIState {
 	public Display2D display;
 	public JFrame displayFrame;
-
-	public ContinuousMetaSimulationUI() {
-		super(new ContinuousMetaSimulation(System.currentTimeMillis()));
+	
+	public ContinuousMetaSimulationUI(Problem p) {
+		super(new ContinuousMetaSimulation(System.currentTimeMillis(), p));
 	}
 
-	public ContinuousMetaSimulationUI(int w, int h, double discretization) {
-		super(new ContinuousMetaSimulation(System.currentTimeMillis(), w, h, discretization));
+	public ContinuousMetaSimulationUI(int w, int h, double discretization, long seed, Problem p) {
+		super(new ContinuousMetaSimulation(seed, w, h, discretization, p));
 	}
+
+	public ContinuousMetaSimulationUI(int w, int h, double discretization, Problem p) {
+		this(w, h, discretization, System.currentTimeMillis(), p);
+	}
+
 
 	public ContinuousMetaSimulationUI(SimState state) {
 		super(state);
@@ -81,7 +87,7 @@ public class ContinuousMetaSimulationUI extends GUIState {
 
 	public void load(SimState state) {
 		super.load(state);
-		// we now have a new grid. Set up the portrayals to reflect this
+		// Now we have a new grid. Set up the portrayals to reflect this
 		setup();
 	}
 

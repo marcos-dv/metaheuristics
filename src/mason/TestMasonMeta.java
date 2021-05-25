@@ -1,27 +1,18 @@
 package mason;
 
+import commombenchmarks.SphereProblem;
+import problems.Problem;
+
 public class TestMasonMeta {
 
-	public static void contConsole() {
-		ContinuousMetaSimulation game = new ContinuousMetaSimulation(System.currentTimeMillis(), 10, 10, 1);
-		game.start();
-		long steps = 0;
-		game.printGrid();
-		while (steps < 5) {
-			if (!game.schedule.step(game))
-				break;
-			steps = game.schedule.getSteps();
-		}
-		game.printGrid();
-		game.finish();
-		System.exit(0);
-	}
+	static long seed = 1;
+	static Problem targetProblem = new SphereProblem(2, -20, 20);
 	
 	public static void startContinuousSimulationUI() {
-		int w = 200;
-		int h = 150;
+		int w = 250;
+		int h = 160;
 		double discretization = 1.0;
-		new ContinuousMetaSimulationUI(w, h, discretization).createController();
+		new ContinuousMetaSimulationUI(w, h, discretization, seed, targetProblem).createController();
 	}
 	
 	public static void main(String[] args) {

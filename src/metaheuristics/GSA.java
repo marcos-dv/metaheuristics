@@ -371,6 +371,11 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		// Next iteration
 		if (DEBUG)
 			System.out.println("\n# Begin iteration: " + numIter);
+
+		if (numIter > MAX_ITER) {
+			System.out.println("GSA: Maximum number of iterations reached: " + MAX_ITER);
+			return ;
+		}
 		
 		// Initialize structures
 		
