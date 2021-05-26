@@ -1,4 +1,4 @@
-package exec;
+package tests;
 
 import commombenchmarks.AckleyProblem;
 import commombenchmarks.RosebrockProblem;
@@ -10,7 +10,7 @@ import problems.RandomProblem;
 import solutions.Solution;
 import utils.Globals;
 
-public class DemoCec2015 {
+public class TestExecution {
 	
 	public static void demoCec2015(int dim, int popsize, int maxiter) {
 		// Fix seed for experiments

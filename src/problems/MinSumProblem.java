@@ -4,7 +4,7 @@ import solutions.Solution;
 
 public class MinSumProblem implements Problem {
 
-	private final double lowerBound = 0;
+	private final double lowerBound = -1;
 	private final double upperBound = 1;
 	public int dim;
 	

@@ -5,12 +5,12 @@ import utils.Globals;
 
 public class RandomProblem implements Problem {
 
-	private double lowerBound = 0;
+	private double lowerBound = -100;
 	private double upperBound = 100;
 	private int dim;
 	
 	public RandomProblem() {
-		lowerBound=0;
+		lowerBound=-100;
 		upperBound=100;
 	}
 

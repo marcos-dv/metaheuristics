@@ -28,7 +28,7 @@ public class DemoCec2015Parallel {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 	
-		Problem problem = new Cec2015Problem(14, dim);
+		Problem problem = new Cec2015Problem(1, dim);
 		// popsize
 		PTGSA ptgsa = ptgsaInit(popsize, maxiter, problem);
 		for(int i = 1; i <= maxiter; ++i) {
@@ -51,7 +51,7 @@ public class DemoCec2015Parallel {
 	public static void main(String[] args) {
 		int dim = 30;
 		int popsize = 50;
-		int numiter = 5;
+		int numiter = 1000;
 //		int numiter = 200;
 		System.out.println(" --- Start test --- ");
 		SimpleClock cl=new SimpleClock();
