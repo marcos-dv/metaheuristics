@@ -4,6 +4,8 @@ import control.Messages;
 
 public class Geometry {
 	
+	private static final double EPS = 1e-14;
+
 	public static double[] neg(double [] x) {
 		double[] xx = new double[x.length];
 		for (int i = 0; i < x.length; ++i) {
@@ -97,7 +99,7 @@ public class Geometry {
 				+ normx + " and " + normy + ")");
 			return 0;
 		}
-		return innerProduct(x, y)/(norm(x)*norm(y));
+		return Math.acos(innerProduct(x, y)/(norm(x)*norm(y)));
 	}
 
 	public static double[] unitary(double [] x) {
@@ -126,7 +128,7 @@ public class Geometry {
 	}
 
 	public static boolean isZero(double [] x) {
-		return norm(x) == 0;
+		return norm(x) <= EPS;
 	}
 
 	
