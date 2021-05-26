@@ -2,6 +2,7 @@ package utils;
 
 import java.util.Arrays;
 
+import control.Messages;
 import solutions.Solution;
 
 // Keep track of indexes when sorting an array
@@ -22,7 +23,7 @@ public class Pair implements Comparable<Pair> {
 	
 	public static Pair[] sortIdxPairs(Pair[] pairs) {
 		if (pairs == null) {
-			System.out.println("Warning-Pair: getKMinimum pairs are not initialized");
+			Messages.error("Pair: getKMinimum pairs are not initialized");
 		}
 		Pair[] kMin = pairs.clone();
 		Arrays.sort(kMin);
@@ -31,7 +32,7 @@ public class Pair implements Comparable<Pair> {
 
 	public static Pair[] sortIdxSolutions(Solution[] sols) {
 		if (sols == null) {
-			System.out.println("Warning-Pair: getKBest solutions are not initialized");
+			Messages.error("Pair: getKBest solutions are not initialized");
 		}
 			
 		Pair kbest[] = new Pair[sols.length];

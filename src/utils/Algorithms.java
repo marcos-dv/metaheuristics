@@ -1,12 +1,13 @@
 package utils;
 
+import control.Messages;
 import solutions.Solution;
 
 public class Algorithms {
 	
 	public static double d2(double [] p, double [] q) {
 		if (p.length != q.length || p.length <= 0) {
-			System.out.println("Error-Algorithms d2: lengths of points are not equal");
+			Messages.error("Algorithms d2: lengths of points are not equal");
 			return 0;
 		}
 		double d = 0;
@@ -18,7 +19,7 @@ public class Algorithms {
 	
 	public static Solution getGlobalOptimum(Solution [] sols) {
 		if (sols == null) {
-			System.out.println("Warning-Algorithms: getGlobalOptimum function, solutions parameter is null");
+			Messages.warning("Algorithms: getGlobalOptimum function, solutions parameter is null");
 			return null;
 		}
 		double curMin = Double.POSITIVE_INFINITY;

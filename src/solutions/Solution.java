@@ -2,8 +2,9 @@ package solutions;
 
 import java.util.StringTokenizer;
 
+import control.Globals;
+import control.Messages;
 import problems.Problem;
-import utils.Globals;
 import utils.RandomGenerator;
 
 public class Solution {
@@ -88,7 +89,7 @@ public class Solution {
 	public double dist(Solution sol) {
 		double [] coords2 = sol.getCoords();
 		if (coords.length != coords2.length) {
-			System.out.println("Solution warning: euclidean distance between 2 different dimensions");
+			Messages.warning("Solution: euclidean distance between 2 different dimensions");
 		}		
 		return dist(coords, coords2);
 	}

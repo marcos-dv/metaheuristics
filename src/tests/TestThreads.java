@@ -1,10 +1,10 @@
 package tests;
 
+import control.Globals;
 import parallelism.FitnessCalculator;
 import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
-import utils.Globals;
 
 public class TestThreads {
 

@@ -1,8 +1,8 @@
 package tests;
 
+import control.Globals;
 import problems.RandomProblem;
 import solutions.Solution;
-import utils.Globals;
 import utils.Pair;
 
 public class TestPair {

@@ -1,10 +1,10 @@
 package tests;
 
+import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.MinSqSumProblem;
 import problems.Problem;
-import utils.Globals;
 
 public class TestPTGSA {
 	

@@ -1,5 +1,7 @@
 package utils;
 
+import control.Messages;
+
 public class Geometry {
 	
 	public static double[] neg(double [] x) {
@@ -20,7 +22,7 @@ public class Geometry {
 
 	public static double[] div(double [] x, double k) {
 		if (k == 0) {
-			System.out.println("Error-Geometry: div division by k == 0");
+			Messages.error("Geometry: div division by k == 0");
 			return x;
 		}
 		return mult(x, 1/k);
@@ -29,7 +31,7 @@ public class Geometry {
 	public static double[] sum(double [] x, double [] y) {
 		double[] sum = new double[x.length];
 		if (x.length != y.length) {
-			System.out.println("Error-Geometry: sum x and y dont have the same dimension ("
+			Messages.error("Geometry: sum x and y dont have the same dimension ("
 				+ x.length + " and " + y.length + ")");
 			return sum;
 		}
@@ -42,7 +44,7 @@ public class Geometry {
 	public static double[] diff(double [] x, double [] y) {
 		double[] sum = new double[x.length];
 		if (x.length != y.length) {
-			System.out.println("Error-Geometry: diff x and y dont have the same dimension ("
+			Messages.error("Geometry: diff x and y dont have the same dimension ("
 				+ x.length + " and " + y.length + ")");
 			return sum;
 		}
@@ -62,7 +64,7 @@ public class Geometry {
 
 	public static double dist(double [] x, double [] y) {
 		if (x.length != y.length) {
-			System.out.println("Error-Geometry: dist x and y dont have the same dimension ("
+			Messages.error("Geometry: dist x and y dont have the same dimension ("
 				+ x.length + " and " + y.length + ")");
 			return 0;
 		}
@@ -72,7 +74,7 @@ public class Geometry {
 	public static double innerProduct(double [] x, double [] y) {
 		double prod = 0;
 		if (x.length != y.length) {
-			System.out.println("Error-Geometry: innerProd x and y dont have the same dimension ("
+			Messages.error("Geometry: innerProd x and y dont have the same dimension ("
 				+ x.length + " and " + y.length + ")");
 			return 0;
 		}
@@ -84,14 +86,14 @@ public class Geometry {
 
 	public static double angle(double [] x, double [] y) {
 		if (x.length != y.length) {
-			System.out.println("Error-Geometry: angle x and y dont have the same dimension ("
+			Messages.error("Geometry: angle x and y dont have the same dimension ("
 				+ x.length + " and " + y.length + ")");
 			return 0;
 		}
 		double normx = norm(x);
 		double normy = norm(y);
 		if (normx==0 || normy==0) {
-			System.out.println("Error-Geometry: angle x or y have norm 0 ("
+			Messages.error("Geometry: angle x or y have norm 0 ("
 				+ normx + " and " + normy + ")");
 			return 0;
 		}
@@ -109,7 +111,7 @@ public class Geometry {
 
 	public static double[] fill(int dim, double value) {
 		if (dim == 0) {
-			System.out.println("Error-Geometry: fill vector with dim == 0");
+			Messages.error("Geometry: fill vector with dim == 0");
 			return null;
 		}
 		double[] x = new double[dim];

@@ -2,13 +2,13 @@ package exec;
 
 
 import commombenchmarks.AckleyProblem;
+import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
 import problems.Problem;
 import problems.RandomProblem;
 import solutions.Solution;
-import utils.Globals;
 import utils.SimpleClock;
 
 public class DemoCec2015Parallel {

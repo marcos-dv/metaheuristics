@@ -1,5 +1,6 @@
 package commombenchmarks;
 
+import control.Messages;
 import problems.AcademicProblem;
 import solutions.Solution;
 
@@ -47,7 +48,7 @@ public class SphereProblem implements AcademicProblem {
 	public double fitness(Solution sol) {
 		double [] coords = sol.getCoords();
 		if (WARNING && coords.length != dim) {
-			System.out.println("Warning-AcademicProblem: the solution dimension (" 
+			Messages.warning("AcademicProblem: the solution dimension (" 
 					+ coords.length + ") not match the problem dimension (" + dim + ")");
 		}
 		

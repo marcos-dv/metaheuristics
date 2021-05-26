@@ -3,11 +3,11 @@ package exec;
 import commombenchmarks.EllipticProblem;
 import commombenchmarks.QuarticProblem;
 import commombenchmarks.RosebrockProblem;
+import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Problem;
 import solutions.Solution;
-import utils.Globals;
 
 public class DemoBenchmarks {
 	

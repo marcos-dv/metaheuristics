@@ -1,8 +1,9 @@
 package solutions;
 
+import control.Globals;
+import control.Messages;
 import problems.Problem;
 import utils.Geometry;
-import utils.Globals;
 
 public class SolutionGenerator {
 	
@@ -10,7 +11,7 @@ public class SolutionGenerator {
 	// Sampling polar coords within the circle
 	public static Solution[] overCircle(int popsize, Problem problem, double ratio) {
 		if (problem.getDim() != 2) {
-			System.out.println("Error-SolutionGenerator: overCircle in problem with dimension (" 
+			Messages.error("SolutionGenerator: overCircle in problem with dimension (" 
 				+ problem.getDim() + ") not equals to 2");
 		}
 		Solution [] sols = new Solution[popsize];
@@ -27,7 +28,7 @@ public class SolutionGenerator {
 	
 	public static Solution[] overSegment(int popsize, double [] p, double [] q, Problem problem) {
 		if ((problem.getDim() != p.length) || (p.length != q.length)) {
-			System.out.println("Error-SolutionGenerator: overSegment dimensions don't match: problem dim = " 
+			Messages.error("SolutionGenerator: overSegment dimensions don't match: problem dim = " 
 					+ problem.getDim() + " p dim = " + p.length + " q dim = " + q.length);
 		}
 		Solution [] sols = new Solution[popsize];

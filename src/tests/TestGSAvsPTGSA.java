@@ -1,11 +1,11 @@
 package tests;
 
 import commombenchmarks.SphereProblem;
+import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Problem;
 import solutions.Solution;
-import utils.Globals;
 
 public class TestGSAvsPTGSA {
 	

@@ -2,6 +2,8 @@ package utils;
 
 import org.apache.commons.math3.random.MersenneTwister;
 
+import control.Messages;
+
 public class RandomGeneratorMersenne implements RandomGenerator {
 
 	MersenneTwister rand;
@@ -25,7 +27,7 @@ public class RandomGeneratorMersenne implements RandomGenerator {
 		if (upperBound == lowerBound)
 			return lowerBound;
 		if (lowerBound > upperBound) {
-			System.out.println("Error-RandomGeneratorJava: lower bound greater than upper bound");
+			Messages.error("RandomGeneratorJava: lower bound greater than upper bound");
 			return 0;
 		}
 		int r = randomInt() % (upperBound-lowerBound);
@@ -44,7 +46,7 @@ public class RandomGeneratorMersenne implements RandomGenerator {
 		if (upperBound == lowerBound)
 			return lowerBound;
 		if (lowerBound > upperBound) {
-			System.out.println("Error-RandomGeneratorJava: lower bound greater than upper bound");
+			Messages.error("RandomGeneratorJava: lower bound greater than upper bound");
 			return 0;
 		}
 		return lowerBound + (upperBound-lowerBound)*randomDouble();

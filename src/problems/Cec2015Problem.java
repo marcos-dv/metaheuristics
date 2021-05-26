@@ -1,5 +1,6 @@
 package problems;
 
+import control.Messages;
 import problems.cec2015.Cec2015Computations;
 import problems.cec2015.Cec2015Data;
 import solutions.Solution;
@@ -32,10 +33,10 @@ public class Cec2015Problem implements AcademicProblem {
 	
 	public double contestFitness1Sol(Solution sol) throws Exception {
 		if (dim <= 0) {
-			System.out.println("Warning-CEC2015: dimension = " + dim);
+			Messages.warning("CEC2015: dimension = " + dim);
 		}
 		if (funcNumber <= 0 || funcNumber > 15) {
-			System.out.println("Warning-CEC2015: function number = " + funcNumber);
+			Messages.warning("CEC2015: function number = " + funcNumber);
 		}
 		
 		double [] x = sol.getCoords().clone();
@@ -51,10 +52,10 @@ public class Cec2015Problem implements AcademicProblem {
 
 	public double [] contestFitnessMultipleSols(Solution [] sols) throws Exception {
 		if (dim <= 0) {
-			System.out.println("Warning-CEC2015: dimension = " + dim);
+			Messages.warning("CEC2015: dimension = " + dim);
 		}
 		if (funcNumber <= 0 || funcNumber > 15) {
-			System.out.println("Warning-CEC2015: function number = " + funcNumber);
+			Messages.warning("CEC2015: function number = " + funcNumber);
 		}
 		
 		double [] x = new double[sols.length*dim];
@@ -80,8 +81,7 @@ public class Cec2015Problem implements AcademicProblem {
 				f[i] -= getOptimum();
 			return f;
 		} catch (Exception e) {
-			System.err.println("Error-Cec2015Problem: Evaluating test_func. Fitness returned +infinity");
-			System.err.println("Solution not evaluated: " + sols);
+			Messages.error("Cec2015Problem: Evaluating test_func. Fitness returned +infinity \nSolution not evaluated: " + sols);
 			e.printStackTrace();
 		}
 		return null;
@@ -91,7 +91,7 @@ public class Cec2015Problem implements AcademicProblem {
 	@Override
 	public double getOptimum() {
 		if (funcNumber <= 0 || funcNumber > 15) {
-			System.out.println("Warning-CEC2015: function number = " + funcNumber);
+			Messages.warning("CEC2015: function number = " + funcNumber);
 		}
 		return optimum[funcNumber-1];
 	}
@@ -101,8 +101,7 @@ public class Cec2015Problem implements AcademicProblem {
 		try {
 			return contestFitness1Sol(sol)-getOptimum();
 		} catch (Exception e) {
-			System.err.println("Error-Cec2015Problem: Evaluating test_func. Fitness returned +infinity");
-			System.err.println("Solution not evaluated: " + sol);
+			Messages.error("Error-Cec2015Problem: Evaluating test_func. Fitness returned +infinity \n Solution not evaluated: " + sol);
 			e.printStackTrace();
 		}
 		return Double.POSITIVE_INFINITY;

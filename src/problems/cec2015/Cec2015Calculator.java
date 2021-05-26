@@ -1,5 +1,6 @@
 package problems.cec2015;
 
+import control.Messages;
 import parallelism.FitnessCalculator;
 import problems.Cec2015Problem;
 import problems.Problem;
@@ -24,7 +25,7 @@ public class Cec2015Calculator extends FitnessCalculator {
 				f[i+firstIdx] = fit[i];
 			}
 		} catch (Exception e) {
-			System.out.println("Error-Cec2015Calculator: multiple solutions evaluation did not work.");
+			Messages.error("Cec2015Calculator: multiple solutions evaluation did not work.");
 		}
 	}
 

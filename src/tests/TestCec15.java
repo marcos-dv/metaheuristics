@@ -1,9 +1,9 @@
 package tests;
 
+import control.Globals;
 import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
-import utils.Globals;
 
 public class TestCec15 {
 	public static void oneCecTest(int dim, int func_number) {

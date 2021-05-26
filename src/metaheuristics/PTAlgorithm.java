@@ -3,9 +3,10 @@ package metaheuristics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import control.Globals;
+import control.Messages;
 import problems.Problem;
 import solutions.Solution;
-import utils.Globals;
 
 public abstract class PTAlgorithm implements IMetaheuristic {
 	private IMetaheuristic metaheuristic;
@@ -26,7 +27,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 		this.metaheuristic = metaheuristic;
 		popsize = metaheuristic.getSols().length;
 		if (popsize <= 0) {
-			System.out.println("Warning-PTAlgorithm: metaheuristic has no population");
+			Messages.warning("PTAlgorithm: metaheuristic has no population");
 		}
 	}
 
@@ -139,7 +140,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 	public void initPop() {
 		metaheuristic.initPop();
 		if (paramRange == null) {
-			System.out.println("Warning-PTAlgorithm: range of the parameter is not initialized");
+			Messages.warning("PTAlgorithm: range of the parameter is not initialized");
 		}
 		// Initialize EW matrix and means
 		EW = new double[paramRange.length][popsize];
@@ -170,7 +171,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 			}
 		}
 		if (bestIndexes.size() == 0) {
-			System.out.println("Warning-PTAlgorithm: not best parameter value found");
+			Messages.warning("PTAlgorithm: not best parameter value found");
 		}
 		/*
 		if (DEBUG) {
@@ -200,7 +201,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 	public void updatePrevFitness() {
 		Solution[] sols = metaheuristic.getSols();
 		if(popsize != sols.length) {
-			System.out.println("Warning-PTAlgorithm: popsize != sols.length in metaheuristic!\n\tpopsize = " 
+			Messages.warning("PTAlgorithm: popsize != sols.length in metaheuristic!\n\tpopsize = " 
 					+ popsize + " and sols.length = " + sols.length);
 		}
 		prevFitness = new double[popsize];
@@ -285,7 +286,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 			updateCaseMixed(row, delta);
 		}
 		else {
-			System.out.println("Warning-PTAlgorithm: Unknown landscape case");
+			Messages.warning("PTAlgorithm: Unknown landscape case");
 		}
 		// Update mean
 		meansEW[row] = calcMean(row);

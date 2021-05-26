@@ -1,5 +1,7 @@
 package mason;
 
+import control.Globals;
+import control.Messages;
 import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
 import problems.Problem;
@@ -7,7 +9,6 @@ import sim.engine.*;
 import sim.field.continuous.Continuous2D;
 import sim.util.Double2D;
 import solutions.Solution;
-import utils.Globals;
 import utils.RandomGenerator;
 
 public class ContinuousMetaSimulation extends SimState implements Steppable {
@@ -128,7 +129,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		// Just mapping algorithm positions -> screen positions
 		Solution [] sols = algorithm.getSols();
 		if (sols.length != popsize) {
-			System.out.println("Warning-ContinuousMetaSimulationUI: number of solutions (" 
+			Messages.error("ContinuousMetaSimulationUI: number of solutions (" 
 					+ sols.length + ") and popsize (" 
 					+ popsize + " are not equal");
 		}

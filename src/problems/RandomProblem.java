@@ -1,7 +1,7 @@
 package problems;
 
+import control.Globals;
 import solutions.Solution;
-import utils.Globals;
 
 public class RandomProblem implements Problem {
 

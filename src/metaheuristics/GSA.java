@@ -1,12 +1,13 @@
 package metaheuristics;
 
 
+import control.Globals;
+import control.Messages;
 import parallelism.FitnessCalculator;
 import problems.Problem;
 import problems.cec2015.Cec2015Calculator;
 import solutions.Solution;
 import utils.Algorithms;
-import utils.Globals;
 import utils.Pair;
 import utils.Parallelizable;
 
@@ -47,7 +48,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 	public GSA(Problem targetProblem) {
 		this.targetProblem = targetProblem;
 		if (targetProblem.getDim() <= 0) {
-			System.out.println("Warning-GSA: Target problem dimension equals 0.");
+			Messages.warning("GSA: Target problem dimension equals 0.");
 		}
 		numIter = 0;
 		// Default Hyperparameters
@@ -76,7 +77,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 	public void initPop() {
 		// Init population
 		if (sols == null) {
-			System.out.println("GSA error: solutions are not initialized");
+			Messages.error("GSA: solutions are not initialized");
 			return ;
 		}
 		// Random init
@@ -111,34 +112,34 @@ public class GSA implements IMetaheuristic , Parallelizable {
 	public boolean checkCorrectness() {
 		boolean ok = true;
 		if (sols == null) {
-			System.out.println("Warning-GSA: solutions are not initialized");
+			Messages.warning("GSA: solutions are not initialized");
 			ok = false;
 		}
 		else {
 			for (int i = 0; i < sols.length; ++i) {
 				if (sols[i] == null) {
-					System.out.println("Warning-GSA: sols["+i+"] is not initialized");
+					Messages.warning("GSA: sols["+i+"] is not initialized");
 					ok = false;
 				}
 			}
 		}
 		if (numIter < 0) {
-			System.out.println("Warning-GSA: number of iterations < 0");
+			Messages.warning("GSA: number of iterations < 0");
 			ok = false;
 		}
 		
 		if (fit == null || q == null || mass == null || a == null || v == null || kbest == null) {
-			System.out.println("Warning-GSA: fitness, q, mass, acceleration, velocity , or kbest are not initialized");
+			Messages.warning("GSA: fitness, q, mass, acceleration, velocity , or kbest are not initialized");
 			ok = false;
 		}
 		if (G0 <= 0) {
-			System.out.println("Warning-GSA: G0 = " + G0);
+			Messages.warning("GSA: G0 = " + G0);
 		}
 		if (alfa <= 0) {
-			System.out.println("Warning-GSA: alfa = " + alfa);
+			Messages.warning("GSA: alfa = " + alfa);
 		}
 		if (epsilon <= 0) {
-			System.out.println("Warning-GSA: epsilon = " + epsilon);
+			Messages.warning("GSA: epsilon = " + epsilon);
 			ok = false;
 		}
 
@@ -184,6 +185,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		 */
 	}
 	
+	// TODO check that 8!!
 	protected void computeParallelFitness() {
 		setNumThreads(8);
 		FitnessCalculator [] fitnessThread = new FitnessCalculator[getNumThreads()];
@@ -202,7 +204,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 			try {
 				fitnessCalculator.join();
 			} catch (InterruptedException e) {
-				System.out.println("Error-GSA: Error while waiting threads");
+				Messages.error("GSA: Error while waiting threads");
 			}
 		}
 	}

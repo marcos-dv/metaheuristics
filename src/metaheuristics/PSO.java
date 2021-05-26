@@ -1,9 +1,10 @@
 package metaheuristics;
 
+import control.Globals;
+import control.Messages;
 import problems.Problem;
 import solutions.Solution;
 import utils.Algorithms;
-import utils.Globals;
 import utils.RandomGenerator;
 
 public class PSO implements IMetaheuristic {
@@ -37,7 +38,7 @@ public class PSO implements IMetaheuristic {
 	@Override
 	public void initPop() {
 		if (sols == null) {
-			System.out.println("PSO error: solutions are not initialized");
+			Messages.error("PSO: solutions are not initialized");
 			return ;
 		}
 		// Random init
