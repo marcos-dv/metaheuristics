@@ -1,5 +1,6 @@
 package utils;
 
+import control.Globals;
 import control.Messages;
 
 public class Geometry {
@@ -129,6 +130,31 @@ public class Geometry {
 
 	public static boolean isZero(double [] x) {
 		return norm(x) <= EPS;
+	}
+
+	public static double [] mutationPerAxis(double [] x, double step) {
+		double [] mutation = new double[x.length];
+		RandomGenerator rand = Globals.getRandomGenerator();
+		for(int i = 0; i < mutation.length; ++i) {
+			double offset = rand.randomDouble(-step, step);
+			mutation[i] = x[i]+offset;
+		}
+		return mutation;
+	}
+
+	public static double [] mutationAnyAxis(double [] x, double step) {
+		int randomAxis = Globals.getRandomGenerator().randomInt(0, x.length);
+		return mutationOneAxis(x, randomAxis, step);
+	}
+
+	public static double [] mutationOneAxis(double [] x, int axis, double step) {
+		double [] mutation = new double[x.length];
+		RandomGenerator rand = Globals.getRandomGenerator();
+		for(int i = 0; i < mutation.length; ++i) {
+			mutation[i] = x[i];
+		}
+		mutation[axis] += rand.randomDouble(-step, step);
+		return mutation;
 	}
 
 	

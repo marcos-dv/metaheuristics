@@ -36,4 +36,10 @@ public class Algorithms {
 		return curSol;
 	}
 	
+	public static Solution getNeighbour(Solution sol, double step) {
+		double [] newCoords = Geometry.mutationPerAxis(sol.getCoords(), step);
+		return new Solution(newCoords, sol.getTargetProblem());
+	}
+	
+	
 }
