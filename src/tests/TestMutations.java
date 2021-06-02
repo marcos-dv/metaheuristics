@@ -4,6 +4,7 @@ import control.Globals;
 import problems.Problem;
 import problems.RandomProblem;
 import solutions.Solution;
+import solutions.SolutionGenerator;
 import utils.Algorithms;
 import utils.Geometry;
 
@@ -26,11 +27,11 @@ public class TestMutations {
 		System.out.println("Old solution:");
 		System.out.println(sol);
 		System.out.println("Mutation:");
-		System.out.println(Algorithms.getNeighbour(sol, 0.3));
+		System.out.println(SolutionGenerator.getNeighbour(sol, 0.3));
 		System.out.println("Mutation:");
-		System.out.println(Algorithms.getNeighbour(sol, 0.3));
+		System.out.println(SolutionGenerator.getNeighbour(sol, 0.3));
 		System.out.println("Mutation:");
-		System.out.println(Algorithms.getNeighbour(sol, 0.3));
+		System.out.println(SolutionGenerator.getNeighbour(sol, 0.3));
 	}
 
 	public static void testRandomOneAxis() {
