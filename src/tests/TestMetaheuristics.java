@@ -4,7 +4,7 @@ import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
-import metaheuristics.Pointless;
+import metaheuristics.PointlessAlgorithm;
 import problems.MinSqSumProblem;
 import problems.Problem;
 import problems.RandomProblem;
@@ -46,7 +46,7 @@ public class TestMetaheuristics {
 		int dim = 3;
 		int maxiter = 1000;
 		Problem problem = new MinSqSumProblem(dim);
-		Pointless meta = new Pointless(popsize, problem);
+		PointlessAlgorithm meta = new PointlessAlgorithm(popsize, problem);
 		testProblem(meta, dim, popsize, maxiter);
 	}
 

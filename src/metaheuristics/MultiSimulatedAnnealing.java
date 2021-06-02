@@ -4,6 +4,7 @@ import control.Globals;
 import control.Messages;
 import problems.Problem;
 import solutions.Solution;
+import solutions.SolutionGenerator;
 import utils.Algorithms;
 
 public class MultiSimulatedAnnealing implements IMetaheuristic {
@@ -15,7 +16,6 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 	private Problem targetProblem;
 	private int numIter;
 
-	// TODO getters setters
 	private double alfa;
 	private double L;
 	private double Temp;
@@ -80,7 +80,7 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 	}
 	
 	public void update(int idx) {
-		Solution sol_ = Algorithms.getNeighbour(sols[idx], step);
+		Solution sol_ = SolutionGenerator.getNeighbour(sols[idx], step);
 		if (diffFeasible(sols[idx], sol_)) {
 			sols[idx] = new Solution(sol_);
 		}

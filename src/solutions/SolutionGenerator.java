@@ -7,6 +7,11 @@ import utils.Geometry;
 
 public class SolutionGenerator {
 	
+	public static Solution getNeighbour(Solution sol, double step) {
+		double [] newCoords = Geometry.mutationPerAxis(sol.getCoords(), step);
+		return new Solution(newCoords, sol.getTargetProblem());
+	}
+	
 	// Only for dim = 2
 	// Sampling polar coords within the circle
 	public static Solution[] overCircle(int popsize, Problem problem, double ratio) {

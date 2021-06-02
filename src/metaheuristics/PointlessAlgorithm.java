@@ -6,7 +6,7 @@ import problems.Problem;
 import solutions.Solution;
 import utils.Algorithms;
 
-public class Pointless implements IMetaheuristic {
+public class PointlessAlgorithm implements IMetaheuristic {
 
 	private boolean DEBUG = false;
 	
@@ -15,7 +15,7 @@ public class Pointless implements IMetaheuristic {
 	private Problem targetProblem;
 	private int numIter;
 
-	public Pointless(Problem targetProblem) {
+	public PointlessAlgorithm(Problem targetProblem) {
 		this.targetProblem = targetProblem;
 		if (targetProblem.getDim() <= 0) {
 			Messages.warning("GSA: Target problem dimension equals 0.");
@@ -23,12 +23,12 @@ public class Pointless implements IMetaheuristic {
 		numIter = 0;
 	}
 
-	public Pointless(int popSize, Problem targetProblem) {
+	public PointlessAlgorithm(int popSize, Problem targetProblem) {
 		this(targetProblem);
 		sols = new Solution[popSize];
 	}
 	
-	public Pointless(Solution [] sols, Problem targetProblem) {
+	public PointlessAlgorithm(Solution [] sols, Problem targetProblem) {
 		this(targetProblem);
 		this.sols = sols.clone();
 	}
