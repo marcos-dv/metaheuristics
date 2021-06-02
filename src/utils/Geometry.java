@@ -2,6 +2,7 @@ package utils;
 
 import control.Globals;
 import control.Messages;
+import solutions.Solution;
 
 public class Geometry {
 	
@@ -165,6 +166,55 @@ public class Geometry {
 		}
 		mutation[axis] += rand.randomUniform(-step, step);
 		return mutation;
+	}
+
+	public static double distPoint2Polygon(double [][] polygon, boolean open, double [] x) {
+		double res = Double.POSITIVE_INFINITY;
+		int numberOfSegments;
+		if (open)
+			numberOfSegments = polygon.length-1;
+		else
+			numberOfSegments = polygon.length;
+		for(int v = 0; v < numberOfSegments; ++v) {
+			double [] vertex1 = polygon[v];
+			double [] vertex2 = polygon[(v+1)%polygon.length];
+			res = Math.min(res, distPoint2Segment(vertex1, vertex2, x));
+		}
+		return res;
+	}
+	
+	// TODO add tests for this
+	public static double distPoint2Segment(double [] p, double [] q, double [] x) {
+		if (p.length != q.length || x.length != q.length) {
+			Messages.error("Geometry: distPoint2Segment p or q or x dont have the same dimension ("
+				+ p.length + " , " + q.length + " , " + x.length + ")");
+			return 0;
+		}
+		double [] pq = diff(q, p);
+		double [] px = diff(x, p);
+		double anglep = Math.abs(angle(pq, px));
+		double [] qp = diff(p, q);
+		double [] qx = diff(x, q);
+		double angleq = Math.abs(angle(qp, qx));
+		if (anglep > Math.PI/2 || angleq > Math.PI/2) {
+			return Math.min(dist(p, x), dist(q, x));
+		}
+		return distPoint2Line2D(p, q, x);
+	}
+
+	public static double distPoint2Line2D(double[] p, double[] q, double[] x) {
+		if (p.length != q.length || x.length != q.length || x.length != 2) {
+			Messages.error("Geometry: distPoint2Segment p or q or x dont have dimension 2 ("
+				+ p.length + " , " + q.length + " , " + x.length + ")");
+			return 0;
+		}
+		if (isZero(diff(p, q))) { // p = q
+			return dist(x, p);
+		}
+		double up = (q[0]-p[0])*(p[1]-x[1])-(p[0]-x[0])*(q[1]-p[0]);
+		up = Math.abs(up);
+		double down = norm(diff(p, q));
+		return up/down;
 	}
 
 	

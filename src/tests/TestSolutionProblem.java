@@ -2,6 +2,7 @@ package tests;
 
 import problems.*;
 import solutions.Solution;
+import utils.SomePolygons;
 
 public class TestSolutionProblem {
 
@@ -29,12 +30,28 @@ public class TestSolutionProblem {
 		}
 	}
 
+	public static void PolygonProblem() {
+		PolygonProblem problem = new PolygonProblem(SomePolygons.M, true);
+		Solution [] sols = new Solution[5];
+		int i = 1;
+		int dim = 2;
+		for (Solution solution : sols) {
+			solution = new Solution(dim, problem);
+			solution.randomInit();
+			System.out.println("Solution " + i + " fitness = " + solution.getFitness());
+			i++;
+		}
+	}
+
 	public static void main(String[] args) {
+		/*
 		System.out.println("Start dummy test 1");
 		dummyTest1();
 		System.out.println("Start dummy test 2");
 		dummyTest2();
 		System.out.println("End testing");
+		*/
+		PolygonProblem();
 	}
 
 }
