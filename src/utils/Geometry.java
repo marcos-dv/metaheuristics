@@ -7,6 +7,16 @@ public class Geometry {
 	
 	private static final double EPS = 1e-14;
 
+	public static void display(double [] x) {
+		String s = "(";
+		
+		for (int i = 0; i < x.length-1; ++i) {
+			s += Double.toString(x[i]) + ", ";
+		}
+		s += Double.toString(x[x.length-1]) + ")";
+		System.out.println(s);
+	}
+	
 	public static double[] neg(double [] x) {
 		double[] xx = new double[x.length];
 		for (int i = 0; i < x.length; ++i) {

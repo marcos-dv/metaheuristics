@@ -2,14 +2,16 @@ package mason;
 
 import control.Globals;
 import control.Messages;
-import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
+import metaheuristics.MultiSimulatedAnnealing;
 import problems.Problem;
 import sim.engine.*;
 import sim.field.continuous.Continuous2D;
 import sim.util.Double2D;
 import solutions.Solution;
+import solutions.SolutionGenerator;
 import utils.RandomGenerator;
+import utils.SomePolygons;
 
 public class ContinuousMetaSimulation extends SimState implements Steppable {
 
@@ -160,11 +162,23 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	}
 
 	private void setupAlgorithm() {
-		maxiter = 1000;
+		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
+		meta.initPop();
+//		double ratio = 20;
+//		Solution[] sols = SolutionGenerator.overCircle(popsize, targetProblem, ratio);
+		double [][] polygon = SomePolygons.A;
+		Solution[] sols = SolutionGenerator.overPolygon(popsize, polygon, true, targetProblem);
+		meta.setSols(sols);
+		meta.setL(50);
+		meta.setStep(0.3);
+		setAlgorithm(meta);
+
+		/*
 		GSA gsa = new GSA(popsize, targetProblem);
 		gsa.setMAX_ITER(maxiter);
 		gsa.initPop();
 		setAlgorithm(gsa);
+		*/
 	}
 	
 	private void setupGrid() {

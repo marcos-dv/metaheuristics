@@ -9,7 +9,9 @@ import utils.Algorithms;
 
 public class MultiSimulatedAnnealing implements IMetaheuristic {
 
-	private boolean DEBUG = false;
+	// TODO implement termination criteria + tuning initial temperature!
+	
+	private boolean DEBUG = true;
 	
 	private Solution [] sols;
 	private Solution globalBest;
@@ -71,7 +73,7 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 	// Should jump from s to ss?
 	public boolean diffFeasible(Solution s, Solution ss) {
 		double delta = ss.getFitness()-s.getFitness();
-		double prob = Globals.getRandomGenerator().randomNormal(0, 1);
+		double prob = Globals.getRandomGenerator().randomUniform(0, 1);
 		if (DEBUG) {
 			System.out.println(Math.exp(-delta/Temp) + " vs " + prob);
 			System.out.println(Temp);

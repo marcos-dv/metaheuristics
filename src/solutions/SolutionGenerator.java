@@ -36,15 +36,39 @@ public class SolutionGenerator {
 			Messages.error("SolutionGenerator: overSegment dimensions don't match: problem dim = " 
 					+ problem.getDim() + " p dim = " + p.length + " q dim = " + q.length);
 		}
+		System.out.println("Segment:");
+		Geometry.display(p);
+		Geometry.display(q);
 		Solution [] sols = new Solution[popsize];
 		double[][] x = new double[popsize][problem.getDim()];
 		for(int i = 0; i < popsize; ++i) {
 			double lambda = Globals.getRandomGenerator().randomUniform(0, 1);
 			double [] lambdap = Geometry.mult(p, lambda);
 			double [] lambdaq = Geometry.mult(q, 1-lambda);
-			x[i] = Geometry.diff(lambdap, lambdaq);
+			x[i] = Geometry.sum(lambdap, lambdaq);
+			Geometry.display(x[i]);
+			sols[i] = new Solution(x[i], problem);
 		}
 		return sols;
 	}
 
+	public static Solution[] overPolygon(int popsize, double [][] polygon, boolean open, Problem problem) {
+		Solution [] sols = new Solution[popsize];
+		double[][] x = new double[popsize][problem.getDim()];
+		int numberOfSegments;
+		if (open)
+			numberOfSegments = polygon.length-1;
+		else
+			numberOfSegments = polygon.length;
+		for(int i = 0; i < popsize; ++i) {
+			int targetSegment = Globals.getRandomGenerator().randomInt(0, numberOfSegments);
+			double [] vertex1 = polygon[targetSegment];
+			double [] vertex2 = polygon[(targetSegment+1)%polygon.length];
+			Solution [] singleSol = overSegment(1, vertex1, vertex2, problem);
+			sols[i] = new Solution(singleSol[0]);
+		}
+		return sols;
+	}
+
+	
 }
