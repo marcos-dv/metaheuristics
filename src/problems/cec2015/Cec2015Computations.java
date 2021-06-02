@@ -1,10 +1,10 @@
 package problems.cec2015;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class Cec2015Computations {
+
+	private final static int CEC2015_TOTAL_FUNCTIONS = 15;
+	private final static int CEC2015_MAX_DIM = 50;
+	
 	final double INF = 1.0e99;
 	final double EPS = 1.0e-14;
 	final double E = 2.7182818284590452353602874713526625;
@@ -14,7 +14,7 @@ public class Cec2015Computations {
 
 	int[] bShuffle = { 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0 };
 
-	double[] OShift, M, y, z, x_bound, bias;
+	double[] OShift, M, y, z, bias;
 	int ini_flag, n_flag, func_flag;
 	int[] SS;
 
@@ -86,18 +86,35 @@ public class Cec2015Computations {
 	// double cf_cal(double[] , double , int , double[] ,double[] ,double[]
 	// ,double[] , int )
 
-	@SuppressWarnings("resource")
+	public Cec2015Computations(int func_number, int dim) {
+		// Setup classes where information is stored (bias, shuffled data...)
+		if (Cec2015Data.data == null) {
+			Cec2015Data.data = new Cec2015Data[CEC2015_MAX_DIM+1][CEC2015_TOTAL_FUNCTIONS+1];
+		}
+		if (Cec2015Data.data[dim][func_number] == null) {
+			Cec2015Data.data[dim][func_number] = new Cec2015Data(dim, func_number);
+		}
+	}
+	
+	public void updateWith(Cec2015Data data) {
+		M = data.M;
+		bias = data.bias;
+		OShift = data.OShift;
+		SS = data.SS;
+	}
+
+	private void setup(int nx, int func_num, int cf_num) {
+		// Skip all the readings!
+		updateWith(Cec2015Data.data[nx][func_num]);
+		y = new double[nx];
+		z = new double[nx];
+	}
+	
 	public void test_func(double[] x, double[] f, int nx, int mx, int func_num) throws Exception {
 		// int cf_num=10,i,j;
 		int cf_num, i, j;
 		cf_num = cf_nums[func_num];
 
-		if (ini_flag == 1) {
-			if ((n_flag != nx) || (func_flag != func_num)) /* check if nx or func_num are changed, reinitialization */
-			{
-				ini_flag = 0;
-			}
-		}
 		if (ini_flag == 0) /* initialization */
 		{
 			setup(nx, func_num, cf_num);
@@ -177,100 +194,6 @@ public class Cec2015Computations {
 					break;
 				}
 			}
-		}
-	}
-
-	private void setup(int nx, int func_num, int cf_num) throws FileNotFoundException {
-		int i;
-		int j;
-		y = new double[nx];
-		z = new double[nx];
-		x_bound = new double[nx];
-		for (i = 0; i < nx; i++)
-			x_bound[i] = 100.0;
-
-		if (!(nx == 2 || nx == 10 || nx == 30 || nx == 50 || nx == 100)) {
-			System.out.println("\nError: Test functions are only defined for D=2,10,30,50,100.");
-		}
-
-		if (nx == 2 && ((func_num >= 6 && func_num <= 8) || (func_num == 10) || (func_num == 13))) {
-			System.out.println("\nError: hf01,hf02,hf03,cf02&cf05 are NOT defined for D=2.\n");
-		}
-
-		/* Load Matrix M *****************************************************/
-		File fpt = new File("input_data/M_" + func_num + "_D" + nx + ".txt");// * Load M data *
-		Scanner input = new Scanner(fpt);
-		if (!fpt.exists()) {
-			System.out.println("\n Error: Cannot open input file for reading ");
-		}
-
-		M = new double[cf_num * nx * nx];
-
-		for (i = 0; i < cf_num * nx * nx; i++) {
-			M[i] = input.nextDouble();
-		}
-
-		input.close();
-
-		/* Load Bias_value bias *************************************************/
-
-		if (cf_num > 1) {
-			fpt = new File("input_data/bias_" + func_num + ".txt");// * Load bias data *
-			input = new Scanner(fpt);
-			if (!fpt.exists()) {
-				System.out.println("\n Error: Cannot open input file for reading ");
-			}
-			bias = new double[cf_num];
-			for (i = 0; i < cf_num; i++) {
-				bias[i] = input.nextDouble();
-			}
-			input.close();
-		}
-
-		/* Load shift_data ***************************************************/
-
-		fpt = new File("input_data/shift_data_" + func_num + ".txt");
-		input = new Scanner(fpt);
-		if (!fpt.exists()) {
-			System.out.println("\n Error: Cannot open input file for reading ");
-		}
-
-		OShift = new double[cf_num * nx];
-
-		if (func_num < 9) {
-			for (i = 0; i < nx * cf_nums[func_num]; i++) {
-
-				OShift[i] = input.nextDouble();
-			}
-		} else {
-			for (i = 0; i < cf_nums[func_num] - 1; i++) {
-				for (j = 0; j < nx; j++) {
-					OShift[i * nx + j] = input.nextDouble();
-				}
-				input.nextLine();
-			}
-			for (j = 0; j < nx; j++) {
-				OShift[(cf_nums[func_num] - 1) * nx + j] = input.nextDouble();
-			}
-
-		}
-
-		input.close();
-
-		/* Load Shuffle_data *******************************************/
-
-		if (bShuffle[func_num] == 1) {
-			fpt = new File("input_data/shuffle_data_" + func_num + "_D" + nx + ".txt");
-			input = new Scanner(fpt);
-			if (!fpt.exists()) {
-				System.out.println("\n Error: Cannot open input file for reading ");
-			}
-			SS = new int[cf_num * nx];
-
-			for (i = 0; i < cf_num * nx; i++) {
-				SS[i] = input.nextInt();
-			}
-			input.close();
 		}
 	}
 

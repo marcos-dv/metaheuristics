@@ -71,7 +71,7 @@ public class DemoCec2015 {
 	public static void main(String[] args) {
 		int dim = 30;
 		int popsize = 50;
-		int numiter = 300;
+		int numiter = 10;
 //		int numiter = 200;
 		System.out.println(" --- Start test --- ");
 		long t0 = System.currentTimeMillis();

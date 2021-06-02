@@ -10,7 +10,6 @@ public class TestCec15 {
 		// Fix seed for experiments
 		Globals.getRandomGenerator().setSeed(1);
 
-		
 		Problem problem = new Cec2015Problem(func_number, dim);
 		Solution sol = new Solution(problem);
 		for(int i = 0; i < sol.coords.length; ++i) {
