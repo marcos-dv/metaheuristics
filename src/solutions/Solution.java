@@ -99,7 +99,7 @@ public class Solution {
 	    coords = new double[dim];
 	    //populate the array with doubles
 	    for (int i = 0; i < coords.length; ++i) {
-			coords[i] = rand.randomDouble(targetProblem.getLB(), targetProblem.getUB());
+			coords[i] = rand.randomUniform(targetProblem.getLB(), targetProblem.getUB());
 		}
 	}
 

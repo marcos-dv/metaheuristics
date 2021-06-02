@@ -4,6 +4,6 @@ public interface RandomGenerator {
 	public void setSeed(long seed);
 	public int randomInt();
 	public int randomInt(int lowerBound, int upperBound);
-	public double randomDouble();
-	public double randomDouble(double lowerBound, double upperBound);
+	public double randomUniform();
+	public double randomUniform(double lowerBound, double upperBound);
 }

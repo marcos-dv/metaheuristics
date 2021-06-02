@@ -136,7 +136,7 @@ public class Geometry {
 		double [] mutation = new double[x.length];
 		RandomGenerator rand = Globals.getRandomGenerator();
 		for(int i = 0; i < mutation.length; ++i) {
-			double offset = rand.randomDouble(-step, step);
+			double offset = rand.randomUniform(-step, step);
 			mutation[i] = x[i]+offset;
 		}
 		return mutation;
@@ -153,7 +153,7 @@ public class Geometry {
 		for(int i = 0; i < mutation.length; ++i) {
 			mutation[i] = x[i];
 		}
-		mutation[axis] += rand.randomDouble(-step, step);
+		mutation[axis] += rand.randomUniform(-step, step);
 		return mutation;
 	}
 

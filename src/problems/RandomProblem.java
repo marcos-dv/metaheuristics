@@ -26,7 +26,7 @@ public class RandomProblem implements Problem {
 
 	@Override
 	public double fitness(Solution sol) {
-		return Globals.getRandomGenerator().randomDouble(lowerBound, upperBound);
+		return Globals.getRandomGenerator().randomUniform(lowerBound, upperBound);
 	}
 
 	@Override

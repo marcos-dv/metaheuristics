@@ -37,19 +37,19 @@ public class RandomGeneratorJava implements RandomGenerator {
 	}
 
 	@Override
-	public double randomDouble() {
+	public double randomUniform() {
 		return rand.nextDouble();
 	}
 
 	@Override
-	public double randomDouble(double lowerBound, double upperBound) {
+	public double randomUniform(double lowerBound, double upperBound) {
 		if (upperBound == lowerBound)
 			return lowerBound;
 		if (lowerBound > upperBound) {
 			Messages.error("RandomGeneratorJava: lower bound greater than upper bound");
 			return 0;
 		}
-		return lowerBound + (upperBound-lowerBound)*randomDouble();
+		return lowerBound + (upperBound-lowerBound)*randomUniform();
 	}
 
 }

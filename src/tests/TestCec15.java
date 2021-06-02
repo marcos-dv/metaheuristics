@@ -14,7 +14,7 @@ public class TestCec15 {
 		Problem problem = new Cec2015Problem(func_number, dim);
 		Solution sol = new Solution(problem);
 		for(int i = 0; i < sol.coords.length; ++i) {
-			sol.coords[i] = Globals.getRandomGenerator().randomDouble(-100, 100);
+			sol.coords[i] = Globals.getRandomGenerator().randomUniform(-100, 100);
 		}
 		System.out.println(sol);
 	}
@@ -31,7 +31,7 @@ public class TestCec15 {
 		}
 		for(int j = 0; j < popsize; ++j)
 		for(int i = 0; i < sols[j].coords.length; ++i) {
-			sols[j].coords[i] = Globals.getRandomGenerator().randomDouble(-100, 100);
+			sols[j].coords[i] = Globals.getRandomGenerator().randomUniform(-100, 100);
 		}
 		double [] f = null;
 		try {

@@ -65,7 +65,7 @@ public class PSO implements IMetaheuristic {
 		v = new double[popSize];
 	    RandomGenerator rand = Globals.getRandomGenerator();
 		for(int i = 0; i < popSize; ++i) {
-			v[i] = rand.randomDouble(targetProblem.getLB()-targetProblem.getUB(),
+			v[i] = rand.randomUniform(targetProblem.getLB()-targetProblem.getUB(),
 									targetProblem.getUB()-targetProblem.getLB());
 		}
 		

@@ -10,9 +10,9 @@ public class TestRandomGenerator {
 		System.out.println(rand.randomInt(-7, 7));
 		System.out.println(rand.randomInt(123456, 123456));
 
-		System.out.println(rand.randomDouble(13, -13));
-		System.out.println(rand.randomDouble(-7, 7));
-		System.out.println(rand.randomDouble(123456, 123456));
+		System.out.println(rand.randomUniform(13, -13));
+		System.out.println(rand.randomUniform(-7, 7));
+		System.out.println(rand.randomUniform(123456, 123456));
 	}
 	
 	public static void main(String[] args) {

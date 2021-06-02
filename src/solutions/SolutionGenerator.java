@@ -17,7 +17,7 @@ public class SolutionGenerator {
 		Solution [] sols = new Solution[popsize];
 		double[][] x = new double[popsize][problem.getDim()];
 		for(int i = 0; i < popsize; ++i) {
-			double theta = Globals.getRandomGenerator().randomDouble(0, 2*Math.PI);
+			double theta = Globals.getRandomGenerator().randomUniform(0, 2*Math.PI);
 			x[i][0] = ratio*Math.cos(theta);
 			x[i][1] = ratio*Math.sin(theta);
 			sols[i] = new Solution(x[i], problem);
@@ -34,7 +34,7 @@ public class SolutionGenerator {
 		Solution [] sols = new Solution[popsize];
 		double[][] x = new double[popsize][problem.getDim()];
 		for(int i = 0; i < popsize; ++i) {
-			double lambda = Globals.getRandomGenerator().randomDouble(0, 1);
+			double lambda = Globals.getRandomGenerator().randomUniform(0, 1);
 			double [] lambdap = Geometry.mult(p, lambda);
 			double [] lambdaq = Geometry.mult(q, 1-lambda);
 			x[i] = Geometry.diff(lambdap, lambdaq);

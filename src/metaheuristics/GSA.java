@@ -290,7 +290,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		if (DEBUG)
 			System.out.println("# velocity");
 		for (int i = 0; i < sols.length; ++i) {
-			double r = Globals.getRandomGenerator().randomDouble();
+			double r = Globals.getRandomGenerator().randomUniform();
 			for (int d = 0; d < targetProblem.getDim(); ++d) {
 				v[i][d] = r*v[i][d]+a[i][d];
 			}
@@ -327,7 +327,7 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		double [] factorj = new double[kSize];
 		for(int j = 0; j < kSize; ++j) {
 			// Factor j
-			factorj[j] = Globals.getRandomGenerator().randomDouble();
+			factorj[j] = Globals.getRandomGenerator().randomUniform();
 			factorj[j] *= mass[kbest[j].index];
 
 		}
