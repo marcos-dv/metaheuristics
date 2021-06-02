@@ -6,4 +6,6 @@ public interface RandomGenerator {
 	public int randomInt(int lowerBound, int upperBound);
 	public double randomUniform();
 	public double randomUniform(double lowerBound, double upperBound);
+	public double randomNormal();
+	public double randomNormal(double mean, double variance);
 }

@@ -43,8 +43,6 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 		this.sols = sols.clone();
 	}
 
-	
-	
 	@Override
 	public void initPop() {
 		// Init population

@@ -52,4 +52,15 @@ public class RandomGeneratorMersenne implements RandomGenerator {
 		return lowerBound + (upperBound-lowerBound)*randomUniform();
 	}
 
+	@Override
+	public double randomNormal() {
+		return rand.nextGaussian();
+	}
+
+	@Override
+	public double randomNormal(double mean, double variance) {
+		return Math.sqrt(variance)*rand.nextGaussian()+mean;
+
+	}
+
 }

@@ -52,4 +52,15 @@ public class RandomGeneratorJava implements RandomGenerator {
 		return lowerBound + (upperBound-lowerBound)*randomUniform();
 	}
 
+	@Override
+	public double randomNormal() {
+		return rand.nextGaussian();
+	}
+
+	@Override
+	public double randomNormal(double mean, double variance) {
+		return rand.nextGaussian()*Math.sqrt(variance)+mean;
+	}
+
+	
 }
