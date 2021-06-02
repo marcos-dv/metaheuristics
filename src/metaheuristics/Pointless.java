@@ -6,7 +6,7 @@ import problems.Problem;
 import solutions.Solution;
 import utils.Algorithms;
 
-public class MultiSimulatedAnnealing implements IMetaheuristic {
+public class Pointless implements IMetaheuristic {
 
 	private boolean DEBUG = false;
 	
@@ -15,31 +15,20 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 	private Problem targetProblem;
 	private int numIter;
 
-	// TODO getters setters
-	private double alfa;
-	private double L;
-	private double Temp;
-	private double step; // for neighbours!
-
-	public MultiSimulatedAnnealing(Problem targetProblem) {
+	public Pointless(Problem targetProblem) {
 		this.targetProblem = targetProblem;
 		if (targetProblem.getDim() <= 0) {
 			Messages.warning("GSA: Target problem dimension equals 0.");
 		}
 		numIter = 0;
-		// Default Hyperparameters
-		alfa = 0.9;
-		L = 500;
-		Temp = 50000;
-		step = 1;
 	}
 
-	public MultiSimulatedAnnealing(int popSize, Problem targetProblem) {
+	public Pointless(int popSize, Problem targetProblem) {
 		this(targetProblem);
 		sols = new Solution[popSize];
 	}
 	
-	public MultiSimulatedAnnealing(Solution [] sols, Problem targetProblem) {
+	public Pointless(Solution [] sols, Problem targetProblem) {
 		this(targetProblem);
 		this.sols = sols.clone();
 	}
@@ -68,35 +57,8 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 		}
 	}
 	
-	// Should jump from s to ss?
-	public boolean diffFeasible(Solution s, Solution ss) {
-		double delta = ss.getFitness()-s.getFitness();
-		double prob = Globals.getRandomGenerator().randomNormal(0, 1);
-		if (DEBUG) {
-			System.out.println(Math.exp(-delta/Temp) + " vs " + prob);
-			System.out.println(Temp);
-		}
-		return Math.exp(-delta/Temp) > prob;
-	}
-	
-	public void update(int idx) {
-		Solution sol_ = Algorithms.getNeighbour(sols[idx], step);
-		if (diffFeasible(sols[idx], sol_)) {
-			sols[idx] = new Solution(sol_);
-		}
-	}
-	
 	@Override
 	public void nextIter() {
-		for(int i = 0; i < sols.length; ++i) {
-			update(i);
-		}
-		
-		// Decrease the temperature in multiples of L
-		if (numIter % L == 0) {
-			Temp *= alfa;
-		}
-		
 		numIter++;
 	}
 
@@ -107,38 +69,6 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 
 	public void setNumIter(int numIter) {
 		this.numIter = numIter;
-	}
-
-	public double getAlfa() {
-		return alfa;
-	}
-
-	public void setAlfa(double alfa) {
-		this.alfa = alfa;
-	}
-
-	public double getL() {
-		return L;
-	}
-
-	public void setL(double l) {
-		L = l;
-	}
-
-	public double getTemp() {
-		return Temp;
-	}
-
-	public void setTemp(double temp) {
-		Temp = temp;
-	}
-
-	public double getStep() {
-		return step;
-	}
-
-	public void setStep(double step) {
-		this.step = step;
 	}
 
 	public void setSols(Solution[] sols) {
