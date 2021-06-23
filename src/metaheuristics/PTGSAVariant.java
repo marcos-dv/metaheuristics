@@ -1,16 +1,11 @@
 package metaheuristics;
 
-public class PTGSA extends PTAlgorithm {
+public class PTGSAVariant extends PTAlgorithmVariant {
 	private GSA gsa;
 	
 	private boolean DEBUG = true;
 	
-	public PTGSA(GSA gsa) {
-		super(gsa);
-		this.gsa = (GSA) getMetaheuristic();
-	}
-
-	public PTGSA(GSA gsa, double [] range) {
+	public PTGSAVariant(GSA gsa, double [] range) {
 		super(gsa, range);
 		this.gsa = (GSA) getMetaheuristic();
 	}
