@@ -2,13 +2,18 @@ package metaheuristics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import control.Globals;
 import control.Messages;
 import problems.Problem;
 import solutions.Solution;
 
-public abstract class PTAlgorithmVariant implements IMetaheuristic {
+public abstract class PTAlgorithmOne implements IMetaheuristic {
 	private IMetaheuristic metaheuristic;
 	private double [] prevFitness;
 	private Problem problem;
@@ -17,24 +22,31 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 	private boolean DEBUG = false;
 	private double curAlfa; // current value for the parameter alfa
 	
-	private EW ew;
+	private Set<String> paramNames;
+	private HashMap<String, EW> parameters;
 	
-	public PTAlgorithmVariant(IMetaheuristic metaheuristic, double [] range) {
+	public PTAlgorithmOne(IMetaheuristic metaheuristic) {
 		this.metaheuristic = metaheuristic;
 		popsize = metaheuristic.getSols().length;
 		if (popsize <= 0) {
 			Messages.warning("PTAlgorithm: metaheuristic has no population");
 		}
-		ew = new EW(popsize, range);
+		paramNames = new HashSet<>();
+		parameters = new HashMap<>();
 	}
-
-	public double getCurAlfa() {
-		return curAlfa;
+	
+	public void setNewParam(String paramName, double [] paramRange) {
+		paramNames.add(paramName);
+		EW ew = new EW(paramName, popsize, paramRange);
+		parameters.put(paramName, ew);
 	}
-
-	public void setCurAlfa(double curAlfa) {
-		this.curAlfa = curAlfa;
-		setNewParam(curAlfa);
+	
+	public double getCurAlfa(String paramName) {
+		return parameters.get(paramName).getCurAlfa();
+	}
+	
+	public void setCurAlfa(String paramName, double curAlfa) {
+		parameters.get(paramName).setCurAlfa(curAlfa);
 	}
 
 	public IMetaheuristic getMetaheuristic() {
@@ -53,16 +65,16 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 		this.problem = problem;
 	}
 	
-	public void printParamRange() {
-		ew.printParamRange();
+	public void printParamRange(String paramName) {
+		parameters.get(paramName).printParamRange();
 	}
 
-	public void printEW() {
-		ew.printEW();
+	public void printEW(String paramName) {
+		parameters.get(paramName).printEW();
 	}
 
-	public void printMeans() {
-		ew.printMeans();
+	public void printMeans(String paramName) {
+		parameters.get(paramName).printMeans();
 	}
 	
 	public void printFitness() {
@@ -105,13 +117,8 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 		prevFitness = null;
 	}
 
-	// Return the index of the best param
-	public int selectParamValue() {
-		return ew.selectParamValue();
-	}
-	
 	// Update in the metaheuristic the proper parameter!
-	public abstract void setNewParam(double alfa);
+	public abstract void setNewParam(String paramName, double alfa);
 	
 	public void updatePrevFitness() {
 		Solution[] sols = metaheuristic.getSols();
@@ -125,7 +132,7 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 		}
 	}
 
-	public void updateEW(int row) {
+	public void updateEW(String paramName, int row) {
 		double [] deltaFitness = new double[popsize];
 		Solution [] sols = metaheuristic.getSols();
 		// Compute differences
@@ -133,13 +140,32 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 			// delta_i = f(x_i) - f(x_i')
 			deltaFitness[i] = prevFitness[i] - sols[i].getFitness();
 		}
-		ew.updateRow(row, deltaFitness);
+		parameters.get(paramName).updateRow(row, deltaFitness);
+	}
+	
+	public String selectBestParam() {
+		double bestMean = Double.NEGATIVE_INFINITY;
+		String bestParam = "";
+		for (String paramName : paramNames) {
+			parameters.get(paramName).selectParamValue();
+			if (parameters.get(paramName).getBestMean() > bestMean) {
+				bestMean = parameters.get(paramName).getBestMean();
+				bestParam = paramName;
+			}
+		}
+		return bestParam;
+	}
+	
+	// Return the index of the best param
+	public int selectParamValue(String paramName) {
+		return parameters.get(paramName).getBestIndex();
 	}
 	
 	public void nextIter() {
-		int idx = selectParamValue();
-		curAlfa = ew.getParamRange()[idx];
-		setNewParam(curAlfa);
+		String paramName = selectBestParam();
+		int idx = selectParamValue(paramName);
+		curAlfa = parameters.get(paramName).getParamRange()[idx];
+		setNewParam(paramName, curAlfa);
 		metaheuristic.nextIter();
 		if (getNumIter() % 20 == 0)
 			printFitness();
@@ -149,7 +175,7 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 			updatePrevFitness();
 		}
 		else { // other iterations
-			updateEW(idx);
+			updateEW(paramName, idx);
 		}
 		updatePrevFitness();
 	}
@@ -177,11 +203,17 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 	}
 
 	public double getTemporalWeight() {
-		return ew.getTemporalWeight();
+		for (String paramName : paramNames) {
+			return parameters.get(paramName).getTemporalWeight();
+		}
+		Messages.error("PTAlgorithmMulti: getTemporalWeight() no parameter found");
+		return -1;
 	}
 
 	public void setTemporalWeight(double temporalWeight) {
-		ew.setTemporalWeight(temporalWeight);
+		for (String paramName : paramNames) {
+			parameters.get(paramName).setTemporalWeight(temporalWeight);
+		}
 	}
 	
 	

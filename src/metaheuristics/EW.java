@@ -18,6 +18,8 @@ public class EW {
 	private double temporalWeight = 0;
 
 	private boolean DEBUG = false;
+	private int bestIndex;
+	private double bestMean;
 	private double curAlfa; // current value for the parameter alfa
 	private String paramName; // current value for the parameter alfa
 
@@ -142,17 +144,17 @@ public class EW {
 
 	// Return the index of the best param
 	public int selectParamValue() {
-		double bestMean = Double.NEGATIVE_INFINITY;
+		setBestMean(Double.NEGATIVE_INFINITY);
 		ArrayList<Integer> bestIndexes = new ArrayList<>();
 		for (int i = 0; i < paramRange.length; ++i) {
 			// better value
-			if (meansEW[i] > bestMean) {
+			if (meansEW[i] > getBestMean()) {
 				bestIndexes.clear();
 				bestIndexes.add(i);
-				bestMean = meansEW[i];
+				setBestMean(meansEW[i]);
 			}
 			// new candidate
-			else if (meansEW[i] == bestMean) {
+			else if (meansEW[i] == getBestMean()) {
 				bestIndexes.add(i);
 			}
 		}
@@ -167,7 +169,8 @@ public class EW {
 		int idx = 0;
 		if (bestIndexes.size() > 1) // Avoid random sample almost always!
 			idx = Globals.getRandomGenerator().randomInt(0, bestIndexes.size());
-		return bestIndexes.get(idx);
+		bestIndex = bestIndexes.get(idx);
+		return bestIndex;
 	}
 
 	public double calcMean(int row) {
@@ -271,6 +274,22 @@ public class EW {
 
 	public void setParamName(String paramName) {
 		this.paramName = paramName;
+	}
+
+	public int getBestIndex() {
+		return bestIndex;
+	}
+
+	public void setBestIndex(int bestIndex) {
+		this.bestIndex = bestIndex;
+	}
+
+	public double getBestMean() {
+		return bestMean;
+	}
+
+	public void setBestMean(double bestMean) {
+		this.bestMean = bestMean;
 	}
 
 }

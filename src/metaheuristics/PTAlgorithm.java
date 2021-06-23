@@ -51,6 +51,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 
 	public void setCurAlfa(double curAlfa) {
 		this.curAlfa = curAlfa;
+		setNewParam(curAlfa);
 	}
 
 	public IMetaheuristic getMetaheuristic() {
