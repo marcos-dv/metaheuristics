@@ -106,8 +106,8 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 	}
 
 	// Return the index of the best param
-	public int selectParamValue() {
-		return ew.selectParamValue();
+	public int selectParamIndex() {
+		return ew.selectParamIndex();
 	}
 	
 	// Update in the metaheuristic the proper parameter!
@@ -137,7 +137,7 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 	}
 	
 	public void nextIter() {
-		int idx = selectParamValue();
+		int idx = selectParamIndex();
 		curAlfa = ew.getParamRange()[idx];
 		setNewParam(curAlfa);
 		metaheuristic.nextIter();

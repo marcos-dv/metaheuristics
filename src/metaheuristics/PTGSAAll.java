@@ -1,17 +1,17 @@
 package metaheuristics;
 
-public class PTGSAMulti extends PTAlgorithmOne {
+public class PTGSAAll extends PTAlgorithmAll {
 	private GSA gsa;
 	
 	private boolean DEBUG = true;
 	
-	public PTGSAMulti(GSA gsa) {
+	public PTGSAAll(GSA gsa) {
 		super(gsa);
 		this.gsa = (GSA) getMetaheuristic();
 	}
 
 	@Override
-	public void setNewParam(String paramName, double alfa) {
+	public void setParam(String paramName, double alfa) {
 		if (paramName.equals("alfa")) {
 			gsa.setAlfa(alfa);
 		}
@@ -21,8 +21,9 @@ public class PTGSAMulti extends PTAlgorithmOne {
 		if (DEBUG) {
 			GSA meta = (GSA) this.getMetaheuristic();
 			System.out.println("Alfa = " + meta.getAlfa());
-			System.out.println("G0= " + meta.getG0());
+			System.out.println("G0 = " + meta.getG0());
 		}
 		
 	}
+
 }

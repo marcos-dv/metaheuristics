@@ -156,7 +156,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 	}
 
 	// Return the index of the best param
-	public int selectParamValue() {
+	public int selectParamIndex() {
 		double bestMean = Double.NEGATIVE_INFINITY;
 		ArrayList<Integer> bestIndexes = new ArrayList<>();
 		for(int i = 0; i < paramRange.length; ++i) {
@@ -313,7 +313,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 	}
 	
 	public void nextIter() {
-		int idx = selectParamValue();
+		int idx = selectParamIndex();
 		curAlfa = paramRange[idx];
 		setNewParam(curAlfa);
 		metaheuristic.nextIter();

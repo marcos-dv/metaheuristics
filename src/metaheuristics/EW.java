@@ -143,7 +143,7 @@ public class EW {
 	}
 
 	// Return the index of the best param
-	public int selectParamValue() {
+	public int selectParamIndex() {
 		setBestMean(Double.NEGATIVE_INFINITY);
 		ArrayList<Integer> bestIndexes = new ArrayList<>();
 		for (int i = 0; i < paramRange.length; ++i) {
