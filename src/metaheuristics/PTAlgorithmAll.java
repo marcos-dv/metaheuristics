@@ -23,8 +23,8 @@ public abstract class PTAlgorithmAll extends PTAlgorithmMulti {
 			setParam(paramName, curAlfa);
 		}
 		getMetaheuristic().nextIter();
-		if (getNumIter() % 20 == 0)
-			printFitness();
+//		if (getNumIter() % 20 == 0)
+//			printFitness();
 
 		// first iteration
 		if (getPrevFitness() == null) {

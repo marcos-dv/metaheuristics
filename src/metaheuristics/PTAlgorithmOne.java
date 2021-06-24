@@ -34,8 +34,8 @@ public abstract class PTAlgorithmOne extends PTAlgorithmMulti {
 		double curAlfa = getParameters().get(paramName).getParamRange()[idx];
 		setParam(paramName, curAlfa);
 		getMetaheuristic().nextIter();
-		if (getNumIter() % 20 == 0)
-			printFitness();
+//		if (getNumIter() % 20 == 0)
+//			printFitness();
 
 		// first iteration
 		if (getPrevFitness() == null) {

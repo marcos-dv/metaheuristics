@@ -141,8 +141,8 @@ public abstract class PTAlgorithmVariant implements IMetaheuristic {
 		curAlfa = ew.getParamRange()[idx];
 		setNewParam(curAlfa);
 		metaheuristic.nextIter();
-		if (getNumIter() % 20 == 0)
-			printFitness();
+//		if (getNumIter() % 20 == 0)
+//			printFitness();
 
 		// first iteration
 		if (prevFitness == null) {

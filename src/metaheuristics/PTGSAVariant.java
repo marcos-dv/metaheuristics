@@ -3,7 +3,7 @@ package metaheuristics;
 public class PTGSAVariant extends PTAlgorithmVariant {
 	private GSA gsa;
 	
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	
 	public PTGSAVariant(GSA gsa, double [] range) {
 		super(gsa, range);

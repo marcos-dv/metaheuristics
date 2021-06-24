@@ -221,7 +221,8 @@ public class GSA implements IMetaheuristic , Parallelizable {
 		
 		// Compute best K fitness
 		kSize = computeK();
-		System.out.println("K = " + kSize);
+		if (DEBUG)
+			System.out.println("K = " + kSize);
 		kbest = Pair.sortIdxSolutions(sols);
 		
 		if (DEBUG) {
