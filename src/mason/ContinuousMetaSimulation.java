@@ -20,7 +20,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	public int height = 20;
 	public double discretization = 1;
 	public Continuous2D grid = null;
-	public int popsize = 500;
+	public int popsize = 250;
 	int problemDimension;
 	int maxiter;
 	Problem targetProblem;

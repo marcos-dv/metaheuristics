@@ -11,8 +11,8 @@ import utils.SomePolygons;
 public class TestMasonMeta {
 
 	static long seed = 1;
-//	static Problem targetProblem = new CircleProblem(2, 5);
-	static Problem targetProblem = new PolygonProblem(SomePolygons.hexagon, false);
+	static Problem targetProblem = new CircleProblem(2, 5);
+//	static Problem targetProblem = new PolygonProblem(SomePolygons.hexagon, false);
 	
 	public static void startContinuousSimulationUI() {
 		int w = 250;

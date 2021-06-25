@@ -111,7 +111,8 @@ public class Geometry {
 				+ normx + " and " + normy + ")");
 			return 0;
 		}
-		return Math.acos(innerProduct(x, y)/(norm(x)*norm(y)));
+		double angle = Math.acos(innerProduct(x, y)/(norm(x)*norm(y)));
+		return normalizeAngle(angle);
 	}
 
 	public static double[] unitary(double [] x) {
@@ -181,6 +182,16 @@ public class Geometry {
 			res = Math.min(res, distPoint2Segment(vertex1, vertex2, x));
 		}
 		return res;
+	}
+	
+	public static double normalizeAngle(double angle) {
+		while (angle < -Math.PI) {
+			angle += 2*Math.PI;
+		}
+		while (angle >= Math.PI) {
+			angle -= 2*Math.PI;
+		}
+		return angle;
 	}
 	
 	// TODO add tests for this
