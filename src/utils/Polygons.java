@@ -1,9 +1,9 @@
 package utils;
 
-public class SomePolygons {
+public class Polygons {
 	public final static double [][] hexagon = new double[][]{
-		{-20, -20}, {-20, 20}, {0, 30},
-		{20, 20}, {20, -20}, {0, -30},
+		{-20, -11}, {-20, 11}, {0, 21},
+		{20, 11}, {20, -11}, {0, -21},
 	};
 
 	public final static double [][] M = new double[][]{

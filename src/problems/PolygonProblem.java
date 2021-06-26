@@ -2,7 +2,7 @@ package problems;
 
 import solutions.Solution;
 import utils.Geometry;
-import utils.SomePolygons;
+import utils.Polygons;
 
 public class PolygonProblem implements Problem {
 

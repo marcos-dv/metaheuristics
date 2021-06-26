@@ -222,7 +222,7 @@ public class Geometry {
 		if (isZero(diff(p, q))) { // p = q
 			return dist(x, p);
 		}
-		double up = (q[0]-p[0])*(p[1]-x[1])-(p[0]-x[0])*(q[1]-p[0]);
+		double up = (q[0]-p[0])*(p[1]-x[1])-(p[0]-x[0])*(q[1]-p[1]);
 		up = Math.abs(up);
 		double down = norm(diff(p, q));
 		return up/down;

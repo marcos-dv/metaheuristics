@@ -3,7 +3,7 @@ package tests;
 import utils.Geometry;
 
 public class TestGeometry {
-	
+
 	public static void basicOperations() {
 		double [] x = new double[]{10, 20};
 		double [] y = new double[]{2, 3};
@@ -71,8 +71,50 @@ public class TestGeometry {
 
 
 	}
+
 	
+	public static void testDist2Segment() {
+		double [] p = new double[] {0, -.5};
+		double [] q = new double[] {0, .5};
+		double [] x = new double[] {-1, 0};
+		double distx = Geometry.distPoint2Segment(p, q, x);
+		System.out.println(distx);
+		System.out.println();
+
+		x = new double[] {1, .5};
+		distx = Geometry.distPoint2Segment(p, q, x);
+		System.out.println(distx);
+		System.out.println(Math.min(Geometry.dist(x, p), Geometry.dist(x, q)));
+		System.out.println();
+		
+		x = new double[] {-10, -10};
+		distx = Geometry.distPoint2Segment(p, q, x);
+		System.out.println(distx);
+		System.out.println(Math.min(Geometry.dist(x, p), Geometry.dist(x, q)));
+		System.out.println();
+
+		x = new double[] {-10, 10};
+		distx = Geometry.distPoint2Segment(p, q, x);
+		System.out.println(distx);
+		System.out.println(Math.min(Geometry.dist(x, p), Geometry.dist(x, q)));
+		System.out.println();
+
+		x = new double[] {10, 10};
+		distx = Geometry.distPoint2Segment(p, q, x);
+		System.out.println(distx);
+		System.out.println(Math.min(Geometry.dist(x, p), Geometry.dist(x, q)));
+		System.out.println();
+
+		x = new double[] {10, -10};
+		distx = Geometry.distPoint2Segment(p, q, x);
+		System.out.println(distx);
+		System.out.println(Math.min(Geometry.dist(x, p), Geometry.dist(x, q)));
+		System.out.println();
+
+	}
+		
 	public static void main(String[] args) {
-		basicOperations();
+		// basicOperations();
+		testDist2Segment();
 	}
 }
