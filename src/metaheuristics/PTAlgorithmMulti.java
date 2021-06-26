@@ -182,6 +182,11 @@ public abstract class PTAlgorithmMulti implements IMetaheuristic {
 	}
 
 	@Override
+	public void setSols(Solution[] sols) {
+		metaheuristic.setSols(sols);
+	}
+
+	@Override
 	public Solution getGlobalOptimum() {
 		return metaheuristic.getGlobalOptimum();
 	}

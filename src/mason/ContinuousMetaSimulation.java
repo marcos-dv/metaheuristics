@@ -27,8 +27,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	private Problem targetProblem;
 	
 	private IMetaheuristic algorithm;
-	
-	private RandomGenerator randomGenerator = Globals.getRandomGenerator();
+	private Solution[] initialPopulation;
 
 	private boolean verbose = false;
 	
@@ -37,6 +36,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		setTargetProblem(solverInfo.getTargetProblem());
 		setPopsize(solverInfo.getPopsize());
 		setAlgorithm(solverInfo.getAlgorithm());
+		initialPopulation = algorithm.getSols().clone();
 		width = w;
 		height = h;
 		this.discretization = discretization;
@@ -161,12 +161,14 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		}
 	}
 
+	@Override
 	public void start() {
 		super.start();
 		grid = new Continuous2D(discretization, width, height);
 		// clear the grid
 		grid.clear();
 		setupGrid();
+		algorithm.setSols(initialPopulation);
 		schedule.scheduleRepeating(this);
 	}
 

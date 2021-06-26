@@ -11,7 +11,9 @@ public interface IMetaheuristic {
 	public int getNumIter();
 
 	public Solution[] getSols();
-	
+
+	public void setSols(Solution[] sols);
+
 	public Solution getGlobalOptimum();
 
 }

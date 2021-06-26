@@ -4,6 +4,7 @@ import commombenchmarks.AckleyProblem;
 import commombenchmarks.SphereProblem;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
+import metaheuristics.PSO;
 import misc.SolverInfo;
 import problems.Cec2015Problem;
 import problems.CircleProblem;
@@ -19,16 +20,23 @@ public class TestMasonMeta {
 //	static Problem targetProblem = new CircleProblem(2, 50);
 
 	private static Problem generateProblem() {
-	 	return new PolygonProblem(Polygons.hexagon, false);
+//		return new AckleyProblem(2);
+		return new Cec2015Problem(2, 2);
+//	 	return new PolygonProblem(Polygons.hexagon, false);
 	}
 	
 	private static IMetaheuristic generateMetaheuristic(Problem targetProblem, int popsize, Solution[] sols) {
+		PSO meta = new PSO(sols, targetProblem);
+		meta.initPop();
+		return meta;
+
+		/*
 		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
 		meta.setSols(sols);
 		meta.setL(50);
 		meta.setStep(0.3);
 		return meta;
-
+		*/
 		/*
 		GSA gsa = new GSA(popsize, targetProblem);
 		gsa.setMAX_ITER(maxiter);
