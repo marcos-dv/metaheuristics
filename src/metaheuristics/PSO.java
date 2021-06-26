@@ -32,10 +32,10 @@ public class PSO implements IMetaheuristic {
 		this.targetProblem = targetProblem;
 		dimension = targetProblem.getDim();
 		numIter = 0;
-		coefSpeed = .3;
-		coefLocalBest = .3;
-		coefGlobalBest = .3;
-		learningRate = 0.5;
+		coefSpeed = 1./3;
+		coefLocalBest = 1./3;
+		coefGlobalBest = 1./3;
+		learningRate = 1;
 		this.popSize = popSize;
 		bestSols = new Solution[popSize];
 		sols = new Solution[popSize];

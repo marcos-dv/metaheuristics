@@ -36,7 +36,7 @@ public abstract class PTAlgorithmMulti implements IMetaheuristic {
 	
 	public void setNewParam(String paramName, double [] paramRange) {
 		getParamNames().add(paramName);
-		EW ew = new EW(paramName, popsize, paramRange);
+		EW ew = new EW(paramName, popsize, paramRange.clone());
 		getParameters().put(paramName, ew);
 	}
 	

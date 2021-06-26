@@ -54,7 +54,7 @@ public class TestMasonMeta {
 	}
 	
 	private static SolverInfo generateSolverInfo() {
-		int popsize = 2;
+		int popsize = 500;
 		Problem targetProblem = generateProblem();
 		Solution [] sols = generateSols(targetProblem, popsize);
 		IMetaheuristic algorithm = generateMetaheuristic(targetProblem, popsize, sols);

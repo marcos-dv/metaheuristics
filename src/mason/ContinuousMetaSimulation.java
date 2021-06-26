@@ -29,7 +29,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	private IMetaheuristic algorithm;
 	private Solution[] initialPopulation;
 
-	private boolean verbose = false;
+	private boolean verbose = true;
 	
 	public ContinuousMetaSimulation(long seed, int w, int h, double discretization, SolverInfo solverInfo) {
 		super(seed);
@@ -118,8 +118,8 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		updateAlgorithm();
 		updateGridPositions();
 //		printGrid();
-		if (verbose)
-			printSols();
+//		if (verbose)
+//			printSols();
 	}
 	
 	private Double2D realSpace2Screen(double [] coords) {
@@ -152,8 +152,6 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		if (verbose)
 			System.out.println("-- Iter " + algorithm.getNumIter());
 		algorithm.nextIter();
-		System.out.println(initialPopulation[0]);
-		System.out.println(algorithm.getSols()[0]);
 		
 		// Global Best
 		Solution globalBest = algorithm.getGlobalOptimum();
