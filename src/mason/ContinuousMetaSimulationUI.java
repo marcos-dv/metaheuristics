@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 
+import misc.SolverInfo;
 import problems.Problem;
 import sim.display.Controller;
 import sim.display.Display2D;
@@ -19,16 +20,16 @@ public class ContinuousMetaSimulationUI extends GUIState {
 	public Display2D display;
 	public JFrame displayFrame;
 	
-	public ContinuousMetaSimulationUI(Problem p) {
-		super(new ContinuousMetaSimulation(System.currentTimeMillis(), p));
+	public ContinuousMetaSimulationUI(SolverInfo solverInfo) {
+		super(new ContinuousMetaSimulation(System.currentTimeMillis(), solverInfo));
 	}
 
-	public ContinuousMetaSimulationUI(int w, int h, double discretization, long seed, Problem p) {
-		super(new ContinuousMetaSimulation(seed, w, h, discretization, p));
+	public ContinuousMetaSimulationUI(int w, int h, double discretization, long seed, SolverInfo solverInfo) {
+		super(new ContinuousMetaSimulation(seed, w, h, discretization, solverInfo));
 	}
 
-	public ContinuousMetaSimulationUI(int w, int h, double discretization, Problem p) {
-		this(w, h, discretization, System.currentTimeMillis(), p);
+	public ContinuousMetaSimulationUI(int w, int h, double discretization, SolverInfo solverInfo) {
+		this(w, h, discretization, System.currentTimeMillis(), solverInfo);
 	}
 
 

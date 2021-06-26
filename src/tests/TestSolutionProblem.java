@@ -2,7 +2,7 @@ package tests;
 
 import problems.*;
 import solutions.Solution;
-import utils.SomePolygons;
+import utils.Polygons;
 
 public class TestSolutionProblem {
 
@@ -31,7 +31,7 @@ public class TestSolutionProblem {
 	}
 
 	public static void PolygonProblem() {
-		PolygonProblem problem = new PolygonProblem(SomePolygons.M, true);
+		PolygonProblem problem = new PolygonProblem(Polygons.M, true);
 		Solution [] sols = new Solution[5];
 		int i = 1;
 		int dim = 2;

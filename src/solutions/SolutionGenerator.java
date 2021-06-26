@@ -36,9 +36,11 @@ public class SolutionGenerator {
 			Messages.error("SolutionGenerator: overSegment dimensions don't match: problem dim = " 
 					+ problem.getDim() + " p dim = " + p.length + " q dim = " + q.length);
 		}
+		/*
 		System.out.println("Segment:");
 		Geometry.display(p);
 		Geometry.display(q);
+		*/
 		Solution [] sols = new Solution[popsize];
 		double[][] x = new double[popsize][problem.getDim()];
 		for(int i = 0; i < popsize; ++i) {
@@ -46,7 +48,7 @@ public class SolutionGenerator {
 			double [] lambdap = Geometry.mult(p, lambda);
 			double [] lambdaq = Geometry.mult(q, 1-lambda);
 			x[i] = Geometry.sum(lambdap, lambdaq);
-			Geometry.display(x[i]);
+			// Geometry.display(x[i]);
 			sols[i] = new Solution(x[i], problem);
 		}
 		return sols;

@@ -11,7 +11,7 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 
 	// TODO implement termination criteria + tuning initial temperature!
 	
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	
 	private Solution [] sols;
 	private Solution globalBest;

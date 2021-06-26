@@ -4,6 +4,7 @@ import control.Globals;
 import control.Messages;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
+import misc.SolverInfo;
 import problems.Problem;
 import sim.engine.*;
 import sim.field.continuous.Continuous2D;
@@ -11,7 +12,7 @@ import sim.util.Double2D;
 import solutions.Solution;
 import solutions.SolutionGenerator;
 import utils.RandomGenerator;
-import utils.SomePolygons;
+import utils.Polygons;
 
 public class ContinuousMetaSimulation extends SimState implements Steppable {
 
@@ -20,26 +21,30 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	public int height = 20;
 	public double discretization = 1;
 	public Continuous2D grid = null;
-	public int popsize = 250;
-	int problemDimension;
-	int maxiter;
-	Problem targetProblem;
+	private int popsize = 250;
+	private int problemDimension;
+	private int maxiter;
+	private Problem targetProblem;
 	
-	IMetaheuristic algorithm;
+	private IMetaheuristic algorithm;
 	
-	RandomGenerator randomGenerator = Globals.getRandomGenerator();
+	private RandomGenerator randomGenerator = Globals.getRandomGenerator();
+
+	private boolean verbose = false;
 	
-	public ContinuousMetaSimulation(long seed, int w, int h, double discretization, Problem p) {
+	public ContinuousMetaSimulation(long seed, int w, int h, double discretization, SolverInfo solverInfo) {
 		super(seed);
-		setTargetProblem(p);
+		setTargetProblem(solverInfo.getTargetProblem());
+		setPopsize(solverInfo.getPopsize());
+		setAlgorithm(solverInfo.getAlgorithm());
 		width = w;
 		height = h;
 		this.discretization = discretization;
 	}
 
-	public ContinuousMetaSimulation(long seed, Problem p) {
+	public ContinuousMetaSimulation(long seed, SolverInfo solverInfo) {
 		// W = 40, H = 20, Discretization = 1 by default
-		this(seed, 40, 20, 1, p);
+		this(seed, 40, 20, 1, solverInfo);
 	}
 
 	public int getWidth() {
@@ -108,11 +113,13 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	
 	@Override
 	public void step(SimState arg0) {
-		System.out.println("New step");
+		if (verbose)
+			System.out.println("New step");
 		updateAlgorithm();
 		updateGridPositions();
 //		printGrid();
-		printSols();
+		if (verbose)
+			printSols();
 	}
 	
 	private Double2D realSpace2Screen(double [] coords) {
@@ -142,13 +149,16 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	}
 
 	private void updateAlgorithm() {
-		System.out.println("-- Iter " + algorithm.getNumIter());
+		if (verbose)
+			System.out.println("-- Iter " + algorithm.getNumIter());
 		algorithm.nextIter();
 		// Global Best
 		Solution globalBest = algorithm.getGlobalOptimum();
-		System.out.println("Best sol: ");
-		System.out.println(globalBest);
-		System.out.println();
+		if (verbose) {
+			System.out.println("Best sol: ");
+			System.out.println(globalBest);
+			System.out.println();
+		}
 	}
 
 	public void start() {
@@ -156,31 +166,10 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		grid = new Continuous2D(discretization, width, height);
 		// clear the grid
 		grid.clear();
-		setupAlgorithm();
 		setupGrid();
 		schedule.scheduleRepeating(this);
 	}
 
-	private void setupAlgorithm() {
-		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
-		meta.initPop();
-//		double ratio = 20;
-//		Solution[] sols = SolutionGenerator.overCircle(popsize, targetProblem, ratio);
-		double [][] polygon = SomePolygons.A;
-		Solution[] sols = SolutionGenerator.overPolygon(popsize, polygon, true, targetProblem);
-		meta.setSols(sols);
-		meta.setL(50);
-		meta.setStep(0.3);
-		setAlgorithm(meta);
-
-		/*
-		GSA gsa = new GSA(popsize, targetProblem);
-		gsa.setMAX_ITER(maxiter);
-		gsa.initPop();
-		setAlgorithm(gsa);
-		*/
-	}
-	
 	private void setupGrid() {
 		updateGridPositions();
 		// Reference points
