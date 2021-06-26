@@ -36,7 +36,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		setTargetProblem(solverInfo.getTargetProblem());
 		setPopsize(solverInfo.getPopsize());
 		setAlgorithm(solverInfo.getAlgorithm());
-		initialPopulation = algorithm.getSols().clone();
+		initialPopulation = Solution.copyOf(algorithm.getSols());
 		width = w;
 		height = h;
 		this.discretization = discretization;
@@ -152,6 +152,9 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		if (verbose)
 			System.out.println("-- Iter " + algorithm.getNumIter());
 		algorithm.nextIter();
+		System.out.println(initialPopulation[0]);
+		System.out.println(algorithm.getSols()[0]);
+		
 		// Global Best
 		Solution globalBest = algorithm.getGlobalOptimum();
 		if (verbose) {
@@ -168,7 +171,7 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 		// clear the grid
 		grid.clear();
 		setupGrid();
-		algorithm.setSols(initialPopulation);
+		algorithm.setSols(Solution.copyOf(initialPopulation));
 		schedule.scheduleRepeating(this);
 	}
 

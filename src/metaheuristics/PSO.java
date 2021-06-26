@@ -18,7 +18,7 @@ public class PSO implements IMetaheuristic {
 	private int numIter;
 	
 	private boolean verbose = false;
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	private boolean stochastic = true;
 
 	// Hyperparameters

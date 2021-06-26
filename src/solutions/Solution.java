@@ -33,13 +33,9 @@ public class Solution {
 		this(p.getDim(), p);
 	}
 
-	public Solution(Solution sol, Problem p) {
-		this(sol.coords, p);
-		setFitness(sol.getFitness());
-	}
-
 	public Solution(Solution sol) {
-		this(sol, sol.getTargetProblem());
+		this(sol.getCoords(), sol.getTargetProblem());
+		setFitness(sol.getFitness());
 	}
 
 	public double[] getCoords() {
@@ -140,6 +136,12 @@ public class Solution {
 			fitness = Double.parseDouble(tokenizer.nextToken());
 	}
 	
-	
+	public static Solution[] copyOf(Solution[] sols) {
+		Solution[] copy = new Solution[sols.length];
+		for(int i = 0; i < sols.length; ++i) {
+			copy[i] = new Solution(sols[i]);
+		}
+		return copy;
+	}
 	
 }
