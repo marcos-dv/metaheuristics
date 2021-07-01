@@ -2,3 +2,5 @@
 plan.txt
 *.class
 
+bin/*
+/bin/
