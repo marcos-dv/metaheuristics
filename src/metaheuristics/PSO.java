@@ -9,23 +9,23 @@ import utils.Geometry;
 import utils.RandomGenerator;
 
 public class PSO implements IMetaheuristic {
-	private Solution [] sols;
-	private Solution [] bestSols;
-	private double [][] v;
-	private Problem targetProblem;
-	private int dimension;
-	private int popSize;
-	private int numIter;
+	protected Solution [] sols;
+	protected Solution [] bestSols;
+	protected double [][] v;
+	protected Problem targetProblem;
+	protected int dimension;
+	protected int popSize;
+	protected int numIter;
 	
-	private boolean verbose = false;
+	protected boolean verbose = false;
 	private boolean DEBUG = false;
-	private boolean stochastic = true;
+	protected boolean stochastic = true;
 
 	// Hyperparameters
-	private double coefSpeed; // impact of last speed over current speed
-	private double coefLocalBest; // impact of best local position over current speed
-	private double coefGlobalBest; // impact of global best over current speed
-	private double learningRate; // impact of last speed over position
+	protected double coefSpeed; // impact of last speed over current speed
+	protected double coefLocalBest; // impact of best local position over current speed
+	protected double coefGlobalBest; // impact of global best over current speed
+	protected double learningRate; // impact of last speed over position
 
 	
 	public PSO(int popSize, Problem targetProblem) {
@@ -103,7 +103,7 @@ public class PSO implements IMetaheuristic {
 		updateBestPositions();
 	}
 
-	private void updateBestPositions() {
+	protected void updateBestPositions() {
 		for(int i = 0; i < popSize; ++i) {
 			if ((bestSols[i] == null) 
 				|| (sols[i].getFitness() < bestSols[i].getFitness())) {
@@ -112,7 +112,7 @@ public class PSO implements IMetaheuristic {
 		}
 	}
 
-	private double[][] computeSpeed() {
+	protected double[][] computeSpeed() {
 		// First, compute speed
 		double [][] speed = new double[popSize][dimension];
 		double [] globalBestPosition = Algorithms.getGlobalOptimum(bestSols).getCoords();
@@ -143,7 +143,7 @@ public class PSO implements IMetaheuristic {
 		return speed;
 	}
 
-	private void updatePosition(double [][] speed) {
+	protected void updatePosition(double [][] speed) {
 		for(int i = 0; i < popSize; ++i) {
 			double [] x = sols[i].getCoords();
 			x = Geometry.sum(x, Geometry.mult(speed[i], learningRate));
