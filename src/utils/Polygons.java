@@ -70,4 +70,18 @@ public class Polygons {
 		return square;
 	}
 	
+	public static double[][] regularPolygon(int sizes) {
+		return regularPolygon(sizes, 1);
+	}
+
+	public static double[][] regularPolygon(int sizes, double ratio) {
+		double [][] vertices = new double[sizes][2];
+		double angle = 2*Math.PI/sizes;
+		for(int i = 0; i < sizes; ++i) {
+			vertices[i][0] = Math.cos(angle*i)*ratio;
+			vertices[i][1] = Math.sin(angle*i)*ratio;
+		}
+		return vertices;
+	}
+
 }

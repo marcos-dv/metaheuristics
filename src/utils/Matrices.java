@@ -4,6 +4,7 @@ import control.Messages;
 
 public class Matrices {
 
+	// TODO tests for this
 	public static double[][] sum(double[][] A, double[][] B) {
 		int rowsA = A.length, colsA = A[0].length;
 		int rowsB = B.length, colsB = B[0].length;
