@@ -150,6 +150,7 @@ public class EW {
 			// better value
 			if (meansEW[i] > getBestMean()) {
 				bestIndexes.clear();
+				
 				bestIndexes.add(i);
 				setBestMean(meansEW[i]);
 			}
@@ -256,8 +257,18 @@ public class EW {
 		} else {
 			Messages.warning("EW: Unknown landscape case");
 		}
+		// Precission issues
+		rectifyRow(row);
 		// Update mean
 		meansEW[row] = calcMean(row);
+	}
+
+	private void rectifyRow(int row) {
+		for(int i = 0; i < popsize; ++i) {
+			if (Double.isNaN(EW[row][i])) {
+				EW[row][i] = 1;
+			}
+		}
 	}
 
 	public double getTemporalWeight() {

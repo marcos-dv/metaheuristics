@@ -1,6 +1,6 @@
 package metaheuristics;
 
-public class PSOOne extends PTAlgorithmAll {
+public class PSOOne extends PTAlgorithmOne {
 	private PSO pso;
 	
 	private boolean DEBUG = false;

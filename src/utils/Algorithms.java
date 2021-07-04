@@ -22,8 +22,8 @@ public class Algorithms {
 			Messages.warning("Algorithms: getGlobalOptimum function, solutions parameter is null");
 			return null;
 		}
-		double curMin = Double.POSITIVE_INFINITY;
-		Solution curSol = null;
+		Solution curSol = sols[0];
+		double curMin = curSol.getFitness();
 
 		for (int i = 0; i < sols.length; ++i) {
 			if (sols[i] == null)

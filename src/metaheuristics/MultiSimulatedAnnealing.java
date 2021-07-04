@@ -30,7 +30,7 @@ public class MultiSimulatedAnnealing implements IMetaheuristic {
 		}
 		numIter = 0;
 		// Default Hyperparameters
-		alfa = 0.9;
+		alfa = 0.95;
 		L = 500;
 		Temp = 50000;
 		step = 1;
