@@ -18,7 +18,7 @@ public class PointlessAlgorithm implements IMetaheuristic {
 	public PointlessAlgorithm(Problem targetProblem) {
 		this.targetProblem = targetProblem;
 		if (targetProblem.getDim() <= 0) {
-			Messages.warning("GSA: Target problem dimension equals 0.");
+			Messages.warning("PointlessAlgorithm: Target problem dimension equals 0.");
 		}
 		numIter = 0;
 	}

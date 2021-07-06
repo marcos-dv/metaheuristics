@@ -163,7 +163,7 @@ public class PSO implements IMetaheuristic {
 
 	@Override
 	public Solution getGlobalOptimum() {
-		return Algorithms.getGlobalOptimum(getSols());
+		return Algorithms.getGlobalOptimum(bestSols);
 	}
 
 	public void setNumIter(int numIter) {
