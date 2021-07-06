@@ -1,7 +1,7 @@
 package tests;
 
 import utils.RandomGenerator;
-import utils.RandomGeneratorMersenne;
+import utils.RandomGeneratorJava;
 
 public class TestRandomGenerator {
 
@@ -17,7 +17,7 @@ public class TestRandomGenerator {
 	
 	public static void main(String[] args) {
 		long seed = 1;
-		RandomGenerator rand = new RandomGeneratorMersenne();
+		RandomGenerator rand = new RandomGeneratorJava();
 		rand.setSeed(seed);
 		testGenerator(rand);
 	}

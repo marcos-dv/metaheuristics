@@ -9,7 +9,6 @@ import metaheuristics.PSO;
 import metaheuristics.PSOAdaptativeGroups;
 import metaheuristics.PSOGroups;
 import misc.SolverInfo;
-import problems.Cec2015Problem;
 import problems.CircleProblem;
 import problems.PolygonProblem;
 import problems.Problem;

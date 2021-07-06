@@ -4,7 +4,6 @@ import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
-import metaheuristics.PointlessAlgorithm;
 import problems.MinSqSumProblem;
 import problems.Problem;
 import problems.RandomProblem;
@@ -36,17 +35,6 @@ public class TestMetaheuristics {
 		int maxiter = 1000;
 		Problem problem = new MinSqSumProblem(dim);
 		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, problem);
-		testProblem(meta, dim, popsize, maxiter);
-	}
-
-	public static void testPointless() {
-		// Fix seed for experiments
-		Globals.getRandomGenerator().setSeed(1);
-		int popsize = 10;
-		int dim = 3;
-		int maxiter = 1000;
-		Problem problem = new MinSqSumProblem(dim);
-		PointlessAlgorithm meta = new PointlessAlgorithm(popsize, problem);
 		testProblem(meta, dim, popsize, maxiter);
 	}
 

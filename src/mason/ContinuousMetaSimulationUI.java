@@ -49,16 +49,9 @@ public class ContinuousMetaSimulationUI extends GUIState {
 		gridPortrayal.setPortrayalForAll((Portrayal) new OvalPortrayal2D() {
 			private static final long serialVersionUID = 1L;
 			public void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
-				int i = (int) object;
 				int r = 255;
 				int g = 50;
 				int b = 200;
-				// (0, 0)
-				if (i < 0) {
-					r = 0;
-					g = 0;
-					b = 0;
-				}
 				paint = new Color(r, g, b);
 				super.draw(object, graphics, info);
 			}

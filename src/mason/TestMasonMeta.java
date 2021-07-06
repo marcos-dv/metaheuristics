@@ -6,7 +6,6 @@ import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
 import metaheuristics.PSO;
 import misc.SolverInfo;
-import problems.Cec2015Problem;
 import problems.CircleProblem;
 import problems.PolygonProblem;
 import problems.Problem;
@@ -21,8 +20,7 @@ public class TestMasonMeta {
 
 	private static Problem generateProblem() {
 //		return new AckleyProblem(2);
-		return new Cec2015Problem(2, 2);
-//	 	return new PolygonProblem(Polygons.hexagon, false);
+	 	return new PolygonProblem(Polygons.hexagon, false);
 	}
 	
 	private static IMetaheuristic generateMetaheuristic(Problem targetProblem, int popsize, Solution[] sols) {
