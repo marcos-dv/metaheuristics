@@ -3,6 +3,11 @@ package utils;
 import control.Messages;
 
 public class Polygons {
+
+	public final static double [][] segment = new double[][]{
+		{-10, 10}, {10, -10}
+	};
+	
 	public final static double [][] hexagon = new double[][]{
 		{-20, -11}, {-20, 11}, {0, 21},
 		{20, 11}, {20, -11}, {0, -21},

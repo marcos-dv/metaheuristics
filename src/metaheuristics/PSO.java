@@ -10,19 +10,20 @@ import utils.RandomGenerator;
 
 /**
  * Particle Swarm Optimization
+ * 
  * @author Marcos Dominguez Velad
  *
  */
 
 public class PSO implements IMetaheuristic {
-	protected Solution [] sols;
-	protected Solution [] bestSols;
-	protected double [][] v;
+	protected Solution[] sols;
+	protected Solution[] bestSols;
+	protected double[][] v;
 	protected Problem targetProblem;
 	protected int dimension;
 	protected int popSize;
 	protected int numIter;
-	
+
 	protected boolean verbose = false;
 	private boolean DEBUG = false;
 	protected boolean stochastic = true;
@@ -33,21 +34,20 @@ public class PSO implements IMetaheuristic {
 	protected double coefGlobalBest; // impact of global best over current speed
 	protected double learningRate; // impact of last speed over position
 
-	
 	public PSO(int popSize, Problem targetProblem) {
 		this.targetProblem = targetProblem;
 		dimension = targetProblem.getDim();
 		numIter = 0;
-		coefSpeed = 1./3;
-		coefLocalBest = 1./3;
-		coefGlobalBest = 1./3;
+		coefSpeed = 1. / 3;
+		coefLocalBest = 1. / 3;
+		coefGlobalBest = 1. / 3;
 		learningRate = 1;
 		this.popSize = popSize;
 		bestSols = new Solution[popSize];
 		sols = new Solution[popSize];
 	}
-	
-	public PSO(Solution [] sols, Problem targetProblem) {
+
+	public PSO(Solution[] sols, Problem targetProblem) {
 		this(sols.length, targetProblem);
 		this.setSols(sols.clone());
 	}
@@ -56,19 +56,19 @@ public class PSO implements IMetaheuristic {
 		this(pso.getSols(), pso.targetProblem);
 	}
 
-	public double [][] randomSpeed() {
+	public double[][] randomSpeed() {
 		double[][] v = new double[popSize][dimension];
-	    RandomGenerator rand = Globals.getRandomGenerator();
-		for(int i = 0; i < popSize; ++i) {
-			for(int d = 0; d < dimension; ++d) {
-				v[i][d] = rand.randomUniform(targetProblem.getLB()-targetProblem.getUB(),
-										targetProblem.getUB()-targetProblem.getLB());
+		RandomGenerator rand = Globals.getRandomGenerator();
+		for (int i = 0; i < popSize; ++i) {
+			for (int d = 0; d < dimension; ++d) {
+				v[i][d] = rand.randomUniform(targetProblem.getLB() - targetProblem.getUB(),
+						targetProblem.getUB() - targetProblem.getLB());
 			}
 		}
 		return v;
 	}
 
-	public double [] zeroSpeed() {
+	public double[] zeroSpeed() {
 		return new double[getPopSize()];
 	}
 
@@ -76,25 +76,23 @@ public class PSO implements IMetaheuristic {
 	public void initPop() {
 		if (sols == null) {
 			Messages.error("PSO: solutions are not initialized");
-			return ;
+			return;
 		}
 
 		// Random init
 		for (int i = 0; i < sols.length; ++i) {
-			if (sols[i]== null) {
+			if (sols[i] == null) {
 				sols[i] = new Solution(targetProblem);
 				sols[i].randomInit();
 			}
 		}
 
-		
-		
 		// Update local optimum for each particle
 		updateBestPositions();
-		
+
 		// Init speed
 		v = randomSpeed();
-		
+
 	}
 
 	@Override
@@ -110,9 +108,8 @@ public class PSO implements IMetaheuristic {
 	}
 
 	protected void updateBestPositions() {
-		for(int i = 0; i < popSize; ++i) {
-			if ((bestSols[i] == null) 
-				|| (sols[i].getFitness() < bestSols[i].getFitness())) {
+		for (int i = 0; i < popSize; ++i) {
+			if ((bestSols[i] == null) || (sols[i].getFitness() < bestSols[i].getFitness())) {
 				bestSols[i] = new Solution(sols[i]);
 			}
 		}
@@ -120,9 +117,9 @@ public class PSO implements IMetaheuristic {
 
 	protected double[][] computeSpeed() {
 		// First, compute speed
-		double [][] speed = new double[popSize][dimension];
-		double [] globalBestPosition = Algorithms.getGlobalOptimum(bestSols).getCoords();
-		for(int i = 0; i < sols.length; ++i) {
+		double[][] speed = new double[popSize][dimension];
+		double[] globalBestPosition = Algorithms.getGlobalOptimum(bestSols).getCoords();
+		for (int i = 0; i < sols.length; ++i) {
 			double factorLocalBest = 1;
 			double factorGlobalBest = 1;
 			if (stochastic) {
@@ -130,14 +127,14 @@ public class PSO implements IMetaheuristic {
 				factorGlobalBest = Globals.getRandomGenerator().randomUniform();
 			}
 			// Speed impact
-			double [] speedImpact = Geometry.mult(v[i], coefSpeed);
+			double[] speedImpact = Geometry.mult(v[i], coefSpeed);
 			// Local best impact
-			double [] x = sols[i].getCoords();
-			double [] localBestImpact = Geometry.diff(bestSols[i].getCoords(), x);
-			localBestImpact = Geometry.mult(localBestImpact, coefLocalBest*factorLocalBest);
+			double[] x = sols[i].getCoords();
+			double[] localBestImpact = Geometry.diff(bestSols[i].getCoords(), x);
+			localBestImpact = Geometry.mult(localBestImpact, coefLocalBest * factorLocalBest);
 			// Global best impact
-			double [] globalBestImpact = Geometry.diff(globalBestPosition, x);
-			globalBestImpact = Geometry.mult(globalBestImpact, coefGlobalBest*factorGlobalBest);
+			double[] globalBestImpact = Geometry.diff(globalBestPosition, x);
+			globalBestImpact = Geometry.mult(globalBestImpact, coefGlobalBest * factorGlobalBest);
 			// Sum
 			speed[i] = Geometry.sum(speedImpact, localBestImpact);
 			speed[i] = Geometry.sum(speed[i], globalBestImpact);
@@ -149,9 +146,9 @@ public class PSO implements IMetaheuristic {
 		return speed;
 	}
 
-	protected void updatePosition(double [][] speed) {
-		for(int i = 0; i < popSize; ++i) {
-			double [] x = sols[i].getCoords();
+	protected void updatePosition(double[][] speed) {
+		for (int i = 0; i < popSize; ++i) {
+			double[] x = sols[i].getCoords();
 			x = Geometry.sum(x, Geometry.mult(speed[i], learningRate));
 			sols[i].setCoords(x);
 		}
@@ -176,23 +173,23 @@ public class PSO implements IMetaheuristic {
 		this.numIter = numIter;
 	}
 
-	public void setSols(Solution [] sols) {
+	public void setSols(Solution[] sols) {
 		this.sols = sols;
 	}
 
-	public Solution [] getBestSols() {
+	public Solution[] getBestSols() {
 		return bestSols;
 	}
 
-	public void setBestSols(Solution [] bestSols) {
+	public void setBestSols(Solution[] bestSols) {
 		this.bestSols = bestSols;
 	}
 
-	public double [][] getV() {
+	public double[][] getV() {
 		return v;
 	}
 
-	public void setV(double [][] v) {
+	public void setV(double[][] v) {
 		this.v = v;
 	}
 
@@ -253,5 +250,5 @@ public class PSO implements IMetaheuristic {
 	public void setDimension(int dimension) {
 		this.dimension = dimension;
 	}
-	
+
 }
