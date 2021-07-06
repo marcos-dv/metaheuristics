@@ -1,5 +1,10 @@
 package metaheuristics;
 
+/**
+ * PSO with autoadjustment of parameters. Only one parameter per iteration
+ * @author Marcos Dominguez Velad
+ *
+ */
 public class PSOOne extends PTAlgorithmOne {
 	private PSO pso;
 	

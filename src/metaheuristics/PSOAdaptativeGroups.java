@@ -3,6 +3,12 @@ package metaheuristics;
 import problems.Problem;
 import solutions.Solution;
 
+/**
+ * PSO with adaptatives groups. The groups are becoming bigger with iterations.
+ * After some iterations, there is only one group (as in usual PSO)
+ * @author Marcos Dominguez Velad
+ *
+ */
 public class PSOAdaptativeGroups extends PSOGroups {
 	// Hyperparameters
 	protected int iterPeriod;

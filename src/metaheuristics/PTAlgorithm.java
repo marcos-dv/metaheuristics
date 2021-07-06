@@ -8,6 +8,11 @@ import control.Messages;
 import problems.Problem;
 import solutions.Solution;
 
+/**
+ * Parameter Tuning Algorithm (only one parameter)
+ * @author Marcos Dominguez Velad
+ *
+ */
 public abstract class PTAlgorithm implements IMetaheuristic {
 	private IMetaheuristic metaheuristic;
 	private double [] paramRange;

@@ -13,6 +13,11 @@ import control.Messages;
 import problems.Problem;
 import solutions.Solution;
 
+/**
+ * Parameter Tuning Algorithm for more parameters.
+ * @author Marcos Dominguez Velad
+ *
+ */
 public abstract class PTAlgorithmMulti implements IMetaheuristic {
 	private IMetaheuristic metaheuristic;
 	private double [] prevFitness;

@@ -1,5 +1,11 @@
 package metaheuristics;
 
+/**
+ * PSO with autoadjustment of parameters. All parameters are adjusted per iteration
+ * @author Marcos Dominguez Velad
+ *
+ */
+
 public class PSOAll extends PTAlgorithmAll {
 	private PSO pso;
 	

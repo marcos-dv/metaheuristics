@@ -8,6 +8,12 @@ import control.Messages;
 import problems.Problem;
 import solutions.Solution;
 
+/**
+ * Matrix of elementary weights implementation.
+ * It analyzes the functional landscape and manages only one parameter.
+ * @author Marcos Dominguez Velad
+ *
+ */
 public class EW {
 	private double[] paramRange;
 	private double[] meansEW;

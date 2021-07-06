@@ -8,6 +8,11 @@ import utils.Algorithms;
 import utils.Geometry;
 import utils.RandomGenerator;
 
+/**
+ * PSO with groups of fixed size (no global influence -> only group influence)
+ * @author Marcos Dominguez Velad
+ *
+ */
 public class PSOGroups extends PSO {
 	private boolean DEBUG;
 	// Hyperparameters

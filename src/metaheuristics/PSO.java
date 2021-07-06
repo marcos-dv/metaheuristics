@@ -8,6 +8,12 @@ import utils.Algorithms;
 import utils.Geometry;
 import utils.RandomGenerator;
 
+/**
+ * Particle Swarm Optimization
+ * @author Marcos Dominguez Velad
+ *
+ */
+
 public class PSO implements IMetaheuristic {
 	protected Solution [] sols;
 	protected Solution [] bestSols;

@@ -1,5 +1,10 @@
 package metaheuristics;
 
+/**
+ * Parameter Tuning Algorithm for all the parameters (one per iteration).
+ * @author Marcos Dominguez Velad
+ *
+ */
 public abstract class PTAlgorithmOne extends PTAlgorithmMulti {
 
 	public PTAlgorithmOne(IMetaheuristic metaheuristic) {

@@ -14,7 +14,6 @@ import metaheuristics.PSOAll;
 import metaheuristics.PSOGroups;
 import metaheuristics.PSOOne;
 import metaheuristics.PTGSA;
-import metaheuristics.PTGSAVariant;
 import problems.MinSqSumProblem;
 import problems.Problem;
 import utils.SimpleClock;
@@ -127,7 +126,7 @@ public class SSMMExp {
 			meta.setAlfa(20);
 			meta.initPop();
 			double [] alphas = new double[] {15, 20, 25, 30};
-			PTGSAVariant meta2 = new PTGSAVariant(meta, alphas);
+			PTGSA meta2 = new PTGSA(meta, alphas);
 			return meta2;
 		} 
 		

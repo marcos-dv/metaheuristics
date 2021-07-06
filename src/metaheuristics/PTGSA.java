@@ -1,5 +1,11 @@
 package metaheuristics;
 
+/**
+ * Parameter Tuning Algorithm for GSA and the parameter
+ * alpha.
+ * @author Marcos Dominguez Velad
+ *
+ */
 public class PTGSA extends PTAlgorithm {
 	private GSA gsa;
 	

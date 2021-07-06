@@ -7,6 +7,11 @@ import solutions.Solution;
 import solutions.SolutionGenerator;
 import utils.Algorithms;
 
+/**
+ * Multi-start simulated annealing. Each individual is independant in the population.
+ * @author Marcos Dominguez Velad
+ *
+ */
 public class MultiSimulatedAnnealing implements IMetaheuristic {
 
 	// TODO implement termination criteria + tuning initial temperature!
