@@ -6,7 +6,7 @@ import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
 import metaheuristics.PSO;
 import metaheuristics.PSOAll;
-import metaheuristics.PSOGroups;
+import metaheuristics.PSOIndependantGroups;
 import metaheuristics.PSOOne;
 import metaheuristics.PTGSA;
 import problems.MinSqSumProblem;
@@ -51,7 +51,7 @@ public class Experiments {
 			return meta;
 		}
 		else if (method == 1) {
-			PSOGroups meta = new PSOGroups(popsize, targetProblem);
+			PSOIndependantGroups meta = new PSOIndependantGroups(popsize, targetProblem);
 			meta.setCoefGlobalBest(1./3);
 			meta.setCoefLocalBest(1./3);
 			meta.setCoefSpeed(1./3);
@@ -98,7 +98,7 @@ public class Experiments {
 			return meta2;
 		}
 		else if (method == 6) {
-			PSOGroups meta = new PSOGroups(popsize, targetProblem);
+			PSOIndependantGroups meta = new PSOIndependantGroups(popsize, targetProblem);
 			meta.setLearningRate(0.9);
 			meta.initPop();
 			meta.setGroupSize(5);
@@ -110,7 +110,7 @@ public class Experiments {
 			return meta2;
 		}
 		else if (method == 7) {
-			PSOGroups meta = new PSOGroups(popsize, targetProblem);
+			PSOIndependantGroups meta = new PSOIndependantGroups(popsize, targetProblem);
 			meta.setLearningRate(0.9);
 			meta.initPop();
 			meta.setGroupSize(5);

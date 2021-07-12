@@ -3,21 +3,21 @@ package metaheuristics;
 import problems.Problem;
 import solutions.Solution;
 
-public class PSOAdaptativeGroups extends PSOGroups {
+public class PSOAdaptativeIndepGroups extends PSOIndependantGroups {
 	// Hyperparameters
 	protected int iterPeriod;
 
-	public PSOAdaptativeGroups(int popSize, Problem targetProblem) {
+	public PSOAdaptativeIndepGroups(int popSize, Problem targetProblem) {
 		super(popSize, targetProblem);
 		iterPeriod = 20;
 	}
 
-	public PSOAdaptativeGroups(Solution[] sols, Problem targetProblem) {
+	public PSOAdaptativeIndepGroups(Solution[] sols, Problem targetProblem) {
 		this(sols.length, targetProblem);
 		this.setSols(sols.clone());
 	}
 
-	public PSOAdaptativeGroups(PSOAdaptativeGroups pso) {
+	public PSOAdaptativeIndepGroups(PSOAdaptativeIndepGroups pso) {
 		this(pso.getSols(), pso.targetProblem);
 	}
 

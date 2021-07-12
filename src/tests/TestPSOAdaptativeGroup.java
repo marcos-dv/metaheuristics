@@ -4,7 +4,7 @@ import mason.ContinuousMetaSimulationUI;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
 import metaheuristics.PSO;
-import metaheuristics.PSOGroups;
+import metaheuristics.PSOIndependantGroups;
 import misc.SolverInfo;
 import problems.Cec2015Problem;
 import problems.CircleProblem;
@@ -28,7 +28,7 @@ public class TestPSOAdaptativeGroup {
 	}
 	
 	private static IMetaheuristic generateMetaheuristic(Problem targetProblem, int popsize, Solution[] sols) {
-		PSOGroups meta = new PSOGroups(sols, targetProblem);
+		PSOIndependantGroups meta = new PSOIndependantGroups(sols, targetProblem);
 		meta.initPop();
 		meta.setGroupSize(5);
 		return meta;

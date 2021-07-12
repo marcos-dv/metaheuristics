@@ -8,22 +8,22 @@ import utils.Algorithms;
 import utils.Geometry;
 import utils.RandomGenerator;
 
-public class PSOGroups extends PSO {
+public class PSORingGroups extends PSO {
 	private boolean DEBUG;
 	// Hyperparameters
-	protected int groupSize;
+	private int ratio;
 
-	public PSOGroups(int popSize, Problem targetProblem) {
+	public PSORingGroups(int popSize, Problem targetProblem) {
 		super(popSize, targetProblem);
-		setGroupSize(5);
+		ratio = 1;
 	}
 
-	public PSOGroups(Solution[] sols, Problem targetProblem) {
+	public PSORingGroups(Solution[] sols, Problem targetProblem) {
 		this(sols.length, targetProblem);
 		this.setSols(sols.clone());
 	}
 
-	public PSOGroups(PSOGroups pso) {
+	public PSORingGroups(PSORingGroups pso) {
 		this(pso.getSols(), pso.targetProblem);
 	}
 
@@ -31,7 +31,7 @@ public class PSOGroups extends PSO {
 	protected double[][] computeSpeed() {
 		// First, compute speed
 		double[][] speed = new double[popSize][dimension];
-		Solution[] groupBest = getBestOfGroup(sols, getGroupSize());
+		Solution[] groupBest = getBestOfGroup(sols, ratio);
 
 		for (int i = 0; i < sols.length; ++i) {
 			double factorLocalBest = 1;
@@ -60,28 +60,18 @@ public class PSOGroups extends PSO {
 		return speed;
 	}
 
-	protected Solution[] getBestOfGroup(Solution[] sols, int groupSize) {
+	protected Solution[] getBestOfGroup(Solution[] sols, int ratio) {
 		Solution[] groupBest = new Solution[sols.length];
-		for (int g = 0; g < sols.length / groupSize; ++g) {
+		for (int i = 0; i < sols.length; ++i) {
+			int groupSize = 1+2*ratio;
 			Solution[] group = new Solution[groupSize];
-			for (int i = 0; i < groupSize; ++i) {
-				group[i] = sols[g * groupSize + i];
+			for (int j = i-ratio; j <= i+ratio; ++i) {
+				int trueIndex = j;
+				while (trueIndex < 0) // % operator return negative numbers
+					trueIndex += sols.length;
+				group[i] = sols[j % sols.length];
 			}
-			Solution bestOfGroup = Algorithms.getGlobalOptimum(group);
-			for (int i = 0; i < groupSize; ++i) {
-				groupBest[g * groupSize + i] = bestOfGroup;
-			}
-		}
-		if (sols.length % groupSize != 0) {
-			int lastGroup = sols.length % groupSize;
-			Solution[] group = new Solution[lastGroup];
-			for (int i = 0; i < lastGroup; ++i) {
-				group[i] = sols[(sols.length / groupSize) * groupSize + i];
-			}
-			Solution bestOfGroup = Algorithms.getGlobalOptimum(group);
-			for (int i = 0; i < lastGroup; ++i) {
-				groupBest[(sols.length / groupSize) * groupSize + i] = bestOfGroup;
-			}
+			groupBest[i] = Algorithms.getGlobalOptimum(group);
 		}
 		return groupBest;
 	}
@@ -97,12 +87,12 @@ public class PSOGroups extends PSO {
 		updateBestPositions();
 	}
 
-	public int getGroupSize() {
-		return groupSize;
+	public int getRatio() {
+		return ratio;
 	}
 
-	public void setGroupSize(int groupSize) {
-		this.groupSize = groupSize;
+	public void setRatio(int ratio) {
+		this.ratio = ratio;
 	}
 
 }
