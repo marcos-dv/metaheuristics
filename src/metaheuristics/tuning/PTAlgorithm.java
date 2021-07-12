@@ -14,6 +14,8 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 	private double [] prevFitness;
 	private Problem problem;
 	private int popsize;
+	// number of consecutive iterations
+	private int consecutiveIterations;
 
 	private boolean DEBUG = false;
 	private double curAlfa; // current value for the parameter alfa
@@ -27,6 +29,7 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 			Messages.warning("PTAlgorithm: metaheuristic has no population");
 		}
 		ew = new EW(popsize, range);
+		consecutiveIterations = 1;
 	}
 
 	public double getCurAlfa() {
@@ -141,7 +144,8 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 		int idx = selectParamIndex();
 		curAlfa = ew.getParamRange()[idx];
 		setNewParam(curAlfa);
-		metaheuristic.nextIter();
+		for(int it = 0; it < consecutiveIterations; it++)
+			metaheuristic.nextIter();
 //		if (getNumIter() % 20 == 0)
 //			printFitness();
 
@@ -188,6 +192,14 @@ public abstract class PTAlgorithm implements IMetaheuristic {
 
 	public void setTemporalWeight(double temporalWeight) {
 		ew.setTemporalWeight(temporalWeight);
+	}
+
+	public int getConsecutiveIterations() {
+		return consecutiveIterations;
+	}
+
+	public void setConsecutiveIterations(int consecutiveIterations) {
+		this.consecutiveIterations = consecutiveIterations;
 	}
 	
 	

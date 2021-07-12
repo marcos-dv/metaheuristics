@@ -19,7 +19,9 @@ public abstract class PTAlgorithmMulti implements IMetaheuristic {
 	private double [] prevFitness;
 	private Problem problem;
 	private int popsize;
-
+	// number of consecutive iterations
+	private int consecutiveIterations;
+	
 	private boolean DEBUG = false;
 	
 	private Set<String> paramNames;
@@ -33,6 +35,7 @@ public abstract class PTAlgorithmMulti implements IMetaheuristic {
 		}
 		setParamNames(new HashSet<>());
 		setParameters(new HashMap<>());
+		consecutiveIterations = 1;
 	}
 	
 	public void setNewParam(String paramName, double [] paramRange) {
@@ -228,6 +231,14 @@ public abstract class PTAlgorithmMulti implements IMetaheuristic {
 
 	public void setPrevFitness(double [] prevFitness) {
 		this.prevFitness = prevFitness;
+	}
+
+	public int getConsecutiveIterations() {
+		return consecutiveIterations;
+	}
+
+	public void setConsecutiveIterations(int consecutiveIterations) {
+		this.consecutiveIterations = consecutiveIterations;
 	}
 	
 	
