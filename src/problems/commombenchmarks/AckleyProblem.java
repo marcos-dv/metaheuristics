@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,7 +6,14 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Ackley
+ * 
+ * This multimodal function is one of the most
+ * commonly used test function for metaheuristic algorithm
+ * evaluation. It has numerous local minima but one global
+ * optimal solution found in deep narrow basin in the middle.
+ * The best solution 0 is found at f(x * )=[0,0,...,0]
+ * in domain [-32,32].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -17,11 +24,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class MichalewiczProblem implements AcademicProblem {
+public class AckleyProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 32;
+	private double lowerBound = -32;
 	private boolean WARNING = true;
 	
 	@Override
@@ -29,11 +36,11 @@ public class MichalewiczProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public MichalewiczProblem(int dim) {
+	public AckleyProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public MichalewiczProblem(int dim, double lb, double ub) {
+	public AckleyProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -48,9 +55,18 @@ public class MichalewiczProblem implements AcademicProblem {
 		}
 		
 		double fit = 0;
+		double sum1 = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			sum1 += coords[i]*coords[i];
 		}
+		sum1 = Math.sqrt(sum1/(double)dim);
+		
+		double sum2 = 0;
+		for(int i = 0; i < dim; ++i) {
+			sum2 += Math.cos(2*Math.PI*coords[i]);
+		}
+		sum2 /= dim;
+		fit = -20*Math.exp(-0.2*sum1) -Math.exp(sum2) + 20 + Math.E;
 		return fit;
 	}
 	

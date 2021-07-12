@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,7 +6,13 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Rosebrock
+ * 
+ * This is also a unimodal function which is
+ * also known as banana function as its global minimum
+ * solution 0 is found in the narrow valley, with optimum
+ * solution f(x * )=[0,0,...,0]. The range of values of parameter
+ * values is often set to [-5, 10].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -17,11 +23,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class SchwefelProblem implements AcademicProblem {
+public class RosebrockProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 10;
+	private double lowerBound = -5;
 	private boolean WARNING = true;
 	
 	@Override
@@ -29,11 +35,11 @@ public class SchwefelProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public SchwefelProblem(int dim) {
+	public RosebrockProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public SchwefelProblem(int dim, double lb, double ub) {
+	public RosebrockProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -48,8 +54,9 @@ public class SchwefelProblem implements AcademicProblem {
 		}
 		
 		double fit = 0;
-		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+		for(int i = 0; i < dim-1; ++i) {
+			double aux = coords[i+1]+coords[i]*coords[i];
+			fit += 100*aux*aux+(coords[i]-1)*(coords[i]-1);
 		}
 		return fit;
 	}

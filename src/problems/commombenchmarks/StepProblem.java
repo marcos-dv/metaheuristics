@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,14 +6,14 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Rastringin
+ * Academic problem: Step
  * 
- * This multimodal function is difficult to
- * solve as it presents numerous local minima locations where
- * an optimization algorithm, with poor explorative capability,
- * has high chances of being trapped. The function’s only
- * globally best solution 0 is found at f(x * )=[0,0,...,0] within the
- * domain of [-5.12,5.12].
+ * This function represents flat surface which is
+ * often considered as difficult to solve as no proper direction
+ * towards globally optimum location is easily found. Step is a
+ * unimodal function where minimum solution 0 located at
+ * f(x * )=[-0.5,-0.5,...,-0.5] within the values spread over [-100,100]
+ * range.
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -24,11 +24,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class RastriginProblem implements AcademicProblem {
+public class StepProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 100;
+	private double lowerBound = -100;
 	private boolean WARNING = true;
 	
 	@Override
@@ -36,11 +36,11 @@ public class RastriginProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public RastriginProblem(int dim) {
+	public StepProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public RastriginProblem(int dim, double lb, double ub) {
+	public StepProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -56,7 +56,7 @@ public class RastriginProblem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i] -10*Math.cos(2*Math.PI*coords[i]) + 10;
+			fit += (coords[i]+0.5)*(coords[i]+0.5);
 		}
 		return fit;
 	}
@@ -67,8 +67,10 @@ public class RastriginProblem implements AcademicProblem {
 	}
 
 	public Solution getOptimalSol() {
-		// Optimum = (0, 0, ...)
+		// Optimum = (-0.5, -0.5, ...)
 		double [] coords = new double[dim];
+		for(int i = 0; i < coords.length; ++i)
+			coords[i] = -0.5;
 		Solution opt = new Solution(coords, this);
 		return opt;
 	}

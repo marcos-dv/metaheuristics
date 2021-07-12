@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,14 +6,13 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Step
+ * Academic problem: Griewank
  * 
- * This function represents flat surface which is
- * often considered as difficult to solve as no proper direction
- * towards globally optimum location is easily found. Step is a
- * unimodal function where minimum solution 0 located at
- * f(x * )=[-0.5,-0.5,...,-0.5] within the values spread over [-100,100]
- * range.
+ * It is a multimodal function with widespread
+ * suboptimal solutions spread all over the search environment.
+ * This function has one global optimum solution 0 to be
+ * located at f(x * )=[0,0,...,0]. The function is solved with range
+ * of [-600,600].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -24,11 +23,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class StepProblem implements AcademicProblem {
+public class GriewankProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 100;
-	private double lowerBound = -100;
+	private double upperBound = 600;
+	private double lowerBound = -600;
 	private boolean WARNING = true;
 	
 	@Override
@@ -36,11 +35,11 @@ public class StepProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public StepProblem(int dim) {
+	public GriewankProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public StepProblem(int dim, double lb, double ub) {
+	public GriewankProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -55,9 +54,16 @@ public class StepProblem implements AcademicProblem {
 		}
 		
 		double fit = 0;
+		double sum = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += (coords[i]+0.5)*(coords[i]+0.5);
+			sum += coords[i]*coords[i];
 		}
+		sum /= 4000;
+		double prod = 1;
+		for(int i = 0; i < dim; ++i) {
+			prod *= Math.cos(coords[i]/Math.sqrt((double)(i+1)));
+		}
+		fit = sum - prod + 1;
 		return fit;
 	}
 	
@@ -67,10 +73,8 @@ public class StepProblem implements AcademicProblem {
 	}
 
 	public Solution getOptimalSol() {
-		// Optimum = (-0.5, -0.5, ...)
+		// Optimum = (0, 0, ...)
 		double [] coords = new double[dim];
-		for(int i = 0; i < coords.length; ++i)
-			coords[i] = -0.5;
 		Solution opt = new Solution(coords, this);
 		return opt;
 	}

@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,12 +6,11 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Elliptic
  * 
- * Sphere is a unimodal and continuous function,
- * which is considered as easy to solve. This function is
- * evaluated using range between [-5.12,5.12] and its minimum
- * solution is 0 which is located at f(x * )=[0,0,...,0].
+ * This unimodal function with single global
+ * best solution 0 found at f(x * )=[0,0,...,0] within the search
+ * space of [-100,100].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -22,11 +21,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class SphereProblem implements AcademicProblem {
+public class EllipticProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = 100;
+	private double lowerBound = -100;
 	private boolean WARNING = true;
 	
 	@Override
@@ -34,11 +33,11 @@ public class SphereProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public SphereProblem(int dim) {
+	public EllipticProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public SphereProblem(int dim, double lb, double ub) {
+	public EllipticProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -54,7 +53,8 @@ public class SphereProblem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			double cte = Math.pow(1E6, i/(double)(dim-1));
+			fit += cte*coords[i]*coords[i];
 		}
 		return fit;
 	}

@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,12 +6,7 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Quartic
- * 
- * This function is a unimodal function like
- * Sphere with degree 4. The best solution 0 is found at
- * f(x * )=[0,0,...,0], whereas the search space is spread between
- * [-1.28,1.28]
+ * Academic problem: Sphere
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -22,11 +17,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class QuarticProblem implements AcademicProblem {
+public class NonContinuousRastriginProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = -1.28;
-	private double lowerBound = 1.28;
+	private double upperBound = 5.12;
+	private double lowerBound = -5.12;
 	private boolean WARNING = true;
 	
 	@Override
@@ -34,11 +29,11 @@ public class QuarticProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public QuarticProblem(int dim) {
+	public NonContinuousRastriginProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public QuarticProblem(int dim, double lb, double ub) {
+	public NonContinuousRastriginProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -54,8 +49,7 @@ public class QuarticProblem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			double sqCoords = coords[i]*coords[i];
-			fit += (i+1)*sqCoords*sqCoords;
+			fit += coords[i]*coords[i];
 		}
 		return fit;
 	}

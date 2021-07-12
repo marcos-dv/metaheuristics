@@ -1,7 +1,5 @@
 package mason;
 
-import commombenchmarks.AckleyProblem;
-import commombenchmarks.SphereProblem;
 import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
@@ -11,6 +9,8 @@ import problems.Cec2015Problem;
 import problems.CircleProblem;
 import problems.PolygonProblem;
 import problems.Problem;
+import problems.commombenchmarks.AckleyProblem;
+import problems.commombenchmarks.SphereProblem;
 import solutions.Solution;
 import solutions.SolutionGenerator;
 import utils.Polygons;

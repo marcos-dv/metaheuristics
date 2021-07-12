@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,7 +6,14 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Rastringin
+ * 
+ * This multimodal function is difficult to
+ * solve as it presents numerous local minima locations where
+ * an optimization algorithm, with poor explorative capability,
+ * has high chances of being trapped. The function’s only
+ * globally best solution 0 is found at f(x * )=[0,0,...,0] within the
+ * domain of [-5.12,5.12].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -17,7 +24,7 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class Penalized1Problem implements AcademicProblem {
+public class RastriginProblem implements AcademicProblem {
 	
 	private int dim;
 	private double upperBound = 5.12;
@@ -29,11 +36,11 @@ public class Penalized1Problem implements AcademicProblem {
 		return dim;
 	}
 
-	public Penalized1Problem(int dim) {
+	public RastriginProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public Penalized1Problem(int dim, double lb, double ub) {
+	public RastriginProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -49,7 +56,7 @@ public class Penalized1Problem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			fit += coords[i]*coords[i] -10*Math.cos(2*Math.PI*coords[i]) + 10;
 		}
 		return fit;
 	}

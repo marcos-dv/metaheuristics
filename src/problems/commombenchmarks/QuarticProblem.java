@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,7 +6,12 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Sphere
+ * Academic problem: Quartic
+ * 
+ * This function is a unimodal function like
+ * Sphere with degree 4. The best solution 0 is found at
+ * f(x * )=[0,0,...,0], whereas the search space is spread between
+ * [-1.28,1.28]
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -17,11 +22,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class Schwefel226Problem implements AcademicProblem {
+public class QuarticProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 5.12;
-	private double lowerBound = -5.12;
+	private double upperBound = -1.28;
+	private double lowerBound = 1.28;
 	private boolean WARNING = true;
 	
 	@Override
@@ -29,11 +34,11 @@ public class Schwefel226Problem implements AcademicProblem {
 		return dim;
 	}
 
-	public Schwefel226Problem(int dim) {
+	public QuarticProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public Schwefel226Problem(int dim, double lb, double ub) {
+	public QuarticProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -49,7 +54,8 @@ public class Schwefel226Problem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += coords[i]*coords[i];
+			double sqCoords = coords[i]*coords[i];
+			fit += (i+1)*sqCoords*sqCoords;
 		}
 		return fit;
 	}

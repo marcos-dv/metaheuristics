@@ -1,13 +1,13 @@
 package exec;
 
 
-import commombenchmarks.AckleyProblem;
 import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
 import problems.Problem;
 import problems.RandomProblem;
+import problems.commombenchmarks.AckleyProblem;
 import solutions.Solution;
 import utils.SimpleClock;
 

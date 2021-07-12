@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,13 +6,12 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: SumSquare
+ * Academic problem: Sphere
  * 
- * This function is also known as Axis
- * Parallel Hyper-Ellipsoid function which maintains no local
- * optima but single global optima f(x * )=[0,0,...,0]. The
- * function is normally evaluated with continuous values within
- * the range of [-10,10].
+ * Sphere is a unimodal and continuous function,
+ * which is considered as easy to solve. This function is
+ * evaluated using range between [-5.12,5.12] and its minimum
+ * solution is 0 which is located at f(x * )=[0,0,...,0].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -23,11 +22,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class SumSquareProblem implements AcademicProblem {
+public class SphereProblem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 10;
-	private double lowerBound = -10;
+	private double upperBound = 5.12;
+	private double lowerBound = -5.12;
 	private boolean WARNING = true;
 	
 	@Override
@@ -35,11 +34,11 @@ public class SumSquareProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public SumSquareProblem(int dim) {
+	public SphereProblem(int dim) {
 		this.dim = dim;
 	}
 
-	public SumSquareProblem(int dim, double lb, double ub) {
+	public SphereProblem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -55,7 +54,7 @@ public class SumSquareProblem implements AcademicProblem {
 		
 		double fit = 0;
 		for(int i = 0; i < dim; ++i) {
-			fit += (i+1)*coords[i]*coords[i];
+			fit += coords[i]*coords[i];
 		}
 		return fit;
 	}

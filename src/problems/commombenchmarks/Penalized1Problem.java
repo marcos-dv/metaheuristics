@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -17,7 +17,7 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class HimmelblauProblem implements AcademicProblem {
+public class Penalized1Problem implements AcademicProblem {
 	
 	private int dim;
 	private double upperBound = 5.12;
@@ -29,11 +29,11 @@ public class HimmelblauProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public HimmelblauProblem(int dim) {
+	public Penalized1Problem(int dim) {
 		this.dim = dim;
 	}
 
-	public HimmelblauProblem(int dim, double lb, double ub) {
+	public Penalized1Problem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;

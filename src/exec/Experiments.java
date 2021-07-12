@@ -1,10 +1,5 @@
 package exec;
 
-import commombenchmarks.AckleyProblem;
-import commombenchmarks.EllipticProblem;
-import commombenchmarks.GriewankProblem;
-import commombenchmarks.RosebrockProblem;
-import commombenchmarks.Schwefel222Problem;
 import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
@@ -16,6 +11,11 @@ import metaheuristics.PSOOne;
 import metaheuristics.PTGSA;
 import problems.MinSqSumProblem;
 import problems.Problem;
+import problems.commombenchmarks.AckleyProblem;
+import problems.commombenchmarks.EllipticProblem;
+import problems.commombenchmarks.GriewankProblem;
+import problems.commombenchmarks.RosebrockProblem;
+import problems.commombenchmarks.Schwefel222Problem;
 import utils.SimpleClock;
 
 public class Experiments {

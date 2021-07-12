@@ -1,4 +1,4 @@
-package commombenchmarks;
+package problems.commombenchmarks;
 
 import control.Messages;
 import problems.AcademicProblem;
@@ -6,11 +6,11 @@ import solutions.Solution;
 
 /**
  * 
- * Academic problem: Elliptic
+ * Academic problem: Schwefel 2.22
  * 
- * This unimodal function with single global
- * best solution 0 found at f(x * )=[0,0,...,0] within the search
- * space of [-100,100].
+ * This function is a unimodal with search
+ * space usually spread over [-10,10] values. The global
+ * minimum 0 is located at f(x * )=[0,0,...,0].
  * 
  * Based on the paper:
  * Common Benchmark Functions for Metaheuristic Evaluation: A Review
@@ -21,11 +21,11 @@ import solutions.Solution;
  * 
  * email : marcos.dominguezv.dev@gmail.com ; marcos.dominguezv0@gmail.com
  */
-public class EllipticProblem implements AcademicProblem {
+public class Schwefel222Problem implements AcademicProblem {
 	
 	private int dim;
-	private double upperBound = 100;
-	private double lowerBound = -100;
+	private double upperBound = 10;
+	private double lowerBound = -10;
 	private boolean WARNING = true;
 	
 	@Override
@@ -33,11 +33,11 @@ public class EllipticProblem implements AcademicProblem {
 		return dim;
 	}
 
-	public EllipticProblem(int dim) {
+	public Schwefel222Problem(int dim) {
 		this.dim = dim;
 	}
 
-	public EllipticProblem(int dim, double lb, double ub) {
+	public Schwefel222Problem(int dim, double lb, double ub) {
 		this(dim);
 		lowerBound = lb;
 		upperBound = ub;
@@ -52,10 +52,15 @@ public class EllipticProblem implements AcademicProblem {
 		}
 		
 		double fit = 0;
+		double sum = 0;
 		for(int i = 0; i < dim; ++i) {
-			double cte = Math.pow(1E6, i/(double)(dim-1));
-			fit += cte*coords[i]*coords[i];
+			sum += Math.abs(coords[i]);
 		}
+		double prod = 1;
+		for(int i = 0; i < dim; ++i) {
+			prod *= Math.abs(coords[i]);
+		}
+		fit = sum + prod;
 		return fit;
 	}
 	
