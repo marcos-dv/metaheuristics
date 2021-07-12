@@ -5,11 +5,6 @@ public class PTGSA extends PTAlgorithm {
 	
 	private boolean DEBUG = false;
 	
-	public PTGSA(GSA gsa) {
-		super(gsa);
-		this.gsa = (GSA) getMetaheuristic();
-	}
-
 	public PTGSA(GSA gsa, double [] range) {
 		super(gsa, range);
 		this.gsa = (GSA) getMetaheuristic();

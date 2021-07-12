@@ -1,11 +1,11 @@
-package exec;
+package demos;
 
 import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PSO;
 import metaheuristics.PSOAll;
 import metaheuristics.PTGSA;
-import metaheuristics.PTGSAVariant;
+import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;

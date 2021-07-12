@@ -1,4 +1,4 @@
-package exec;
+package demos;
 
 import control.Globals;
 import metaheuristics.GSA;

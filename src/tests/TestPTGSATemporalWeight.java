@@ -3,7 +3,7 @@ package tests;
 import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.PTGSA;
-import metaheuristics.PTGSAVariant;
+import metaheuristics.PTGSA;
 import problems.MinSqSumProblem;
 import problems.Problem;
 
@@ -17,7 +17,7 @@ public class TestPTGSATemporalWeight {
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {2., 5., 7.};
-		PTGSAVariant ptgsa = new PTGSAVariant(gsa, alfas);
+		PTGSA ptgsa = new PTGSA(gsa, alfas);
 		ptgsa.run(maxiter);		
 	}
 	
@@ -29,7 +29,7 @@ public class TestPTGSATemporalWeight {
 		// popsize
 		GSA gsa = new GSA(popsize, problem);
 		double [] alfas = {2., 5., 7.};
-		PTGSAVariant ptgsa = new PTGSAVariant(gsa, alfas);
+		PTGSA ptgsa = new PTGSA(gsa, alfas);
 		ptgsa.setTemporalWeight(0.0);
 		ptgsa.initPop();
 		for(int i = 0; i < maxiter; ++i) {
