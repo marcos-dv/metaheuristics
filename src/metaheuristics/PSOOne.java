@@ -1,5 +1,7 @@
 package metaheuristics;
 
+import metaheuristics.tuning.PTAlgorithmOne;
+
 public class PSOOne extends PTAlgorithmOne {
 	private PSO pso;
 	

@@ -1,4 +1,6 @@
-package metaheuristics;
+package metaheuristics.tuning;
+
+import metaheuristics.IMetaheuristic;
 
 public abstract class PTAlgorithmAll extends PTAlgorithmMulti {
 

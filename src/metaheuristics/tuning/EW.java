@@ -1,4 +1,4 @@
-package metaheuristics;
+package metaheuristics.tuning;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,5 +1,7 @@
 package metaheuristics;
 
+import metaheuristics.tuning.PTAlgorithmOne;
+
 public class PTGSAOne extends PTAlgorithmOne {
 	private GSA gsa;
 	

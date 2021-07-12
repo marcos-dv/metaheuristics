@@ -1,4 +1,4 @@
-package metaheuristics;
+package metaheuristics.tuning;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,7 @@ import java.util.Set;
 
 import control.Globals;
 import control.Messages;
+import metaheuristics.IMetaheuristic;
 import problems.Problem;
 import solutions.Solution;
 
