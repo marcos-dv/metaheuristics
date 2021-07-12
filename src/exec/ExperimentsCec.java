@@ -74,13 +74,12 @@ public class ExperimentsCec {
 
 	private static IMetaheuristic generateAlgorithm(long seed, Problem targetProblem, int popsize, int method) {
 		if (method == 0) {
-			PSO meta = new PSO(popsize, targetProblem);
-			meta.setCoefGlobalBest(1./3);
-			meta.setCoefLocalBest(1./3);
-			meta.setCoefSpeed(1./3);
-			meta.setLearningRate(0.9);
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setAlfa(20);
 			meta.initPop();
-			return meta;
+			double [] alphas = new double[] {15, 20, 25, 30};
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			return meta2;
 		}
 		else if (method == 1) {
 			PSOIndependantGroups meta = new PSOIndependantGroups(popsize, targetProblem);

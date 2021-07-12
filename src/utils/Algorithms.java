@@ -36,4 +36,21 @@ public class Algorithms {
 		return curSol;
 	}
 	
+	public static double[] uniformSample(double a, double b, int numPoints) {
+		double[] partition = new double[numPoints];
+		for(int i = 0; i < numPoints; ++i) {
+			partition[i] = a+i*(b-a)/(double)(numPoints-1);
+		}
+		return partition;
+	}
+
+	public static double[] forwardSample(double a, double r, int numPoints) {
+		double[] partition = new double[numPoints];
+		partition[0] = a;
+		for(int i = 1; i < numPoints; ++i) {
+			partition[i] = partition[i-1]+r;
+		}
+		return partition;
+	}
+
 }
