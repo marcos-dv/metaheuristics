@@ -9,6 +9,7 @@ import metaheuristics.PSOAll;
 import metaheuristics.PSOIndependantGroups;
 import metaheuristics.PSOOne;
 import metaheuristics.PTGSA;
+import problems.Cec2015Problem;
 import problems.MinSqSumProblem;
 import problems.Problem;
 import problems.commombenchmarks.AckleyProblem;
@@ -18,26 +19,57 @@ import problems.commombenchmarks.RosebrockProblem;
 import problems.commombenchmarks.Schwefel222Problem;
 import utils.SimpleClock;
 
-public class Experiments {
+public class ExperimentsCec {
 
 	private static int numSimulations = 30;
 	private static long [] seed;
-	private static int numProblems = 4;
 	private static Problem [] benchmark;
-
+	
 	private static int dimension = 30;
-	private static int numIter = 10000;
+	private static int numIter = 100;
 
 	private static int numAlgorithms = 9;
 
+	private static boolean time_flag = true;
+
+	// args
+	private static boolean parsedArgs;
+	private static int numProblems; // see initBenchmark()
+	private static int problem_id = 1;
+	private static int method_id = 1;
+	
 	private static SimpleClock clock = new SimpleClock();
 	
-	private static void initBenchmark() {
-		benchmark = new Problem[numProblems];
-		benchmark[0] = new Schwefel222Problem(dimension);
-		benchmark[1] = new EllipticProblem(dimension);
-		benchmark[2] = new GriewankProblem(dimension);
-		benchmark[3] = new AckleyProblem(dimension);
+	private static int [] initMethods() {
+		int [] methods;
+		if (!parsedArgs) {
+			methods = new int[]{1,2,3,4,5,6,7,8};
+		}
+		else {
+			methods = new int[numAlgorithms];
+			methods[0] = method_id;
+		}
+		return methods;		
+	}
+
+	private static Problem[] initBenchmark() {
+		Problem [] benchmark;
+		if (!parsedArgs) {
+			int [] funcnumber1 = new int[] {1, 2, 3, 4, 5, 6, 8};
+			int [] funcnumber2 = new int[] {7, 9, 10, 12, 13, 14};
+			int [] funcnumber3 = new int[] {11, 15};
+			int [] funcnumber = new int[] {1, 2, 3, 4, 5, 6, 8};
+			numProblems = funcnumber.length;
+			benchmark = new Problem[numProblems];
+			for(int i = 0; i < numProblems; ++i) {
+				benchmark[i] = new Cec2015Problem(funcnumber[i], dimension);
+			}
+		}
+		else {
+			benchmark = new Problem[numProblems];
+			benchmark[0] = new Cec2015Problem(problem_id, dimension);
+		}
+		return benchmark;
 	}
 
 	private static IMetaheuristic generateAlgorithm(long seed, Problem targetProblem, int popsize, int method) {
@@ -138,37 +170,80 @@ public class Experiments {
 		Globals.getRandomGenerator().setSeed(seed);
 		int popsize = 50;
 		IMetaheuristic algorithm = generateAlgorithm(seed, targetProblem, popsize, method);
-		return run(algorithm);
-	}
-
-	private static double run(IMetaheuristic algorithm) {
+		// RUN
 		for(int i = 0; i < numIter; ++i) {
 			algorithm.nextIter();
 		}
 		return algorithm.getGlobalOptimum().getFitness();
 	}
 
+	private static boolean parseArgs(String[] args) {
+		if (args.length <= 0)
+			return false;
+		if (args[0].equals("-h")) {
+			System.out.println("./exec NUM_ITER ID_PROBLEM METHOD NUM_SIMUL");
+			System.out.println("\tNUM_ITER: number of iterations. Default: " + numIter);
+			System.out.println("\tID_PROBLEM: id of the problem to solve. Range of ids: from 1 to 15. Default: 1");
+			System.out.println("\tMETHOD: solving method number. Default: 1");
+			System.out.println("\tNUM_SIMUL: number of simulations. Default: " + numSimulations);
+			return false;
+		}
+		if (args.length <= 3) {
+			System.out.println("Not enough arguments. Exit (" + args.length + " < 4)");
+			return false;
+		}
+		numIter = Integer.parseInt(args[0]);
+		problem_id = Integer.parseInt(args[1]);
+		method_id = Integer.parseInt(args[2]);
+		numSimulations = Integer.parseInt(args[3]);
+		return true;
+	}
+	
 	public static void main(String[] args) {
+		// Parse arguments
+		parsedArgs = parseArgs(args);
+		if (parsedArgs) {
+			numAlgorithms = 1;
+			numProblems = 1;
+		}
+		// Setup simulation
+		// Problems
+		benchmark = initBenchmark();
+		int [] methods = initMethods();
+
 		seed = new long[numSimulations];
 		for(int i = 0; i < seed.length; ++i) {
 			seed[i] = i*3+1;
 		}
 		double [][][] results = new double[numAlgorithms][numProblems][numSimulations];
-		initBenchmark();
-
-		for(int k = 0; k < numAlgorithms; ++k) {
-			clock.start();
+		
+		for(int k = 0; k < methods.length; ++k) {
+			if (time_flag)
+				clock.start();
 			for(int j = 0; j < numProblems; ++j) {
 				for(int i = 0; i < seed.length; ++i) {
-					results[k][j][i] = simulation(seed[i], benchmark[j], k);
+					results[k][j][i] = simulation(seed[i], benchmark[j], methods[k]);
 				}
 			}
-			clock.end();
-			clock.displayTime();
+			if (time_flag) {
+				clock.end();
+				clock.displayTime();
+			}
 		}
-		// TODO get media
+		
+		// Display results
+		for(int k = 0; k < methods.length; ++k) {
+			for(int j = 0; j < numProblems; ++j) {
+				for(int i = 0; i < numSimulations; ++i) {
+					System.out.print(results[k][j][i] + ';');
+				}
+				System.out.println();
+			}
+		}
+
+		// Compute means
 		double [][] means = new double[numAlgorithms][numProblems];
-		for(int k = 0; k < numAlgorithms; ++k) {
+		for(int k = 0; k < methods.length; ++k) {
 			for(int j = 0; j < numProblems; ++j) {
 				for(int i = 0; i < numSimulations; ++i) {
 					means[k][j] += results[k][j][i];
@@ -176,12 +251,14 @@ public class Experiments {
 				means[k][j] = means[k][j]/numSimulations;
 			}
 		}
-		for(int k = 0; k < numAlgorithms; ++k) {
+		// Display means
+		for(int k = 0; k < methods.length; ++k) {
 			for(int j = 0; j < numProblems; ++j) {
-				System.out.println("Algo " + k + " Problem " + (j+1) + " = " + means[k][j]);
+				System.out.println("Algo " + methods[k] + " Problem " + (j+1) + " = " + means[k][j]);
 			}
 		}
 	}
+
 
 
 	
