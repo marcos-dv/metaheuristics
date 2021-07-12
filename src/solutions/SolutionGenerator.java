@@ -4,6 +4,7 @@ import control.Globals;
 import control.Messages;
 import problems.Problem;
 import utils.Geometry;
+import utils.RandomGenerator;
 
 public class SolutionGenerator {
 	
@@ -68,6 +69,15 @@ public class SolutionGenerator {
 			double [] vertex2 = polygon[(targetSegment+1)%polygon.length];
 			Solution [] singleSol = overSegment(1, vertex1, vertex2, problem);
 			sols[i] = new Solution(singleSol[0]);
+		}
+		return sols;
+	}
+
+	public static Solution[] randomInit(int popsize, Problem targetProblem) {
+		Solution [] sols = new Solution[popsize];
+		for (int i = 0; i < sols.length; ++i) {
+			sols[i] = new Solution(targetProblem);
+			sols[i].randomInit();
 		}
 		return sols;
 	}

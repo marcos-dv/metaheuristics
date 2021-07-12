@@ -6,8 +6,8 @@ import utils.Polygons;
 
 public class PolygonProblem implements Problem {
 
-	private final double lowerBound = -50;
-	private final double upperBound = 50;
+	private double lowerBound = -50;
+	private double upperBound = 50;
 	private double [][] polygon;
 	private int dim;
 	private boolean open;

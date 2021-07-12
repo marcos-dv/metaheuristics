@@ -2,6 +2,7 @@ package mason;
 
 import commombenchmarks.AckleyProblem;
 import commombenchmarks.SphereProblem;
+import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
 import metaheuristics.PSO;
@@ -21,40 +22,49 @@ public class TestMasonMeta {
 
 	private static Problem generateProblem() {
 //		return new AckleyProblem(2);
-		return new Cec2015Problem(2, 2);
-//	 	return new PolygonProblem(Polygons.hexagon, false);
+//		return new Cec2015Problem(2, 2);
+	 	return new PolygonProblem(Polygons.regularPolygon(5, 25), false);
 	}
 	
 	private static IMetaheuristic generateMetaheuristic(Problem targetProblem, int popsize, Solution[] sols) {
+		/*
 		PSO meta = new PSO(sols, targetProblem);
 		meta.initPop();
+		meta.setLearningRate(1);
+		meta.setCoefSpeed(.5);
+		meta.setCoefLocalBest(.3);
+		meta.setCoefGlobalBest(.2);
 		return meta;
-
-		/*
+		*/
+		
+		
 		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
 		meta.setSols(sols);
+		meta.setTemp(9000);
 		meta.setL(50);
+		meta.setAlfa(0.9);
 		meta.setStep(0.3);
 		return meta;
-		*/
+		
+		
 		/*
-		GSA gsa = new GSA(popsize, targetProblem);
-		gsa.setMAX_ITER(maxiter);
-		gsa.initPop();
-		setAlgorithm(gsa);
+		GSA meta = new GSA(popsize, targetProblem);
+		meta.setMAX_ITER(10000);
+		meta.setAlfa(20);
+		meta.initPop();
+		return meta;
 		*/
-
 	}
 
 	private static Solution[] generateSols(Problem targetProblem, int popsize) {
-		double [][] polygon = Polygons.A;
+//		double [][] polygon = Polygons.A;
 //		Solution[] sols = SolutionGenerator.overCircle(popsize, targetProblem, ratio);
-		Solution[] sols = SolutionGenerator.overPolygon(popsize, polygon, true, targetProblem);
+		Solution[] sols = SolutionGenerator.randomInit(popsize, targetProblem);
 		return sols;
 	}
 	
 	private static SolverInfo generateSolverInfo() {
-		int popsize = 500;
+		int popsize = 200;
 		Problem targetProblem = generateProblem();
 		Solution [] sols = generateSols(targetProblem, popsize);
 		IMetaheuristic algorithm = generateMetaheuristic(targetProblem, popsize, sols);

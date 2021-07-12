@@ -176,15 +176,19 @@ public class ContinuousMetaSimulation extends SimState implements Steppable {
 	private void setupGrid() {
 		updateGridPositions();
 		// Reference points
+		/*
 		grid.setObjectLocation(-1, realSpace2Screen(new double[]{1, 1}));
 		grid.setObjectLocation(-2, realSpace2Screen(new double[]{50, 50}));
 		grid.setObjectLocation(-3, realSpace2Screen(new double[]{1, 50}));
 		grid.setObjectLocation(-4, realSpace2Screen(new double[]{50, 1}));
+		*/
 		// Center
+		/*
 		double [] center = new double[2];
 		center[0] = (double) width/2;
 		center[1] = (double) height/2;
 		grid.setObjectLocation(-5, realSpace2Screen(center));
+		*/
 	}
 	
 	public void printGrid() {
