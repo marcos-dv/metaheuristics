@@ -3,6 +3,8 @@ package metaheuristics.tuning;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apache.commons.math3.analysis.function.Sigmoid;
+
 import control.Globals;
 import control.Messages;
 import problems.Problem;
@@ -181,12 +183,17 @@ public class EW {
 		}
 		return mean / (double) popsize;
 	}
+	
+	public double activationFunction(double x) {
+		return Math.tanh(x);
+//		return Globals.sigmoid01.value(x);
+	}
 
 	public void updateCaseAllGood(int row, double[] delta) {
 		if (DEBUG)
 			System.out.println("# Update case good");
 		for (int j = 0; j < popsize; ++j) {
-			EW[row][j] = temporalWeight * EW[row][j] + (1 - temporalWeight) * Math.tanh(delta[j] / popsize);
+			EW[row][j] = temporalWeight * EW[row][j] + (1 - temporalWeight) * activationFunction(delta[j] / popsize);
 		}
 	}
 
@@ -195,7 +202,7 @@ public class EW {
 			System.out.println("# Update case bad");
 		// Negative weights
 		for (int j = 0; j < popsize; ++j) {
-			EW[row][j] = temporalWeight * EW[row][j] + (1 - temporalWeight) * Math.tanh(delta[j] / popsize);
+			EW[row][j] = temporalWeight * EW[row][j] + (1 - temporalWeight) * activationFunction(delta[j] / popsize);
 		}
 	}
 
@@ -203,7 +210,7 @@ public class EW {
 		if (DEBUG)
 			System.out.println("# Update case mix");
 		for (int j = 0; j < popsize; ++j) {
-			EW[row][j] = temporalWeight * EW[row][j] + (1 - temporalWeight) * Math.abs(Math.tanh(delta[j] / popsize));
+			EW[row][j] = temporalWeight * EW[row][j] + (1 - temporalWeight) * Math.abs(activationFunction(delta[j] / popsize));
 		}
 	}
 

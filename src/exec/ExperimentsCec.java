@@ -69,7 +69,7 @@ public class ExperimentsCec {
 	}
 
 	private static IMetaheuristic generateAlgorithm(long seed, Problem targetProblem, int popsize, int method) {
-		if (method == 1) {
+		if (method == 5) {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
@@ -79,7 +79,7 @@ public class ExperimentsCec {
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
 		}
-		else if (method == 2) {
+		else if (method == 6) {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
@@ -89,7 +89,7 @@ public class ExperimentsCec {
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
 		}
-		else if (method == 3) {
+		else if (method == 7) {
 			double temporalWeight = 0.25;
 			int consecIter = 10;
 			GSA meta = new GSA(popsize, targetProblem);
@@ -101,7 +101,7 @@ public class ExperimentsCec {
 			meta2.setConsecutiveIterations(consecIter);
 			return meta2;
 		}
-		else if (method == 4) {
+		else if (method == 8) {
 			double temporalWeight = 0.1;
 			int consecIter = 10;
 			GSA meta = new GSA(popsize, targetProblem);

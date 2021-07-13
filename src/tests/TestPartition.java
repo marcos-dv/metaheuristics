@@ -12,5 +12,11 @@ public class TestPartition {
 		for (double d : range) {
 			System.out.println(d);
 		}
+
+		range = Algorithms.uniformSample(10, 50, 9);
+		for (double d : range) {
+			System.out.println(d);
+		}
+
 	}
 }
