@@ -124,7 +124,16 @@ public class Solution {
 		str += getFitness() + '\n';
 		return str;
 	}
-	
+
+	public String coords2string() {
+		String str = "";
+		str += Integer.toString(dim) + ' ';
+		for (int i = 0; i < coords.length; ++i) {
+			str += Double.toString(coords[i]) + ' ';
+		}
+		return str;
+	}
+
 	public void build(String str) {
 		StringTokenizer tokenizer = new StringTokenizer(str, " ");
 		dim = Integer.parseInt(tokenizer.nextToken());
