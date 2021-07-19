@@ -21,9 +21,9 @@ public class TestMasonMeta {
 //	static Problem targetProblem = new CircleProblem(2, 50);
 
 	private static Problem generateProblem() {
-//		return new AckleyProblem(2);
+		return new AckleyProblem(2);
 //		return new Cec2015Problem(2, 2);
-	 	return new PolygonProblem(Polygons.regularPolygon(5, 25), false);
+//	 	return new PolygonProblem(Polygons.regularPolygon(5, 25), false);
 	}
 	
 	private static IMetaheuristic generateMetaheuristic(Problem targetProblem, int popsize, Solution[] sols) {

@@ -59,7 +59,7 @@ public class ContinuousMetaSimulationUI extends GUIState {
 					g = 0;
 					b = 0;
 				}
-				paint = Color.ORANGE;
+				paint = Color.BLACK;
 				super.draw(object, graphics, info);
 			}
 		});
