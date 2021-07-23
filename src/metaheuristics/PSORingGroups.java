@@ -65,11 +65,11 @@ public class PSORingGroups extends PSO {
 		for (int i = 0; i < sols.length; ++i) {
 			int groupSize = 1+2*ratio;
 			Solution[] group = new Solution[groupSize];
-			for (int j = i-ratio; j <= i+ratio; ++i) {
+			for (int j = i-ratio, k = 0; j <= i+ratio; ++j, k++) {
 				int trueIndex = j;
 				while (trueIndex < 0) // % operator return negative numbers
 					trueIndex += sols.length;
-				group[i] = sols[j % sols.length];
+				group[k] = sols[trueIndex % sols.length];
 			}
 			groupBest[i] = Algorithms.getGlobalOptimum(group);
 		}
