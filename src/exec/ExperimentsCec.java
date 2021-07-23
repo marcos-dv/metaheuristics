@@ -3,6 +3,9 @@ package exec;
 import control.Globals;
 import metaheuristics.GSA;
 import metaheuristics.IMetaheuristic;
+import metaheuristics.PSORingAll;
+import metaheuristics.PSORingGroups;
+import metaheuristics.PSORingOne;
 import metaheuristics.PTGSA;
 import problems.Cec2015Problem;
 import problems.Problem;
@@ -136,13 +139,104 @@ public class ExperimentsCec {
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			return meta2;
 		}
-		/*
-		else if (method == 2) {
-			GSA meta = new GSA(popsize, targetProblem);
-			meta.setAlfa(20);
+		
+		else if (method == 10) { // PSORing ratio 1
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.99);
+			meta.setRatio(1);
 			meta.initPop();
+
 			return meta;
-		} 
+		}
+		
+		else if (method == 11) { // PSORing ratio 2
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.99);
+			meta.setRatio(2);
+			meta.initPop();
+
+			return meta;
+		}
+
+		else if (method == 12) { // PSORing ratio 1 one
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.99);
+			meta.setRatio(1);
+			meta.initPop();
+
+			PSORingOne meta2 = new PSORingOne(meta);
+			double [] unif = Algorithms.uniformSample(0.1, 0.5, 6);
+			double [] unif2 = Algorithms.uniformSample(0.5, 1, 6);
+			meta2.setNewParam("v", unif2);
+			meta2.setNewParam("local", unif);
+			meta2.setNewParam("global", unif);
+			return meta2;
+		}
+
+		else if (method == 13) { // PSORing ratio 2 one
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.99);
+			meta.setRatio(2);
+			meta.initPop();
+
+			PSORingOne meta2 = new PSORingOne(meta);
+			double [] unif = Algorithms.uniformSample(0.1, 0.5, 6);
+			double [] unif2 = Algorithms.uniformSample(0.5, 1, 6);
+			meta2.setNewParam("v", unif2);
+			meta2.setNewParam("local", unif);
+			meta2.setNewParam("global", unif);
+			return meta2;
+		}
+
+		else if (method == 14) { // PSORing ratio 1 all
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.99);
+			meta.setRatio(1);
+			meta.initPop();
+
+			PSORingAll meta2 = new PSORingAll(meta);
+			double [] unif = Algorithms.uniformSample(0.1, 0.5, 6);
+			double [] unif2 = Algorithms.uniformSample(0.5, 1, 6);
+			meta2.setNewParam("v", unif2);
+			meta2.setNewParam("local", unif);
+			meta2.setNewParam("global", unif);
+			return meta2;
+		}
+
+		else if (method == 15) { // PSORing ratio 2 all
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.99);
+			meta.setRatio(2);
+			meta.initPop();
+
+			PSORingAll meta2 = new PSORingAll(meta);
+			double [] unif = Algorithms.uniformSample(0.1, 0.5, 6);
+			double [] unif2 = Algorithms.uniformSample(0.5, 1, 6);
+			meta2.setNewParam("v", unif2);
+			meta2.setNewParam("local", unif);
+			meta2.setNewParam("global", unif);
+			return meta2;
+		}
+
+		/*
 		else if (method == 3) {
 			MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
 			meta.setAlfa(0.9);
