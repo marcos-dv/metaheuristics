@@ -139,6 +139,18 @@ public class ExperimentsCec {
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			return meta2;
 		}
+		else if (method == 8) { // PTGSA - mix 0.1, 10
+			int consecIter = 10;
+			double temporalWeight = 0.25;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter*consecIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setTemporalWeight(temporalWeight);
+			meta2.setConsecutiveIterations(consecIter);
+			return meta2;
+		}
 		
 		else if (method == 10) { // PSORing ratio 1
 			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
