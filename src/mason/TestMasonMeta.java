@@ -23,8 +23,11 @@ public class TestMasonMeta {
 
 	private static Problem generateProblem() {
 //		return new AckleyProblem(2);
-		return new Cec2015Problem(14, 2);
-//	 	return new PolygonProblem(Polygons.regularPolygon(5, 25), false);
+//		return new Cec2015Problem(1, 2);
+		double [][] polygon = Polygons.regularPolygon(3, 30);
+		polygon = Polygons.polygonRotation(polygon, Math.PI/5);
+		polygon = Polygons.polygonTranslation(polygon, new double[]{-30, 12});
+	 	return new PolygonProblem(polygon, false);
 	}
 	
 	private static IMetaheuristic generateMetaheuristic(Problem targetProblem, int popsize, Solution[] sols) {
@@ -41,8 +44,8 @@ public class TestMasonMeta {
 		/*
 		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
 		meta.setSols(sols);
-		meta.setTemp(9000);
-		meta.setL(50);
+		meta.setTemp(500);
+		meta.setL(100);
 		meta.setAlfa(0.9);
 		meta.setStep(0.3);
 		return meta;
@@ -52,10 +55,12 @@ public class TestMasonMeta {
 		meta.setCoefSpeed(0.7);
 		meta.setCoefLocalBest(0.2);
 		meta.setCoefGlobalBest(0.3);
-		meta.setLearningRate(0.1);
+		meta.setLearningRate(0.9);
 		meta.setRatio(1);
+		meta.setSols(sols);
 		meta.initPop();
 		return meta;
+
 		
 		/*
 		GSA meta = new GSA(popsize, targetProblem);
@@ -68,13 +73,13 @@ public class TestMasonMeta {
 
 	private static Solution[] generateSols(Problem targetProblem, int popsize) {
 //		double [][] polygon = Polygons.A;
-//		Solution[] sols = SolutionGenerator.overCircle(popsize, targetProblem, ratio);
-		Solution[] sols = SolutionGenerator.randomInit(popsize, targetProblem);
+		Solution[] sols = SolutionGenerator.insideCircle(popsize, targetProblem, 75);
+//		Solution[] sols = SolutionGenerator.randomInit(popsize, targetProblem);
 		return sols;
 	}
 	
 	private static SolverInfo generateSolverInfo() {
-		int popsize = 200;
+		int popsize = 300;
 		Problem targetProblem = generateProblem();
 		Solution [] sols = generateSols(targetProblem, popsize);
 		IMetaheuristic algorithm = generateMetaheuristic(targetProblem, popsize, sols);

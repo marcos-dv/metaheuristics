@@ -59,12 +59,13 @@ public class ContinuousMetaSimulationUI extends GUIState {
 					g = 0;
 					b = 0;
 				}
-				paint = Color.BLACK;
+				paint = Color.BLUE;
 				super.draw(object, graphics, info);
 			}
 		});
 		// axis
 		gridPortrayal.setAxes(true);
+		gridPortrayal.setAxesColor(Color.BLACK);
 		gridPortrayal.setBorder(true);
 	}
 

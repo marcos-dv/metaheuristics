@@ -31,6 +31,25 @@ public class SolutionGenerator {
 		return sols;
 	}
 
+	// Only for dim = 2
+	// Sampling polar coords within the circle
+	public static Solution[] insideCircle(int popsize, Problem problem, double ratio) {
+		if (problem.getDim() != 2) {
+			Messages.error("SolutionGenerator: overCircle in problem with dimension (" 
+				+ problem.getDim() + ") not equals to 2");
+		}
+		Solution [] sols = new Solution[popsize];
+		double[][] x = new double[popsize][problem.getDim()];
+		for(int i = 0; i < popsize; ++i) {
+			double r = ratio*Math.min(1,1.5*Globals.getRandomGenerator().randomUniform(0, 1));
+			double theta = Globals.getRandomGenerator().randomUniform(0, 2*Math.PI);
+			x[i][0] = r*Math.cos(theta);
+			x[i][1] = r*Math.sin(theta);
+			sols[i] = new Solution(x[i], problem);
+		}
+		return sols;
+	}
+
 	
 	public static Solution[] overSegment(int popsize, double [] p, double [] q, Problem problem) {
 		if ((problem.getDim() != p.length) || (p.length != q.length)) {
