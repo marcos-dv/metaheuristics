@@ -5,6 +5,7 @@ import metaheuristics.IMetaheuristic;
 import metaheuristics.MultiSimulatedAnnealing;
 import metaheuristics.PSO;
 import metaheuristics.PSORingGroups;
+import metaheuristics.PTGSA;
 import misc.SolverInfo;
 import problems.Cec2015Problem;
 import problems.CircleProblem;
@@ -14,15 +15,18 @@ import problems.commombenchmarks.AckleyProblem;
 import problems.commombenchmarks.SphereProblem;
 import solutions.Solution;
 import solutions.SolutionGenerator;
+import utils.Algorithms;
 import utils.Polygons;
 
 public class TestMasonMeta {
 
 	static long seed = 1;
 //	static Problem targetProblem = new CircleProblem(2, 50);
-
+	static int method = 1;
+	
 	private static Problem generateProblem() {
-//		return new AckleyProblem(2);
+		if (method == 2)
+			return new AckleyProblem(2);
 //		return new Cec2015Problem(1, 2);
 		double [][] polygon = Polygons.regularPolygon(3, 30);
 		polygon = Polygons.polygonRotation(polygon, Math.PI/5);
@@ -41,7 +45,27 @@ public class TestMasonMeta {
 		return meta;
 		*/
 		
-		/*
+		
+		if (method == 1) {
+			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
+			meta.setCoefSpeed(0.7);
+			meta.setCoefLocalBest(0.2);
+			meta.setCoefGlobalBest(0.3);
+			meta.setLearningRate(0.9);
+			meta.setRatio(1);
+			meta.setSols(sols);
+			meta.initPop();
+			return meta;
+		}
+		else if (method == 2) {
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(30000);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			return meta2;
+		}
+
 		MultiSimulatedAnnealing meta = new MultiSimulatedAnnealing(popsize, targetProblem);
 		meta.setSols(sols);
 		meta.setTemp(500);
@@ -49,26 +73,6 @@ public class TestMasonMeta {
 		meta.setAlfa(0.9);
 		meta.setStep(0.3);
 		return meta;
-		*/
-		
-		PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
-		meta.setCoefSpeed(0.7);
-		meta.setCoefLocalBest(0.2);
-		meta.setCoefGlobalBest(0.3);
-		meta.setLearningRate(0.9);
-		meta.setRatio(1);
-		meta.setSols(sols);
-		meta.initPop();
-		return meta;
-
-		
-		/*
-		GSA meta = new GSA(popsize, targetProblem);
-		meta.setMAX_ITER(10000);
-		meta.setAlfa(20);
-		meta.initPop();
-		return meta;
-		*/
 	}
 
 	private static Solution[] generateSols(Problem targetProblem, int popsize) {
@@ -96,6 +100,9 @@ public class TestMasonMeta {
 	}
 	
 	public static void main(String[] args) {
+		if (args.length > 0) {
+			method = Integer.parseInt(args[0]);
+		}
 		startContinuousSimulationUI();
 	}
 
