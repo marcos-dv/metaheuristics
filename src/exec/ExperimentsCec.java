@@ -11,32 +11,34 @@ import problems.Cec2015Problem;
 import problems.Problem;
 import solutions.Solution;
 import utils.Algorithms;
-import utils.Geometry;
 import utils.SimpleClock;
 
 public class ExperimentsCec {
-
-	private static int numSimulations = 30;
-	private static long startingSeed = 1;
+	
 	private static long [] seed;
 	private static Problem [] benchmark;
-	private static Solution [][][] globalOptimums;
 	
 	private static int dimension = 30;
-//	private static int numIter = dimension*10000; // 300 000
-	private static int numIter = 20; // 300 000
 
 	private static int numAlgorithms;
 
 	private static boolean time_flag = false;
 
-	// args
 	private static boolean parsedArgs;
+	
+	private static SimpleClock clock = new SimpleClock();
+	
+	// All these numeric globals should be specified via args[]	
+	private static int numSimulations = 30;
+	private static int numSimulationsStart = 0;
+	private static int numSimulationsEnd = numSimulationsStart+numSimulations;
+	private static long startingSeed = 1;
 	private static int numProblems; // see initBenchmark()
 	private static int problem_id = 1;
 	private static int method_id = 1;
-	
-	private static SimpleClock clock = new SimpleClock();
+//	private static int numIter = dimension*10000; // 300 000
+	private static int numIter = 20; // 300 000
+
 	
 	private static int [] initMethods() {
 		int [] methods;
@@ -337,6 +339,7 @@ public class ExperimentsCec {
 			System.out.println("\tID_PROBLEM: id of the problem to solve. Range of ids: from 1 to 15. Default: 1");
 			System.out.println("\tMETHOD: solving method number. Default: 1");
 			System.out.println("\tNUM_SIMUL: number of simulations. Default: " + numSimulations);
+			System.out.println("\tSTARTING_SIM_NUM ENDING_SIM_NUM: interval of simulations. Default: 0 " + numSimulations);
 			System.out.println("\tSEED: starting seed for simulations. Default: " + startingSeed);
 			return false;
 		}
@@ -348,7 +351,9 @@ public class ExperimentsCec {
 		problem_id = Integer.parseInt(args[1]);
 		method_id = Integer.parseInt(args[2]);
 		numSimulations = Integer.parseInt(args[3]);
-		startingSeed = Long.parseLong(args[4]);
+		numSimulationsStart = Integer.parseInt(args[4]);
+		numSimulationsEnd = Integer.parseInt(args[5]);
+		startingSeed = Long.parseLong(args[6]);
 		return true;
 	}
 	
@@ -366,7 +371,7 @@ public class ExperimentsCec {
 
 		// Setup seeds
 		seed = new long[numSimulations];
-		for(int i = 0; i < seed.length; ++i) {
+		for(int i = numSimulationsStart; i < numSimulationsEnd; ++i) {
 			// seed[i] = startingSeed xor i^2
 			seed[i] = startingSeed^(i*i);
 		}
@@ -376,7 +381,7 @@ public class ExperimentsCec {
 			if (time_flag)
 				clock.start();
 			for(int j = 0; j < numProblems; ++j) {
-				for(int i = 0; i < seed.length; ++i) {
+				for(int i = numSimulationsStart; i < numSimulationsEnd; ++i) {
 					globalOptimums[k][j][i] = simulation(seed[i], benchmark[j], methods[k]);
 					results[k][j][i] = globalOptimums[k][j][i].getFitness();
 				}
@@ -390,7 +395,7 @@ public class ExperimentsCec {
 		// Display results
 		for(int k = 0; k < methods.length; ++k) {
 			for(int j = 0; j < numProblems; ++j) {
-				for(int i = 0; i < numSimulations; ++i) {
+				for(int i = numSimulationsStart; i < numSimulationsEnd; ++i) {
 					System.out.print(results[k][j][i] + ";");
 				}
 				System.out.println();
@@ -399,7 +404,7 @@ public class ExperimentsCec {
 		// Display results
 		for(int k = 0; k < methods.length; ++k) {
 			for(int j = 0; j < numProblems; ++j) {
-				for(int i = 0; i < numSimulations; ++i) {
+				for(int i = numSimulationsStart; i < numSimulationsEnd; ++i) {
 					System.out.println(globalOptimums[k][j][i].coords2string());
 				}
 			}
@@ -408,12 +413,13 @@ public class ExperimentsCec {
 		double [][] means = new double[numAlgorithms][numProblems];
 		for(int k = 0; k < methods.length; ++k) {
 			for(int j = 0; j < numProblems; ++j) {
-				for(int i = 0; i < numSimulations; ++i) {
+				for(int i = numSimulationsStart; i < numSimulationsEnd; ++i) {
 					means[k][j] += results[k][j][i];
 				}
 				means[k][j] = means[k][j]/numSimulations;
 			}
 		}
+
 		// Compute sd
 		double [][] sd = new double[numAlgorithms][numProblems];
 		for(int k = 0; k < methods.length; ++k) {
@@ -424,12 +430,14 @@ public class ExperimentsCec {
 				sd[k][j] = Math.sqrt(sd[k][j]/numSimulations);
 			}
 		}
-		// Display means
+		// Display stats
+		/*
 		for(int k = 0; k < methods.length; ++k) {
 			for(int j = 0; j < numProblems; ++j) {
 				System.out.println("Algo " + methods[k] + " Problem " + (problem_id) + " means " + means[k][j] + " standard deviations " + sd[k][j]);
 			}
 		}
+		*/
 	}
 
 	
