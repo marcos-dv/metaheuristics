@@ -154,6 +154,69 @@ public class ExperimentsCec {
 			return meta2;
 		}
 		
+		////// MORE TESTING
+		else if (method == 20) { // Temporal weight 0.05
+			double temporalWeight = 0.05;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setTemporalWeight(temporalWeight);
+			return meta2;
+		}
+		else if (method == 21) { // Temporal weight 0.125
+			double temporalWeight = 0.125;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setTemporalWeight(temporalWeight);
+			return meta2;
+		}
+		else if (method == 22) { // Temporal weight 0.15
+			double temporalWeight = 0.15;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setTemporalWeight(temporalWeight);
+			return meta2;
+		}
+		else if (method == 23) { // Consec iter 50
+			int consecIter = 50;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter*consecIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setConsecutiveIterations(consecIter);
+			return meta2;
+		}
+		else if (method == 24) { // Consec iter 75
+			int consecIter = 75;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter*consecIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setConsecutiveIterations(consecIter);
+			return meta2;
+		}
+		else if (method == 25) { // Consec iter 100
+			int consecIter = 100;
+			GSA meta = new GSA(popsize, targetProblem);
+			meta.setMAX_ITER(numIter*consecIter);
+			meta.initPop();
+			double [] alphas = Algorithms.uniformSample(10, 50, 9);
+			PTGSA meta2 = new PTGSA(meta, alphas);
+			meta2.setConsecutiveIterations(consecIter);
+			return meta2;
+		}
+		
+		///// PSO
 		else if (method == 10) { // PSORing ratio 1
 			PSORingGroups meta = new PSORingGroups(popsize, targetProblem);
 			meta.setCoefSpeed(0.7);
