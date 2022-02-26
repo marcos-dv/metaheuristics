@@ -114,7 +114,17 @@ public class Solution {
 				+ coordsString;
 	}
 	
-
+	public void normalizeCoords() {
+		if (targetProblem != null) {
+			double lb = targetProblem.getLB();
+			double ub = targetProblem.getUB();
+			for (int i = 0; i < coords.length-1; ++i) {
+				coords[i] = Math.max(lb, coords[i]);
+				coords[i] = Math.min(ub, coords[i]);
+			}
+		}
+	}
+	
 	public String save() {
 		String str = "";
 		str += Integer.toString(dim) + ' ';

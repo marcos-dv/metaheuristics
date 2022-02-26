@@ -414,6 +414,11 @@ public class GSA implements IMetaheuristic , Parallelizable {
 				System.out.println("f[" + i + "] = " + sols[i].getFitness());
 			}
 		}
+		
+		for (int i = 0; i < sols.length; ++i) {
+			sols[i].normalizeCoords();
+		}
+		
 	}
 
 	@Override

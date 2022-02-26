@@ -1,7 +1,6 @@
 # Files to ignore:
 plan.txt
-*.class
-
+./*.class
 bin/*
 /bin/
 /old
