@@ -141,7 +141,7 @@ public class ExperimentsCec {
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			return meta2;
 		}
-		else if (method == 8) { // PTGSA - mix 0.1, 10
+		else if (method == 8) { // PTGSA - mix 0.25, 10
 			int consecIter = 10;
 			double temporalWeight = 0.25;
 			GSA meta = new GSA(popsize, targetProblem);
