@@ -8,8 +8,9 @@
 OUTPUT_DIR="logs"
 EXEC_FILE=exec1.jar
 METHOD_NUMBER=1
-# Expected: 30
-NUM_SIMUL=75
+# Expected: 30 or 50...
+NUM_SIMUL=75 # STARTING_SIMULATION and ENDING_SIMULATION variables decide the number of sims
+# this is just an informative number for the java application
 STARTING_SIMULATION=0
 ENDING_SIMULATION=$NUM_SIMUL
 NUM_ITER=300000
@@ -60,16 +61,17 @@ MY_SEED=11235813
 
 #for problem in 1 2 3 4 5 6 8
 #for problem in 7 9 10 11 12 13 14 15
+TOTAL_BENCHMARK_FUNCTIONS=16
 for problem in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 do
-	seed=$((($METHOD_NUMBER*16+$problem)*$MY_SEED))
+	seed=$((($METHOD_NUMBER*$TOTAL_BENCHMARK_FUNCTIONS+$problem)*$MY_SEED))
 	timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 	echo "# Method $METHOD_NUMBER Problem $problem | $timestamp"
 
-	name="method_$METHOD_NUMBER-cecfunc_$problem"
-	additions="date_$timestamp-iters_$NUM_ITER-startsim_$STARTING_SIMULATION-endsim_$ENDING_SIMULATION-totalsims_$NUM_SIMUL-seed_$seed"
+	name="method-$METHOD_NUMBER-cecfunc-$problem"
+	additions="date-$timestamp-iters-$NUM_ITER-startsim_$STARTING_SIMULATION-endsim-$ENDING_SIMULATION-totalsims-$NUM_SIMUL-seed-$seed"
 
-	filename="$name-startsim_$STARTING_SIMULATION-endsim_$ENDING_SIMULATION.txt"
+	filename="$name-startsim-$STARTING_SIMULATION-endsim-$ENDING_SIMULATION.txt"
 	filename2="$name-$additions.txt"
 
 	java -jar $EXEC_FILE $NUM_ITER $problem $METHOD_NUMBER $NUM_SIMUL $STARTING_SIMULATION $ENDING_SIMULATION $seed | tee -a "$OUTPUT_DIR/$filename"
