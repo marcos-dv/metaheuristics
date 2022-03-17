@@ -78,6 +78,11 @@ public class ExperimentsCec {
 	}
 
 	private static IMetaheuristic generateAlgorithm(long seed, Problem targetProblem, int popsize, int method) {
+		
+		// double [] alphas = Algorithms.uniformSample(10, 50, 9);
+		// Alphas for PTGSA
+		double [] alphas = Algorithms.uniformSample(1, 101, 11);
+
 		if (method == 1) { // GSA - ori
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
@@ -89,7 +94,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			return meta2;
 		}
@@ -98,7 +102,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
@@ -108,7 +111,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
@@ -118,7 +120,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter*consecIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setConsecutiveIterations(consecIter);
 			return meta2;
@@ -128,7 +129,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter*consecIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setConsecutiveIterations(consecIter);
 			return meta2;
@@ -137,7 +137,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			return meta2;
 		}
@@ -147,7 +146,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter*consecIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setTemporalWeight(temporalWeight);
 			meta2.setConsecutiveIterations(consecIter);
@@ -160,7 +158,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
@@ -170,7 +167,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
@@ -180,7 +176,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setTemporalWeight(temporalWeight);
 			return meta2;
@@ -190,7 +185,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter*consecIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setConsecutiveIterations(consecIter);
 			return meta2;
@@ -200,7 +194,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter*consecIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setConsecutiveIterations(consecIter);
 			return meta2;
@@ -210,7 +203,6 @@ public class ExperimentsCec {
 			GSA meta = new GSA(popsize, targetProblem);
 			meta.setMAX_ITER(numIter*consecIter);
 			meta.initPop();
-			double [] alphas = Algorithms.uniformSample(10, 50, 9);
 			PTGSA meta2 = new PTGSA(meta, alphas);
 			meta2.setConsecutiveIterations(consecIter);
 			return meta2;
